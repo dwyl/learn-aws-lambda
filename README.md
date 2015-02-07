@@ -1,4 +1,7 @@
-# learn-aws-lambda
+# Learn Aws Lambda  [Work in Progress!!]
+
+![aws lambda intro image](http://i.imgur.com/9ImDKrv.jpg)
+
 Learn to use AWS Lambda to create scalable micro-services
 
 ## What is Lambda?
@@ -24,7 +27,8 @@ Pay for Compute/RAM/Storage in fixed units and scale at the container level.
 Similar to EC2 (in that you pay a "reserve" amount for
 specific amount of compute power & RAM)
 but much easier to scale transparently to your app.
-However both Heroku and Nodejitsu have a scaling delay.
+However both Heroku and Nodejitsu have a **scaling delay** and
+a fixed increment for scaling (instances)
 
 ## Lambda Features
 
@@ -64,6 +68,8 @@ used a Heroku or EC2 instance to handle the upload/resize/compresion task.
 
 1,000,000 images x (900,000 + 100,000) = 100 Gigabytes or 100 GB  
 So 100 x $0.030 = **$30 per month** to store a million images!
+
+
 
 ##### S3 Pricing
 
