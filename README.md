@@ -60,7 +60,8 @@ Or **$43.54** to upload **One Milion** images.
 ***Just*** the **Lambda** component of this is: **$33.54**
 
 Given how efficient Node.js is you could probably run a single small/medium
-EC2 instance for
+EC2 instance for the same budget; crucially with Lambda though, you would
+not pay for the *idle* time e.g. while your users are asleep! 
 
 
 **Note**: the S3 storage costs would still be the same if you
@@ -104,6 +105,16 @@ other providers could catch up quite quick (the underlying infrastructure
 
 ### Limits
 
-- Concurrent requests (during the Lambda preview)	**50**
++ Concurrent requests (during the Lambda preview)	**50**
 
 http://docs.aws.amazon.com/lambda/latest/dg/limits.html
+
+## Further Reading
+
++ Walkthrough Custom Events:
+http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-custom-events.html
++ Admin Events:
+http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-s3-events-adminuser.html
++ lambdash: AWS Lambda Shell Hack http://alestic.com/2014/11/aws-lambda-shell
++ Lambda Persistence: http://alestic.com/2014/12/aws-lambda-persistence
++ Lambda Speed (faster execution): http://alestic.com/2014/11/aws-lambda-speed
