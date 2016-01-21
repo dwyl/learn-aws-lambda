@@ -22,13 +22,13 @@ you pay for *usage*.
 
 Pay for Compute/RAM/Storage in fixed units and scale at the container level.
 
-### Heroku / Nodejitsu
+### Heroku / Modulus
 
 Similar to EC2 (in that you pay a "reserve" amount for
 specific amount of compute power & RAM)
 but much easier to scale transparently to your app.
-However both Heroku and Nodejitsu have a **scaling delay** and
-a fixed increment for scaling (instances)
+However both Heroku and Modulus have a ***scaling delay*** and
+scale in a ***fixed increment*** (instances).
 
 ## Lambda Features
 
@@ -61,7 +61,7 @@ Or **$43.54** to upload **One Milion** images.
 
 Given how efficient Node.js is you could probably run a single small/medium
 EC2 instance for the same budget; crucially with Lambda though, you would
-not pay for the *idle* time e.g. while your users are asleep! 
+not pay for the *idle* time e.g. while your users are asleep!
 
 
 **Note**: the S3 storage costs would still be the same if you
