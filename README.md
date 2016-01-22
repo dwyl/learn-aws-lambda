@@ -1,26 +1,29 @@
-# Learn Aws Lambda  [Work in Progress!!]
+# Learn Aws Lambda
 
 ![aws lambda intro image](http://i.imgur.com/9ImDKrv.jpg)
 
-Learn to use AWS Lambda to create scalable micro-services
+Learn to use AWS Lambda to create scalable micro-services in less time
+and cost *far* less to run than "*traditional*" server-based apps.
 
 ## What is Lambda?
 
-Amazon Web Services (AWS) Lambda lets you run JavaScript (Node.js)
+Amazon Web Services (AWS) Lambda lets you run JavaScript (Node.js), Java & Python
 scripts/apps in Amazon's (virtually) infinately-scalable cloud environment
-without having to *think* about servers, instances or memory.
+without having provision VM instances or other "*orquestration*";
 Everything is dynamically auto-scaled so if you have 1 user or 1 billion
 you pay for *usage*.
 
-> http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
-- How it Works: http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html
++ General Intro (*if you're completely new, watch the video!*): http://aws.amazon.com/lambda/
++ How it Works: http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html
++ Getting Started Guide (Overview): http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
 
 
 ## The "*Old*" Way
 
 ### EC2
 
-Pay for Compute/RAM/Storage in fixed units and scale at the container level.
+Pay for Compute/RAM/Storage in *fixed* units and scale at the container level.
+This required a lot of "***DevOps***" oversight
 
 ### Heroku / Modulus
 
@@ -35,8 +38,10 @@ scale in a ***fixed increment*** (instances).
 ### Ephemeral
 
 No access to a filesystem or memory persistance (e.g. on-instance Redis)
-so you cannot store data or the result of an opperation locally.
-This is resolved by having low-latency access to AWS S3 but there's an
+so you cannot store data or the result of an opperation *locally*.
+This is resolved by having low-latency access to AWS S3  
+and *other* AWS Datastores ()
+but there's an
 important (and potentially *expensive*) catch: S3 PUT/POST/GET requests
 are **NOT** Free! While per-run costs on Lambda are tiny, if you GET and PUT
 something to S3 on each execution cycle you could rack up the bill!
@@ -89,25 +94,36 @@ You are charged for the total number of requests across all your functions. Lamb
 
 > http://aws.amazon.com/lambda/pricing/
 
-## Concerns
+## Concerns?
 
-As exciting as this *incredible* service is, I have a few concerns:
+As exciting as this *incredible* service is, it's only natural to have few concerns:
 
-### Vendor Lock-in
+### Limits?
 
-Because this is an innovative approach to running node.js code
-(this is what nodejitsu *could* have been!) no other vendors are
+AWS Lambda has a default safety throttle limit of **100 concurrent Lambda
+function executions** per account.
+see: http://docs.aws.amazon.com/lambda/latest/dg/limits.html
+
+***Q***: Does this mean we can "*only*" process 100 requests at any given time?  
+***A***: No, *it depends* on how long the Lambda function takes to *complete*.
+e.g: a request that takes 90ms to complete means your Lambda function can
+handle **1000** ***concurrent requests*** *out of the box*.
+If that sounds *low* don't panic, if you need more you can easily
+*request* a **Service Limit Increase** by submitting a ticket to AWS Support.
+
+### Vendor Lock-in?
+
+As AWS Lambda is an *innovative* approach to executing code
+in a dynamically scalable way, no other vendors are
 offering something similar you will be *bound* to AWS until
 everyone else catches up (copies AWS).
 Depending on the up-take in the developer community,
 other providers could catch up quite quick (the underlying infrastructure
-  to run micro-apps-as-a-service is not especially complex!).
+  to run micro-apps-as-a-service is not *especially complex*!)
 
-### Limits
+At present the cost savings of not having *idle* capacity far out-weigh
 
-+ Concurrent requests (during the Lambda preview)	**50**
 
-http://docs.aws.amazon.com/lambda/latest/dg/limits.html
 
 ## Further Reading
 
@@ -118,3 +134,9 @@ http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-s3-events-adminuser.html
 + lambdash: AWS Lambda Shell Hack http://alestic.com/2014/11/aws-lambda-shell
 + Lambda Persistence: http://alestic.com/2014/12/aws-lambda-persistence
 + Lambda Speed (faster execution): http://alestic.com/2014/11/aws-lambda-speed
++ Lambda Execution Environment and Available Libraries:
+http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
++ Intro to Lambda by [Jeff Douglas](https://github.com/jeffdonthemic) (*Cloud Legend*)
+https://www.topcoder.com/blog/amazon-lambda-demo-tutorial/ + https://youtu.be/m7egclrPzSg
++ Alternatives to Lambda:
+https://www.quora.com/Are-there-any-alternatives-to-Amazon-Lambda
