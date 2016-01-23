@@ -125,6 +125,46 @@ At present the cost savings of not having *idle* capacity far out-weigh
 
 
 
+## Create and Test Your Own AWS Lambda Function
+### 'HELLO WORLD!' Example (inline)
+
+Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you started with AWS Lambda:
+
+1. If you haven't already done so, create a free AWS account  **[here](http://aws.amazon.com/)**.
+
+2. Sign in to the AWS management console, select your region in the top right hand corner and then open the AWS Lambda console.
+
+3. Choose 'Get Started Now' and then select the 'hello-world' blueprint from the list of option tiles.
+
+4. On the 'Configure Function' page, edit the existing inline code to create your function. AWS Lambda expects us to export an object which has a property called handler. Here's our example:
+
+ ![Configure Function](https://cloud.githubusercontent.com/assets/12450298/12529907/061d8e28-c1c3-11e5-9509-24cd1548417d.png)  
+
+ The value of that property is a function that takes two arguments, event and context. The event will be created by us and the context consists of the runtime information which will be supplied by AWS lambda. They both take the form of JSON objects.
+
+5. Beneath the function you then have to specify the handler and the role you wish to give it. (A role is an AWS identity with permission policies that determine what the identity can or cannot do in AWS. For more information on roles click **[here](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)**). We chose the 'lambda_basic_execution' role because our function is extremely simple:
+
+  ![Handler and Roles](https://cloud.githubusercontent.com/assets/12450298/12529957/dace98fa-c1c4-11e5-9df3-a6709cddcdab.png)
+
+  In the 'Advanced Settings' section you can specify the amount of memory that each AWS Lambda instance should be allocated.   
+  **_Note: by increasing the memory, this also increases the cost of your function runtime!_**
+
+6. Click 'next' to review your code and then if you are happy click 'create function'. You'll then be taken to your AWS Lambda functions where you should see the one you just created.
+
+  ![Test](https://cloud.githubusercontent.com/assets/12450298/12530052/a8e296b2-c1c8-11e5-9ef1-4d19367a4980.png)
+
+7. We can then test our function by clicking on the blue 'Test' button in the top left. Here we will be able to specify the payload of the event that gets passed to our function. There will be an existing event template but we changed the key value pairs as shown below:
+
+  ![event object](https://cloud.githubusercontent.com/assets/12450298/12530077/e1a703d8-c1c9-11e5-97f8-00cdf390bcdc.png)
+
+  Click the 'Save and test' button to test your function.
+
+8. Below your function you should now be able to see the results from your test. Here are the results from our example:
+
+  ![test results](https://cloud.githubusercontent.com/assets/12450298/12530135/1a62941a-c1cc-11e5-87d8-d8077bd599ce.png)
+
+  You can reconfigure your test at any time. Click on the 'Actions' dropdown beside the 'Test' button and select the 'Configure test event' option.
+
 ## Further Reading
 
 + Walkthrough Custom Events:
