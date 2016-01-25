@@ -208,7 +208,8 @@ Another really cool thing about AWS Lambda is that you can invoke a Lambda funct
 
  ![add api endpoint](https://cloud.githubusercontent.com/assets/12450298/12551718/6427822e-c364-11e5-9bda-5138e241e72a.png)
 
-3. Configure your API endpoint settings:  
+3. Configure your API endpoint settings:
+ 
  - API endpoint type : API Gateway  
  - API name : WhateverYouLike  
  - Resource name: /YourLambdaFunctionName  
