@@ -213,7 +213,7 @@ Another really cool thing about AWS Lambda is that you can invoke a Lambda funct
  - API name : WhateverYouLike  
  - Resource name: /YourLambdaFunctionName  
  - Method : GET/POST/PUT/DELETE...  
- - Deployment stage : Defines the *path through which an API deployment is accessible  
+ - Deployment stage : Defines the *path through which an API deployment is accessible
  - Security : Defines how your function can be invoked  
 
     *The path will be a URI ending in >> _.../deploymentStage/ResourceName_
