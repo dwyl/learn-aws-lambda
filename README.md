@@ -197,7 +197,7 @@ Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you st
 
    ![function list](https://cloud.githubusercontent.com/assets/12450298/12537495/94d2171a-c2b8-11e5-861e-9225d3b17f28.png)
 
-   This function can now be tested in the same way as the previous inline example.
+   This function can now be tested in the same way as the inline example.
 
 ### 'HELLO WORLD!' Example (API Gateway)
 Another really cool thing about AWS Lambda is that you can invoke a Lambda function through a web endpoint i.e. they can be triggered via HTTP calls. You can configure these endpoints straight from the AWS Lambda console:
