@@ -209,14 +209,14 @@ Another really cool thing about AWS Lambda is that you can invoke a Lambda funct
  ![add api endpoint](https://cloud.githubusercontent.com/assets/12450298/12551718/6427822e-c364-11e5-9bda-5138e241e72a.png)
 
 3. Configure your API endpoint settings:  
-API endpoint type : API Gateway  
-API name : WhateverYouLike  
-Resource name: /YourLambdaFunctionName  
-Method : GET/POST/PUT/DELETE...  
-Deployment stage : Defines the *path through which an API deployment is accessible  
-Security : Defines how your function can be invoked
+ - API endpoint type : API Gateway  
+ - API name : WhateverYouLike  
+ - Resource name: /YourLambdaFunctionName  
+ - Method : GET/POST/PUT/DELETE...  
+ - Deployment stage : Defines the *path through which an API deployment is accessible  
+ - Security : Defines how your function can be invoked  
 
- *The path will be a URI ending in >> _.../deploymentStage/ResourceName_
+    *The path will be a URI ending in >> _.../deploymentStage/ResourceName_
 
  ![api endpoint settings](https://cloud.githubusercontent.com/assets/12450298/12551817/234565ae-c365-11e5-8afe-64d186c22cbe.png)
 
