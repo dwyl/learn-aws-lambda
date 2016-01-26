@@ -338,78 +338,80 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
 1. Using Lambda to test Lambda!
 
-AWS lambda has a blueprint that you can use to test another Lambda function.
+  AWS lambda has a blueprint that you can use to test another Lambda function.
 
-more info [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
+  more info [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
 
 2. Generating mock events and testing locally using a Node.js assertion library
 
-The event and context objects can be mocked so that the lambda function can be tested locally.
+  The event and context objects can be mocked so that the lambda function can be tested locally.
 
-By logging the event objects for different types of events e.g. DynamoDB events, SNS notifications, the structure of the event object in each case can be determined and mock objects can be created. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects.
+  By logging the event objects for different types of events e.g. DynamoDB events, SNS notifications, the structure of the event object in each case can be determined and mock objects can be created. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects.
 
-Have a look at [mock-events.js](www.github.com/dwyl/learn-aws-lambda/lambda-testing/mock-events.js) to see some examples.  These can be used to create helper functions to generate mock events.
+  Have a look at [mock-events.js](www.github.com/dwyl/learn-aws-lambda/lambda-testing/mock-events.js) to see some examples.  These can be used to create helper functions to generate mock events.
 
-The context object has the following form:
+  The context object has the following form:
 
-```js
-{
-  //methods
-  success,
-  done,
-  fail,
-  getRemainingTimeInMillis,
+  ```js
+  {
+    //methods
+    success,
+    done,
+    fail,
+    getRemainingTimeInMillis,
 
-  //properties
-  functionName,
-  functionVersion,
-  invokedFunctionArn,
-  memoryLimitInMB,
-  awsRequestId,
-  logGroupName,
-  logStreamName,
-  identity: {
-    cognito_identity_id,
-    cognito_identity_pool_id
-  },
-  clientContext: {
-    client: {
-      installation_id,
-      app_title,
-      app_version_name,
-      app_version_code,
-      app_package_name,
-      Custom,
+    //properties
+    functionName,
+    functionVersion,
+    invokedFunctionArn,
+    memoryLimitInMB,
+    awsRequestId,
+    logGroupName,
+    logStreamName,
+    identity: {
+      cognito_identity_id,
+      cognito_identity_pool_id
     },
-    env: {
-      platform_version
-      platform,
-      make,
-      model,
-      locale,
+    clientContext: {
+      client: {
+        installation_id,
+        app_title,
+        app_version_name,
+        app_version_code,
+        app_package_name,
+        Custom,
+      },
+      env: {
+        platform_version
+        platform,
+        make,
+        model,
+        locale,
+      }
     }
   }
-}
-```
+  ```
 
-It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
-It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
-> If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
-> If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
+  It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
+  It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
+  > If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
+  > If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
 
-More info on testing lambda functions locally [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv)
+  More info on testing lambda functions locally [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv)
 
-Testing by mocking the [context object](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/)
+  Testing by mocking the [context object](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/)
 
 3. Using grunt-aws-lambda plugin to test
 
-- cannot set environment variables in Lamdba as with Heroku - use dotenv module?
+  - cannot set environment variables in Lamdba as with Heroku - use dotenv module?
 
-mMre info [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
+  More info [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
 
 ### Deploying using gulp
 
-More info on setting up gulp [here](https://medium.com/@AdamRNeary/a-gulp-workflow-for-amazon-lambda-61c2afd723b6#.4rfsrda09)
+  Gulp can be used to automate the packaging and deployment of Lambda functions.
+
+  More info on setting up gulp [here](https://medium.com/@AdamRNeary/a-gulp-workflow-for-amazon-lambda-61c2afd723b6#.4rfsrda09)
 
 ## Further Reading
 
