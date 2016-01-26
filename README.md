@@ -392,13 +392,59 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
   ```
 
   It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
-  
+
   It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
 
   > If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
   > If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
 
-  More info on testing lambda functions locally [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv) and an example of testing by mocking the context object can be found [here](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/).
+  The following is an example lambda function and associated test using the 'mock-context-object' module and the 'tape' assertion library.
+
+  ```js
+  // very simple lambda function
+  exports.handler = function(event, context) {
+      context.succeed(event.key1);  // SUCCESS with message
+  };
+  ```
+
+  ```js
+  // test set up and simple test
+  var context = require('aws-lambda-mock-context');
+  var test = require('tape');
+
+  var lambdaToTest = require('../functions/lambdaTest.js');
+
+  // creating context object
+  var ctx = context();
+  // text event object
+  var testEvent = {
+    key1: 'name'
+  }
+
+  var response = null
+  var error = null;
+
+  test("Capture response", t => {
+    lambdaToTest.handler(testEvent, ctx);
+    //capture the response or errors
+    ctx.Promise
+      .then(resp => {
+        response = resp;
+        t.end();
+      })
+      .catch(err => {
+        error = err;
+        t.end();
+      })
+  })
+
+  test("Check response", t => {
+    t.equals(response, 'name');
+    t.end();
+  })
+  ```
+
+  More info on testing lambda functions locally can be found  [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv) and an example of testing by mocking the context object can be found [here](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/).
 
 3. **Using grunt-aws-lambda plugin**
 
