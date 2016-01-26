@@ -272,8 +272,6 @@ You now have a DynamoDB table with streams enabled.
 
 3. The 'Event Source Type' and 'DynamoDB table' fields should already have been filled in. Click 'Next'.
 
- ![table name](https://cloud.githubusercontent.com/assets/5912647/12557522/1cb82a5a-c383-11e5-9771-50036f46940e.png)
-
  ![New trigger name](https://cloud.githubusercontent.com/assets/5912647/12557522/1cb82a5a-c383-11e5-9771-50036f46940e.png)
 
 4. In the 'Configure Function' section, give your lambda function a name in the 'Name' field. e.g. 'DynamoDBLambda'. The 'Runtime' should be set to 'Node.js' and the 'Description' should already have been filled in.
