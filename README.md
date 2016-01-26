@@ -254,9 +254,9 @@ Lambda functions can be set up to be triggered by events from other AWS services
 
 3. Click the 'Manage Stream' button and in the pop up window, select the 'New and Old images' option.
 
- ![Manage Streams](https://cloud.githubusercontent.com/assets/5912647/12557457/b38a7bbe-c382-11e5-96ea-d85995598b1e.png)
+ ![Manage Streams](https://cloud.githubusercontent.com/assets/5912647/12559366/b08d36e0-c38c-11e5-944a-b9da7596ddee.png)
 
- ![Manage Streams Options](https://cloud.githubusercontent.com/assets/5912647/12557468/ce4e8d6e-c382-11e5-9b23-1a6747d2d7b8.png)
+ ![Manage Streams Options](https://cloud.githubusercontent.com/assets/5912647/12559413/edeb637c-c38c-11e5-959e-4fa6388f93dc.png)
 
 You now have a DynamoDB table with streams enabled.
 
@@ -266,43 +266,43 @@ You now have a DynamoDB table with streams enabled.
 
  ![select table](https://cloud.githubusercontent.com/assets/5912647/12557478/e3e383be-c382-11e5-9456-81d7504a7e8e.png)
 
-2. Click the 'More' drop down menu and click the 'Triggers' option.
+2. Click 'Create New Trigger' > 'New Function'. This opens the Lambda Console.
 
- ![Triggers](https://cloud.githubusercontent.com/assets/5912647/12557501/ff34f5da-c382-11e5-93fa-de999771223b.png)
+ ![Triggers](https://cloud.githubusercontent.com/assets/5912647/12559453/0ff42378-c38d-11e5-9546-698c39429199.png)
 
-3. Click 'Create New Trigger' > 'New Function'. This opens the Lambda Console.
+3. The 'Event Source Type' and 'DynamoDB table' fields should already have been filled in. Click 'Next'.
 
-4. The 'Event Source Type' and 'DynamoDB table' fields should already have been filled in. Click 'Next'.
-
-5. Give your lambda function a name in the 'Name' field. e.g. 'DynamoStreamsLambda'. The 'Runtime' should be set to 'Node.js' and the 'Description' should already have been filled in.
+ ![table name](https://cloud.githubusercontent.com/assets/5912647/12557522/1cb82a5a-c383-11e5-9771-50036f46940e.png)
 
  ![New trigger name](https://cloud.githubusercontent.com/assets/5912647/12557522/1cb82a5a-c383-11e5-9771-50036f46940e.png)
 
-6. There will already be some default code in the 'Lambda Function Code' section. You can leave the code as it is. It is just logging the data from each data row in the event from DynamoDB along with the action e.g. 'INSERT', 'MODIFY'. We will see the output of these logs in a later step.
+4. In the 'Configure Function' section, give your lambda function a name in the 'Name' field. e.g. 'DynamoDBLambda'. The 'Runtime' should be set to 'Node.js' and the 'Description' should already have been filled in.
 
- ```js
- console.log('Loading function');
+There will already be some default code in the 'Lambda Function Code' section. You can leave the code as it is. It is just logging the data from each data row in the event from DynamoDB along with the action e.g. 'INSERT', 'MODIFY'. We will see the output of these logs in a later step.
 
- exports.handler = function(event, context) {
-     //console.log('Received event:', JSON.stringify(event, null, 2));
-     event.Records.forEach(function(record) {
-         console.log(record.eventID);
-         console.log(record.eventName);
-         console.log('DynamoDB Record: %j', record.dynamodb);
-     });
-     context.succeed("Successfully processed " + event.Records.length + " records.");
- };
- ```
+```js
+console.log('Loading function');
 
-6. In the 'Lambda function handler and role' section, select the 'DynamoDB event stream role' option. This will open a new window to create an Identity and Access Management Role (IAM). Click the blue 'Allow' button to enable the creation of the role. This is necessary to enable permission for DynamoDB to invoke your Lambda function.
+exports.handler = function(event, context) {
+    //console.log('Received event:', JSON.stringify(event, null, 2));
+    event.Records.forEach(function(record) {
+        console.log(record.eventID);
+        console.log(record.eventName);
+        console.log('DynamoDB Record: %j', record.dynamodb);
+    });
+    context.succeed("Successfully processed " + event.Records.length + " records.");
+};
+```
+
+5. In the 'Lambda function handler and role' section, select the 'DynamoDB event stream role' option. This will open a new window to create an Identity and Access Management Role (IAM). Click the blue 'Allow' button to enable the creation of the role. This is necessary to enable permission for DynamoDB to invoke your Lambda function.
 
  ![role](https://cloud.githubusercontent.com/assets/5912647/12557588/75019368-c383-11e5-9824-f6c6f721f03d.png)
 
  ![role name](https://cloud.githubusercontent.com/assets/5912647/12557604/8f24704e-c383-11e5-90f5-2dc15723c2c5.png)
 
-7. Then click 'Next'
+6. Then click 'Next'
 
-8. On the final Review page, in the 'Event Sources' section choose the 'Enable now' option. Then Click 'Create Function'
+7. On the final Review page, in the 'Event Sources' section choose the 'Enable now' option. Then Click 'Create Function'
 
  ![enable now option](https://cloud.githubusercontent.com/assets/5912647/12557637/ba8ae330-c383-11e5-8fde-f6912a681f51.png)
 
@@ -310,13 +310,13 @@ You now have a DynamoDB table with streams enabled.
 
 1. Go back to the DynamoDB dashboard and select the 'Tables' tab > 'LambdaTest'. Click 'Create Item'. This will open a pop up window. Enter an 'Id' for your data point. This can be any string you want. Then click 'Save'.
 
- ![create data button](https://cloud.githubusercontent.com/assets/5912647/12557670/e09a743c-c383-11e5-9496-78f4b3caf9af.png)
+ ![create data button](https://cloud.githubusercontent.com/assets/5912647/12563887/4cd15e34-c3a4-11e5-8b65-c16a909c3637.png)
 
- ![create data save](https://cloud.githubusercontent.com/assets/5912647/12557705/03df9b3e-c384-11e5-9b0b-be47673355e4.png)
+ ![create data save](https://cloud.githubusercontent.com/assets/5912647/12563894/56dd9852-c3a4-11e5-986a-be381262c536.png)
 
 2. Add in some more items and perform some actions to edit/delete the entries in the table e.g. add attributes, delete items. This can be done by selecting the entry and then clicking the 'Actions' dropdown menu. Each of these actions will be logged by our Lambda function and will be visible in the Cloudwatch logs.
 
- ![edit data](https://cloud.githubusercontent.com/assets/5912647/12557746/2a7b2d62-c384-11e5-849d-2f78decdf1e4.png)
+ ![edit data](https://cloud.githubusercontent.com/assets/5912647/12563914/62fb5b38-c3a4-11e5-9830-f87e65a4468b.png)
 
  ![edit data 2](https://cloud.githubusercontent.com/assets/5912647/12557777/55046eea-c384-11e5-9abe-db37615ba2d4.png)
 
