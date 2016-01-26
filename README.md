@@ -16,13 +16,13 @@ you pay for *usage*.
 ### *Self*-Disruption
 
 AWS are effectively [*disrupting*](https://en.wikipedia.org/wiki/Disruptive_innovation)
-their (*own*) *existing* business by creating Lambda.
-Instead of paying for EC2 instances in fixed increments and forcing
-people to have complex application monitoring/scaling, they have
-built a *much simpler* way of building & running micro-services.
+their (*own*) *existing* business with Lambda.
+Instead of forcing us to pay for EC2 instances in fixed increments and
+have complex application monitoring/scaling, AWS have
+built a *much simpler* way of building & running *micro-services*.
 
 Lambda also disrupts other Platform-as-a-Service ("**PaaS**") providers
-such as Heroku or Modulus where you pay a fixed amount for
+such as Heroku, Google App Engine, Azure or Modulus where you pay for a
 *specific* amount of compute power & RAM but have a ***scaling delay*** and
 scale in a ***fixed increment*** (instances).
 
