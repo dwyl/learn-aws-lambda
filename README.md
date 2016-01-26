@@ -306,7 +306,7 @@ Amazon SNS is a Publisher/Subscribe System. You can create, subscribe and publis
   ![Publish to topic](https://cloud.githubusercontent.com/assets/5912647/12579960/a5dd5238-c423-11e5-90df-40b3c88f7e05.png)
 
 2. The opens the message editor. The topic ARN is the 'Amazon Resource Name' for the topic. ARNs are used to specify a resource unambiguously across all of AWS.  We don't need to worry about them for this example!
-Give your message a subject and add some text to the message body. Leave the 'Time to Leave' field blank and click 'Publish Message' in the bottom right hand corner of the screen. You should be redirected back the SNS console.
+Give your message a subject and add some text to the message body. Leave the 'Time to Live' field blank and click 'Publish Message' in the bottom right hand corner of the screen. You should be redirected back the SNS console.
 
   ![Publish message](https://cloud.githubusercontent.com/assets/5912647/12579968/c3410dec-c423-11e5-9189-3dd68fe7060c.png)
 
@@ -418,4 +418,4 @@ You are charged for the total number of requests across all your functions. Lamb
 + Execution time is rounded up to the nearest 100ms
 + You are charged $0.00001667 for every GB-second used
 
-> http://aws.amazon.com/lambda/pricing/
+> See: http://aws.amazon.com/lambda/pricing/ for more ***pricing examples***.
