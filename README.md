@@ -53,6 +53,14 @@ something to S3 on each execution cycle you could rack up the bill!
 
 
 ## Create and Test Your Own AWS Lambda Function
+
+* [Creating a Lambda function inline](#hello-world-example-inline)
+* [Creating a Lambda function using a .zip folder](#hello-world-example-.zip)
+* [Creating a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
+* [Triggering a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
+* [Using AWS Simple Notification System (SNS) to Invoke a Lambda Function](#using-aws-simple-notification-system-sns-to-invoke-a-lambda-function)
+* [Testing Lambda Functions](#testing-lambda-functions)
+
 ### 'HELLO WORLD!' Example (inline)
 
 Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you started with AWS Lambda:
@@ -323,6 +331,85 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
   ![Log stream](https://cloud.githubusercontent.com/assets/5912647/12579999/ff48d928-c423-11e5-9b02-45b7ecc7b1d4.png)
 
   ![Log stream output](https://cloud.githubusercontent.com/assets/5912647/12580016/18dc1f76-c424-11e5-8d27-ecd4f1ae68e0.png)
+
+### Testing Lambda Functions
+
+#### Unit Testing
+
+1. Using Lambda to test Lambda!
+
+AWS lambda has a blueprint that you can use to test another Lambda function.
+
+more info [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
+
+2. Generating mock events and testing locally using a Node.js assertion library
+
+The event and context objects can be mocked so that the lambda function can be tested locally.
+
+By logging the event objects for different types of events e.g. DynamoDB events, SNS notifications, the structure of the event object in each case can be determined and mock objects can be created. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects.
+
+Have a look at [mock-events.js](www.github.com/dwyl/learn-aws-lambda/lambda-testing/mock-events.js) to see some examples.  These can be used to create helper functions to generate mock events.
+
+The context object has the following form:
+
+```js
+{
+  //methods
+  success,
+  done,
+  fail,
+  getRemainingTimeInMillis,
+
+  //properties
+  functionName,
+  functionVersion,
+  invokedFunctionArn,
+  memoryLimitInMB,
+  awsRequestId,
+  logGroupName,
+  logStreamName,
+  identity: {
+    cognito_identity_id,
+    cognito_identity_pool_id
+  },
+  clientContext: {
+    client: {
+      installation_id,
+      app_title,
+      app_version_name,
+      app_version_code,
+      app_package_name,
+      Custom,
+    },
+    env: {
+      platform_version
+      platform,
+      make,
+      model,
+      locale,
+    }
+  }
+}
+```
+
+It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
+It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
+> If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
+> If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
+
+More info on testing lambda functions locally [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv)
+
+Testing by mocking the [context object](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/)
+
+3. Using grunt-aws-lambda plugin to test
+
+- cannot set environment variables in Lamdba as with Heroku - use dotenv module?
+
+mMre info [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
+
+### Deploying using gulp
+
+More info on setting up gulp [here](https://medium.com/@AdamRNeary/a-gulp-workflow-for-amazon-lambda-61c2afd723b6#.4rfsrda09)
 
 ## Further Reading
 
