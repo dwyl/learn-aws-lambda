@@ -60,6 +60,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Triggering a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Using AWS Simple Notification System (SNS) to Invoke a Lambda Function](#using-aws-simple-notification-system-sns-to-invoke-a-lambda-function)
 * [Testing Lambda Functions](#testing-lambda-functions)
+* [Deploying Lambda Functions using Gulp](#deploying-lambda-functions-using -gulp)
 
 ### 'HELLO WORLD!' Example (inline)
 
@@ -336,13 +337,13 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
 #### Unit Testing
 
-1. Using Lambda to test Lambda!
+1. **Using Lambda to test Lambda!**
 
   AWS lambda has a blueprint that you can use to test another Lambda function.
 
   more info [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
 
-2. Generating mock events and testing locally using a Node.js assertion library
+2. **Generating mock events and testing locally using a Node.js assertion library**
 
   The event and context objects can be mocked so that the lambda function can be tested locally.
 
@@ -401,13 +402,13 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
   Testing by mocking the [context object](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/)
 
-3. Using grunt-aws-lambda plugin to test
+3. **Using grunt-aws-lambda plugin**
 
-  - cannot set environment variables in Lamdba as with Heroku - use dotenv module?
+  This plugin has helpers for running Lambda functions locally as well as packaging and deployment.
 
-  More info [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
+  More info and an example can be found [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
 
-### Deploying using gulp
+### Deploying Lambda Functions using Gulp
 
   Gulp can be used to automate the packaging and deployment of Lambda functions.
 
