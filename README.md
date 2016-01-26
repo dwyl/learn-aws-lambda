@@ -339,15 +339,15 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
 1. **Using Lambda to test Lambda!**
 
-  AWS lambda has a blueprint that you can use to test another Lambda function.
+  This method uses Lambda itself as the test platform. This involves creating a “unit” test that calls the Lambda function being testsed and then either summarizes whether it succeeded or failed and/or records its output in DynamoDB. AWS lambda has a unit and load test harness blueprint that you can use to test another Lambda function when it is live on AWS.
 
-  more info [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
+  The harness has two modes: 'Unit' and 'Load' so simple scale testing can also be performed.
+
+  More information and an example can be found [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
 
 2. **Generating mock events and testing locally using a Node.js assertion library**
 
-  The event and context objects can be mocked so that the lambda function can be tested locally.
-
-  By logging the event objects for different types of events e.g. DynamoDB events, SNS notifications, the structure of the event object in each case can be determined and mock objects can be created. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects.
+  The event and context objects can be mocked so that the lambda function can be tested locally before deployment. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects e.g. DynamoDB events, SNS notifications,
 
   Have a look at [mock-events.js](www.github.com/dwyl/learn-aws-lambda/lambda-testing/mock-events.js) to see some examples.  These can be used to create helper functions to generate mock events.
 
@@ -395,6 +395,7 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
   It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
   It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
+
   > If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
   > If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
 
@@ -412,7 +413,7 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
   Gulp can be used to automate the packaging and deployment of Lambda functions.
 
-  More info on setting up gulp [here](https://medium.com/@AdamRNeary/a-gulp-workflow-for-amazon-lambda-61c2afd723b6#.4rfsrda09)
+  More info on setting up gulp with aws-lambda can be found [here](https://medium.com/@AdamRNeary/a-gulp-workflow-for-amazon-lambda-61c2afd723b6#.4rfsrda09)
 
 ## Further Reading
 
