@@ -607,7 +607,7 @@ Some initial set up of your project repo is required. This involves having a lam
 
   ![AWS monitoring log](https://cloud.githubusercontent.com/assets/5912647/12619412/cb2df10e-c50f-11e5-8af3-d53c11d4953b.png)
 
-For more information have a look at the information in the Codeship documentation:
+For more information have at the Codeship documentation:
 * [Integrating AWS Lambda with Codeship](https://blog.codeship.com/integrating-aws-lambda-with-codeship/)
 * [Deployment to AWS Lambda](https://codeship.com/documentation/continuous-deployment/deployment-to-aws-lambda/)
 
