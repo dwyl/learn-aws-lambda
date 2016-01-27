@@ -23,11 +23,11 @@ describe('Test a simple Lambda function', function(){
     lambdaToTest.handler(testEvent, ctx);
     //capture the response or errors
     ctx.Promise
-      .then(resp => {
+      .then(function(resp) {
         response = resp;
         done();
       })
-      .catch(err => {
+      .catch(function(err) {
         error = err;
         done();
       })
