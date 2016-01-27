@@ -127,9 +127,16 @@ Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you st
    This function can now be tested in the same way as the inline example.
 
 ### 'HELLO WORLD!' Example (API Gateway)
-Another really cool thing about AWS Lambda is that you can invoke a Lambda function through a web endpoint i.e. they can be triggered via HTTP calls. You can configure these endpoints straight from the AWS Lambda console:
 
-1. Open your AWS Lambda console and click on the function that you wish to create an endpoint for. _(if you haven't created a Lambda function already you can do so by following one of the previous examples!)_
+Another really cool thing about AWS Lambda is that you can invoke
+a Lambda function through a web endpoint i.e. they can be triggered
+via HTTP calls. You can configure these endpoints straight from the
+AWS Lambda console:
+
+1. Open your AWS Lambda console and click on the function that you wish
+to create an endpoint for.
+_(if you haven't created a Lambda function already you can do so
+by following one of the previous examples!)_
 
 2. On this page Select the 'API endpoints' tab and then click '+ Add API endpoint':
 
@@ -168,6 +175,77 @@ Another really cool thing about AWS Lambda is that you can invoke a Lambda funct
 7. Enter the input values that your API will be expecting _(this is event object we have been using to previously test our functions)_ then click the blue 'Test' button on the right. Your response body should then return the results of your Lambda function in the response body :
 
  ![test api](https://cloud.githubusercontent.com/assets/12450298/12553516/e9a8e220-c36f-11e5-958e-4f3f052ae252.png)
+
+
+### How to Access the Lambda Function via API Gateway
+
+By *default*, access to your API Endpoint and therefore the Lambda function
+are set to '*Private*' this means that when you attempt to access/visit
+the function you just created the *API Gateway* endpoint for in the previous
+section will not be accessible if you attempt to access it.
+
+0. If you aren't already viewing the **API Gateway**,
+select it from your AWS Console Menu:
+![aws01-aws-dashboard-select-api-gateway](https://cloud.githubusercontent.com/assets/194400/12614516/66030ff6-c4f8-11e5-9b3c-3aff954051ee.png)
+
+1. Create an API Key in the **Amazon API Gateway** section of the AWS Console:
+![aws02-api-key-create](https://cloud.githubusercontent.com/assets/194400/12613480/f3263f2c-c4f1-11e5-8add-c0d68226deae.png)
+
+2. Create a *New* API Key:
+![aws03-api-key-create0ew](https://cloud.githubusercontent.com/assets/194400/12613554/778ca09e-c4f2-11e5-9760-eab3694eed6e.png)
+
+3. Name your key, *Enable* it and click `Save` button:
+![aws03-api-key-create-new-specify](https://cloud.githubusercontent.com/assets/194400/12614177/2361edd6-c4f6-11e5-8046-96b23a30233a.png)
+
+4. Once you enable your API Key, a section will appear below the creation form
+that allows you to assign the new API Key to one of your APIs "*Stage*".
+Select the API & Stage (*in our case the API is* `LambdaMicroservice`
+  *and the stage is* `prod`) then click the `Add` button:
+![aws04-api-key-create-assign-to-stage](https://cloud.githubusercontent.com/assets/194400/12614393/8f1224c8-c4f7-11e5-99d0-aa97b48ae727.png)
+You should now see that the API Key is *Enabled* for your `prod` stage:
+![aws05-api-key-associated](https://cloud.githubusercontent.com/assets/194400/12614459/0a6ff2b2-c4f8-11e5-9c0d-3a44fb6b1a2a.png)
+
+5. ***Copy*** the ***API key*** from this screen and save it to your notepad.
+![aws05-copy-the-api-key](https://cloud.githubusercontent.com/assets/194400/12615054/5630abd0-c4fb-11e5-8737-fe83ccef681f.png)
+
+6. Return to your **AWS Console** and select **Lambda**.
+This will display the list of your Lambda functions. Select the
+`Concatenate` Lambda function you created earlier.
+![aws06-list-of-lambda-functions](https://cloud.githubusercontent.com/assets/194400/12615084/8e8490b4-c4fb-11e5-9350-dbdc3b4ee733.png)
+
+7. When you are *viewing* your Lambda Function, select the **API Endpoints**
+tab and *copy* the ***API endpoint URL***:
+![aws07-view-api-endpoints-and-copy-the-link](https://cloud.githubusercontent.com/assets/194400/12615388/5216665a-c4fd-11e5-8b50-64b37fcd26b6.png)
+
+8. With the endpoint URL and API Key copied you can now run a `cURL` Command in
+your terminal to access the endpoint:
+```sh
+curl --header "x-api-key: LhGU6jr5C19QrT8yexCNoaBYeYHy9iwa5ugZlRzm" https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/Concatenate
+```
+
+![aws-lambda-curl-with-api-key-works](https://cloud.githubusercontent.com/assets/194400/12611892/0dae99c6-c4e7-11e5-9fa4-7b2467e336f4.png)
+
+Note: I slightly modified my Lambda function to return a timestamp so I know
+when the function gets executed:
+```js
+exports.handler = function(event, context) {
+    console.log('Received event:', JSON.stringify(event, null, 2));
+    console.log('context:', JSON.stringify(context, null, 2));
+    event.key1 = event.key1 || 'Hello'; // set default values
+    event.key2 = event.key1 || 'World!';
+    console.log('value1 =', event.key1);
+    console.log('value2 =', event.key2);
+    var date = new Date();
+    var time = date.toString();
+    context.succeed(event.key1 + ' ' + event.key2 + ' >> ' + time );
+};
+```
+
+For *even* more steps on enabling API Keys on AWS API Gateway,
+see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys.html
+
+
+<br />
 
 ### Triggering a Lambda function using an event from DynamoDB
 Lambda functions can be set up to be triggered by events from other AWS services like Dynamo DB tables. This can be used to build applications that react to data modifications.
@@ -324,6 +402,9 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
   ![Log stream output](https://cloud.githubusercontent.com/assets/5912647/12580016/18dc1f76-c424-11e5-8d27-ecd4f1ae68e0.png)
 
+
+<br />
+
 ## Further Reading
 
 + Walkthrough Custom Events:
@@ -339,6 +420,8 @@ http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
 https://www.topcoder.com/blog/amazon-lambda-demo-tutorial/ + https://youtu.be/m7egclrPzSg
 + Alternatives to Lambda:
 https://www.quora.com/Are-there-any-alternatives-to-Amazon-Lambda
+
+<br />
 
 ## Concerns?
 
@@ -411,7 +494,9 @@ So 100 x $0.030 = **$30 per month** to store a million images!
 
 ## Lambda Pricing
 
-You are charged for the total number of requests across all your functions. Lambda counts a request each time it starts executing in response to an event notification or invoke call, including test invokes from the console.
+You are charged for the total number of requests across all your functions.
+Lambda counts a request each time it starts executing in response to an
+event notification or invoke call, including test invokes from the console.
 
 + First 1 million requests per month are free
 + $0.20 per 1 million requests thereafter ($0.0000002 per request)
