@@ -165,7 +165,7 @@ Another really cool thing about AWS Lambda is that you can invoke a Lambda funct
 
  ![POST method](https://cloud.githubusercontent.com/assets/12450298/12553412/2a88d8d2-c36f-11e5-9786-27472b186c7f.png)
 
-7. Enter the input values that your API will be expecting _(this is event object we have been using to previously test our functions)_ then click the blue 'Test' button on the right. Your response body should then return the results of your Lambda function in the response body :
+7. Enter the input values that your API will be expecting _(this is the event object we have been using to previously test our functions)_ then click the blue 'Test' button on the right. Your response body should then return the results of your Lambda function :
 
  ![test api](https://cloud.githubusercontent.com/assets/12450298/12553516/e9a8e220-c36f-11e5-958e-4f3f052ae252.png)
 
