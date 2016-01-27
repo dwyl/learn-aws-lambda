@@ -1,10 +1,10 @@
 {
   "name": "learn-aws-lambda",
-  "version": "1.0.0",
-  "description": "\"Tutorial on AWS lambda\"",
+  "version": "1.0.1",
+  "description": "\"How-to Guide for AWS Lambda, DynamoDB, SNS & API Gateway\"",
   "main": "index.js",
   "scripts": {
-    "test": "tape lambda-testing/tests/index.js"
+    "test": "./node_modules/lab/bin/lab lambda-testing/tests/index.js"
   },
   "repository": {
     "type": "git",
@@ -13,16 +13,18 @@
   "keywords": [
     "AWS",
     "lambda",
+    "DynamoDB",
     "node.js"
   ],
   "author": "Nelson Correia, Jack Carlisle, Nikki Ravi",
-  "license": "ISC",
+  "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/nikhilaravi/learn-aws-lambda/issues"
+    "url": "https://github.com/dwyl/learn-aws-lambda/issues"
   },
-  "homepage": "https://github.com/nikhilaravi/learn-aws-lambda#readme",
+  "homepage": "https://github.com/dwyl/learn-aws-lambda#readme",
   "devDependencies": {
     "aws-lambda-mock-context": "^1.1.0",
-    "tape": "^4.4.0"
+    "code": "^2.0.1",
+    "lab": "^7.2.0"
   }
 }

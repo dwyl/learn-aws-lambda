@@ -1,5 +1,10 @@
 var context = require('aws-lambda-mock-context');
-var test = require('tape');
+var Code = require('code');
+var Lab = require('lab');
+var lab = exports.lab = Lab.script();
+var describe = lab.experiment;
+var expect = Code.expect;
+var it = lab.test;
 
 var lambdaToTest = require('../functions/lambdaTest.js');
 
@@ -13,21 +18,23 @@ var testEvent = {
 var response = null
 var error = null;
 
-test("Capture response", t => {
-  lambdaToTest.handler(testEvent, ctx);
-  //capture the response or errors
-  ctx.Promise
-    .then(resp => {
-      response = resp;
-      t.end();
-    })
-    .catch(err => {
-      error = err;
-      t.end();
-    })
-})
+describe('Test a simple Lambda function', function(){
+  it("Capture response", function(done) {
+    lambdaToTest.handler(testEvent, ctx);
+    //capture the response or errors
+    ctx.Promise
+      .then(resp => {
+        response = resp;
+        done();
+      })
+      .catch(err => {
+        error = err;
+        done();
+      })
+  })
 
-test("Check response", t => {
-  t.equals(response, 'name');
-  t.end();
+  it("Check response", function(done) {
+    expect(response).to.equal('name');
+    done();
+  })
 })
