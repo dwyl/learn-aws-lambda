@@ -725,7 +725,9 @@ You should now be good to go!
 
 Click the 'Create Bucket' button. Give your S3 Bucket a name and select its region. We've called ours 'lambda-function-container':
 
-![s3 create bucket](https://cloud.githubusercontent.com/assets/12450298/12646889/8f342590-c5ca-11e5-8e2f-e2cb2bccf04d.png)
+![s3 create bucket](https://cloud.githubusercontent.com/assets/12450298/12646889/8f342590-c5ca-11e5-8e2f-e2cb2bccf04d.png)  
+
+
 
 7. Next you'll want to write a bash script that will perform 3 commands. The first is to create your deployment package (a .ZIP file containing your lambda function and its dependencies). The second will upload the deployment package to your newly created S3 Bucket. The third will deploy your Lambda function from S3.
 
