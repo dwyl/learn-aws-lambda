@@ -4,6 +4,7 @@
   "description": "\"How-to Guide for AWS Lambda, DynamoDB, SNS & API Gateway\"",
   "main": "index.js",
   "scripts": {
+    "upload": "./lambda-upload-create.sh",
     "test": "./node_modules/lab/bin/lab ./lambda-testing/test/index.js -m 0 -c -a code -r lcov -o lcov.info -r console -o stdout",
     "coverage": "./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
   },
