@@ -757,7 +757,30 @@ You should now be good to go!
   --code S3Bucket="$BucketName",S3Key="./$ZipFileName.zip" \
   --description $Description
   ```   
+8. Let's create the script that we'll run in our ```package.json``` that will trigger the ```.sh``` file we just created:
 
+  ![script link](https://cloud.githubusercontent.com/assets/12450298/12648830/b1af1d4c-c5d3-11e5-91af-0d32691b7764.png)
+
+  In order to be able to run our script we have to make it **_executable_**. Type this command into your terminal:
+
+  ```chmod +x (filenameOfScript.sh)```
+
+9. One final step before we'll be able to run our script. Go back to AWS and go to the IAM console because you need to add some   policies that enable you to perform certain methods like 'create-function' or 'put-object'.
+
+  Click on the groups and then select 'Create Group'. We've made a 'Public' group, click on it once you've created it:
+  ![create group](https://cloud.githubusercontent.com/assets/12450298/12649316/06ac3a80-c5d6-11e5-8b05-d624d507a12e.png)
+
+  Click on the 'Attach Policy' button and then select 'IAMFullAccess' from the list:
+  ![Attach policy](https://cloud.githubusercontent.com/assets/12450298/12649326/11a19a3e-c5d6-11e5-82e3-5136640fdeb4.png)
+
+  Click on the 'Create Group Policy' in the Inline Policies section:
+  ![inline policy](https://cloud.githubusercontent.com/assets/12450298/12649339/1c916cb2-c5d6-11e5-8109-34f51f860d5a.png)
+
+  Select the 'Custom Policy' and then press the 'Select' button:
+  ![custom policy](https://cloud.githubusercontent.com/assets/12450298/12649566/095d28ba-c5d7-11e5-812d-97ea278cb285.png)
+
+  Create your custom policy. We've incuded the necessary effects, actions and resources to have complete access. Then click 'Apply Policy':
+  ![create custom policy](https://cloud.githubusercontent.com/assets/12450298/12649574/0f1dbcd8-c5d7-11e5-864e-d9e04b80882f.png)
 
 
 
