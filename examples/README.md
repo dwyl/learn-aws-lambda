@@ -16,6 +16,9 @@ Everything else will be covered step-by-step!
 
 ## *How*?
 
+This step-by-step guide will take you from zero to Lambda-based
+Note taking app in the next 10 minutes.
+
 
 ### Part 1 - Create The DynamoDB Table to Hold your Notes
 
@@ -51,6 +54,32 @@ Then paste this JSON in as the record and click the "***Save***" button:
   "Notes": "Hello World!"
 }
 ```
+
+You should now have one item in your *Notes* table:
+
+![dynamo-db-showing-notes-item](https://cloud.githubusercontent.com/assets/194400/12699057/ed299e5a-c7a5-11e5-87d1-4be2729b378c.png)
+
+
+### Give Lambda Permission to Access the DynamoDB Table
+
+#### 1. From the AWS Console Select "***Identity & Access Management***"
+
+
+![lambda-identity](https://cloud.githubusercontent.com/assets/194400/12699139/ae13ad84-c7a8-11e5-8a40-4532786f89e5.png)
+
+#### 2. Select Roles and then "***Create New Role***":
+
+![create-new-role](https://cloud.githubusercontent.com/assets/194400/12699130/7cffb314-c7a8-11e5-81a3-b18208dc74ba.png)
+
+#### 3. Set Role Name to `APIGatewayLambdaDynamoDB` and click "***Next Step***"
+
+![aws-set-role-name](https://cloud.githubusercontent.com/assets/194400/12699145/f89a881e-c7a8-11e5-852f-378970621459.png)
+
+#### 4. Select "***AWS Lambda***" then click "***Next Step***":
+
+![select-lambda](https://cloud.githubusercontent.com/assets/194400/12699151/3a3528ba-c7a9-11e5-8f36-35c132f103c0.png)
+
+
 
 
 ### Part 2 - Upload your "Client" App to S3
