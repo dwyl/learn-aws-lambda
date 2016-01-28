@@ -5,6 +5,16 @@
 Learn to use AWS Lambda to create scalable micro-services in less time
 and cost *far* less to run than "*traditional*" server-based apps.
 
+## Contents
+
+* [What is Lambda?](#what-is-lambda)
+* [How does it work?](#how)
+* [Create and Test Your Own AWS Lambda Function](#create-and-test-your-own-aws-lambda-function)
+* [Further Reading](#further-reading)
+* [Glossary](#glossary)
+* [Concerns](#concerns)
+* [Pricing](#pricing)
+
 ## What is Lambda?
 
 Amazon Web Services (AWS) Lambda lets you run JavaScript (Node.js), Java & Python
@@ -51,17 +61,17 @@ something to S3 on each execution cycle you could rack up the bill!
 + How it Works: http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html
 + Getting Started Guide (Overview): http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
 
-
 ## Create and Test Your Own AWS Lambda Function
 
-* [Creating a Lambda function inline](#hello-world-example-inline)
-* [Creating a Lambda function using a .zip folder](#hello-world-example-.zip)
-* [Creating a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
-* [Triggering a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
-* [Using AWS Simple Notification System (SNS) to Invoke a Lambda Function](#using-aws-simple-notification-system-sns-to-invoke-a-lambda-function)
+* [Create a Lambda function inline](#hello-world-example-inline)
+* [Create a Lambda function using a .zip folder](#hello-world-example-.zip)
+* [Create a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
+* [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
+* [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
 * [Testing Lambda Functions](#testing-lambda-functions)
 * [Deploying Lambda Functions using Gulp](#deploying-lambda-functions-using -gulp)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
+* [Versioning and Aliasing Lambda Functions](#versioning-and-aliasing-lambda-functions)
 
 ### 'HELLO WORLD!' Example (inline)
 
@@ -346,7 +356,7 @@ exports.handler = function(event, context) {
 
 You can now modify the lambda function to perform different operations with the event data from DynamoDB.
 
-### Using AWS Simple Notification System (SNS) to Invoke a Lambda Function
+### Trigger a Lambda function using the Simple Notification System
 
 Amazon SNS is a Publisher/Subscribe System. You can create, subscribe and publish to 'Topics' which are the AWS term for a messaging channel. Lambda functions can be subscribed to topics so when a message is published to that topic, the Lambda function will be invoked with the payload of the published message as an input parameter. The Lambda function can then do any number of things with the information in the message including publishing further messages to the same topic or other topics.
 
@@ -692,6 +702,37 @@ For more information have at the Codeship documentation:
 * [Integrating AWS Lambda with Codeship](https://blog.codeship.com/integrating-aws-lambda-with-codeship/)
 * [Deployment to AWS Lambda](https://codeship.com/documentation/continuous-deployment/deployment-to-aws-lambda/)
 
+### Versioning and Aliasing Lambda Functions
+
+Multiple versions of a Lambda function can be running at the same time on AWS. Each one has a unique ARN. This allows different versions to be used in different stages of the development workflow e.g. development, beta, staging, production etc. Versions are immutable.
+
+An alias is a pointer to a specific Lambda function version. Aliases are however mutable and can be changed to point to different versions. For example you might have two aliases 'DEV' and 'PROD', standing for 'development' and 'production' respectively. Event sources such as S3 buckets, DynamoDB tables or SNS topics can be configured with a Lambda function alias so that the ARN of the specific version doesn't need to be updated every time in the event source mapping. When new versions are upgraded to production, only the alias needs to be changed and the event source will automatically point to the correct version. This workflow also enables easy rollbacks to previous versions.
+
+#### Versioning
+
+When you create a Lambda function e.g. 'helloworld', its version is automatically set to `$LATEST`. The version is the last part of the Lambda function's ARN:
+```bash
+arn:aws:lambda:aws-region:acct-id:function:helloworld:$LATEST
+```
+The `$LATEST` version is mutable i.e. if a Lambda function is updated either in the console or using the cli, the code in the `$LATEST` version is updated.
+
+You can also _publish_ a new version from the `$LATEST` version. The ARN of the published version will have the version number replaced: e.g. for Version 1:
+```bash
+arn:aws:lambda:aws-region:acct-id:function:helloworld:1
+```
+Published versions are immutable so if you want to change any part of the code or configuration, you have to modify `$LATEST` and then publish a new version.
+If the `$LATEST` version is not changed, then a new version cannot be published.
+
+#### Aliasing
+
+An alias can be created for an existing Lambda function. The alias and lambda function have different ARNS as they are both unique AWS resources.
+
+Using aliases means that calling event source doesn't have to know the specific Lambda function version the alias is pointing to.  It enables
+* new versions to easily be promoted or rolled back (aliases can easily be mapped to different function versions)
+* easier event source mappings - more control over which versions of your function are used with specific event sources in your development environment
+
+Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases-walkthrough1.html) and [aliasing](http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases-walkthrough1.html) using the AWS CLI on the AWS Lambda docs.
+
 ## Further Reading
 
 + Walkthrough Custom Events:
@@ -709,6 +750,12 @@ https://www.topcoder.com/blog/amazon-lambda-demo-tutorial/ + https://youtu.be/m7
 https://www.quora.com/Are-there-any-alternatives-to-Amazon-Lambda
 
 <br />
+
+## Glossary
+
+* IAM - Identity and Access Management
+* ARN - Amazon Resource Number
+* Event Source - Event sources publish events that cause a Lambda function to be invoked.
 
 ## Concerns?
 
@@ -741,7 +788,6 @@ At present the ***cost savings*** of not having *idle* capacity
 or having to spend time/effort provisioning/managing servers *far* out-weigh
 the risk of vendor lock-in.
 
-
 #### Image Upload & Re-Size Example
 
 + Image gets uploaded from Browser/Mobile App to Lambda function
@@ -770,7 +816,6 @@ used a Heroku or EC2 instance to handle the upload/resize/compresion task.
 
 1,000,000 images x (900,000 + 100,000) = 100 Gigabytes or 100 GB  
 So 100 x $0.030 = **$30 per month** to store a million images!
-
 
 
 ##### S3 Pricing
