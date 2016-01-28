@@ -12,7 +12,7 @@
 
   <textarea id="notes" name="textarea" rows="10" cols="50" placeholder="Make your notes here"></textarea>
   <br/>
-  <button class="pure-button pure-button-primary">Save</button>
+  <button id="save" class="pure-button pure-button-primary">Save</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
@@ -33,7 +33,7 @@
           // $('#notes').val(res.notes);
         },
         error: function(xhr, err) {
-          console.log(xhr);
+          console.log(xhr);GET
           console.log(err);
         }
       });
@@ -60,6 +60,11 @@
         }
       });
     }
+
+    $( "#save" ).click(function() {
+      console.log('Save Button Clicked!');
+      postNotes();
+    });
 
 
   });
