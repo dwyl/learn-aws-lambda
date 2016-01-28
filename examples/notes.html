@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <title>Lambda Notes</title>
+  <link rel="shortcut icon" href="https://en.wikipedia.org/static/favicon/wikipedia.ico">
   <!-- CSS Styles are 100% Optional! -->
-  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.2.2/css/flat-ui.min.css">
+  <style>body { margin-left: 2em;} #save { float: right;}</style>
 </head>
 <body>
-  <h1>Make Your Notes Below</h1>
+  <h1>Totes</h1>
 
-  <textarea id="notes" name="textarea" rows="10" cols="50" placeholder="Make your notes here"></textarea>
+  <textarea id="notes" name="textarea" rows="10" cols="60" placeholder="Make your notes here"></textarea>
   <br/>
-  <button id="save" class="pure-button pure-button-primary">Save</button>
+  <button id="save" class="btn btn-block btn-lg btn-success">Save</button>
 
 <!-- Litterally *Everyone* Knows jQuery ... see: http://trends.builtwith.com/javascript/jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -25,8 +26,8 @@
 
       $.ajax({
         type: "GET",
-        headers: { 'x-api-key' : API_KEY },
-        url: "https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod/",
+        // headers: { 'x-api-key' : API_KEY },
+        url: "https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod/GetPetInfo",
         dataType: "json",
         success: function(res, status, xhr) {
           console.log(' - - - - - - - - getNotes res:')
@@ -34,7 +35,9 @@
           // $('#notes').val(res.notes);
         },
         error: function(xhr, err) {
+          console.log(' - - - - - - - - xhr:')
           console.log(xhr);
+          console.log(' - - - - - - - - error:')
           console.log(err);
         }
       });
