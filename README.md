@@ -703,7 +703,6 @@ For more information have at the Codeship documentation:
 * [Integrating AWS Lambda with Codeship](https://blog.codeship.com/integrating-aws-lambda-with-codeship/)
 * [Deployment to AWS Lambda](https://codeship.com/documentation/continuous-deployment/deployment-to-aws-lambda/)
 
-<<<<<<< HEAD
 ### Upload Your Lambda Function to an S3 Bucket and Automatically Deploy it to Lambda (bash script example)
 In this example will build a script that will execute the neccessary steps to upload a Lambda function to S3 where it can be stored and then automatically deploy it to Lambda.
 
