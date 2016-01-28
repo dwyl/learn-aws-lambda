@@ -692,6 +692,73 @@ For more information have at the Codeship documentation:
 * [Integrating AWS Lambda with Codeship](https://blog.codeship.com/integrating-aws-lambda-with-codeship/)
 * [Deployment to AWS Lambda](https://codeship.com/documentation/continuous-deployment/deployment-to-aws-lambda/)
 
+### Upload Your Lambda Function to an S3 Bucket and Automatically Deploy it to Lambda (bash script example)
+In this example will build a script that will execute the neccessary steps to upload a Lambda function to S3 where it can be stored and then automatically deploy it to Lambda.
+
+We will be writing our own bash script that will involve the use of some of the AWS CLI commands. Follow these instructions on how to get set up with the AWS CLI on your local machine:
+
+1. If you haven't already done so, set up an account with AWS **[here](http://aws.amazon.com/)**.
+2. You'll then need to get your 'access key ID' and 'secret access key' by doing the following:
+    * Open the IAM console
+    * In the navigation pane choose 'Users'
+    * Click your IAM username
+    * Click 'Security Credentials' and then 'Create Access Key'
+    * To see your access key, choose Show User Security Credentials. Your credentials will look something like this:
+      Access Key ID: AKIAIOSFODNN7EXAMPLE
+      Secret Access Key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    * Click 'Download Credentials' and store them in a secure location
+3. Install the AWS CLI via a method of your choice **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**.
+4. Once it's installed you have to configure it. Type ```aws configure``` in the command line. You should see something like this:
+```bash
+$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: eu-west-1
+Default output format [None]: ENTER
+```
+Enter your aws access key, secret access key and region then press enter on the last option.  
+You should now be good to go!
+5. Next write a Lambda function in your text editor if you haven't already. Check out our **[previous example](https://github.com/dwyl/learn-aws-lambda#hello-world-example-zip)** up until step 4 _(we'll be automating the zipping in this example)_.
+6. Once you've done this you'll want to create a new S3 bucket that will store all of your uploaded Lambda functions. Click on the S3 console on the AWS Management Console window:
+
+![s3 console](https://cloud.githubusercontent.com/assets/12450298/12646827/32f97802-c5ca-11e5-84a8-b49e2cd0e929.png)
+
+Click the 'Create Bucket' button. Give your S3 Bucket a name and select its region. We've called ours 'lambda-function-container', here's our example:
+
+![s3 create bucket](https://cloud.githubusercontent.com/assets/12450298/12646889/8f342590-c5ca-11e5-8e2f-e2cb2bccf04d.png)
+
+7. Next you'll want to write a bash script that will perform 3 commands. The first is to create your deployment package (a .ZIP file containing your lambda function and its dependencies). The second will upload the deployment package to your newly created S3 Bucket. The third will deploy your Lambda function from S3.
+
+To do so create a new file and call it whatever you want and save it as a ```.sh``` file. We've called ours 'lambda-upload-create.sh'. The 3 commands require variables as input which is why we've included the ```echo``` & ```read``` bash commands in order to temporarily save these inputs:
+
+![echo and read](https://cloud.githubusercontent.com/assets/12450298/12647320/7f9fdd52-c5cc-11e5-98d0-dfd68b6a8caf.png)
+
+We tried to have as few variable inputs as possible so that it reduces the margin for error when typing it into the command line. These are followed by our zip and AWS CLI commands:
+
+The first command (zip) takes two inputs, the name of the zip file you want to create and the names of the files you want to zip up. _(in our case its going to be upload and upload.js seeing as we have no dependencies)_
+```bash
+zip -r "$ZipFileName.zip" $FilesToBeZipped
+```
+
+The upload command 'put-object' takes three inputs, the name of the bucket, the key which is the file path of the zip file and the body which is the same as the key in this case.
+```bash
+aws s3api put-object --bucket $BucketName --key "./$ZipFileName.zip" --body "./$ZipFileName.zip"
+```
+
+The deployment command 'create-function' takes five inputs, the function name which can be anything you like, the runtime which in our case is nodejs, the role which is the ARN for an IAM role you have used/created in the IAM console, the code which consists of the bucket name that you're deploying from and the key which is the file path of the zip and finally the description of your function which is optional.    
+```bash
+aws lambda create-function --function-name $FunctionName --runtime nodejs \
+--role $Role --handler "$ZipFileName.handler" \
+--code S3Bucket="$BucketName",S3Key="./$ZipFileName.zip" \
+--description $Description
+```   
+
+
+
+
+
+
+
 ## Further Reading
 
 + Walkthrough Custom Events:

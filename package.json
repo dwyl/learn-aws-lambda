@@ -4,7 +4,8 @@
   "description": "\"Tutorial on AWS lambda\"",
   "main": "index.js",
   "scripts": {
-    "test": "tape lambda-testing/tests/index.js"
+    "test": "tape lambda-testing/tests/index.js",
+    "upload": "./lambda-upload-create.sh"
   },
   "repository": {
     "type": "git",
