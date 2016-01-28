@@ -79,10 +79,52 @@ You should now have one item in your *Notes* table:
 
 ![select-lambda](https://cloud.githubusercontent.com/assets/194400/12699151/3a3528ba-c7a9-11e5-8f36-35c132f103c0.png)
 
+#### 5. Click to add an in-line Policy
+
+
+![aws-role-inline-policy](https://cloud.githubusercontent.com/assets/194400/12699176/49f34a10-c7aa-11e5-8525-2bf0560c15ea.png)
+
+#### 6. Click "Custom Policy" and then "***Select***":
+
+![aws-custom-policy](https://cloud.githubusercontent.com/assets/194400/12699187/986e158a-c7aa-11e5-8dff-ad45fe767d36.png)
+
+#### 7. Call your Policy `LogAndDynamoDBAccess` and paste:
+
+
+```js
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AccessCloudwatchLogs",
+      "Action": ["logs:*"],
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Sid": "PetsDynamoDBReadWrite",
+                  "Effect": "Allow",
+      "Action": [
+                  "dynamodb:DeleteItem",
+                  "dynamodb:GetItem",
+                  "dynamodb:PutItem",
+                  "dynamodb:UpdateItem"
+                  ],
+      "Resource": ["arn:aws:dynamodb:eu-west-1:182294303866:table/Notes"]
+    }
+   ]
+}
+```
+> ***Note***: your "*Resource*" value will be different.
+To locate yours, view the details of your DynamoDB Table:
+
+![dynamodb-resource-name](https://cloud.githubusercontent.com/assets/194400/12699229/c958863e-c7ab-11e5-9a19-fce240c762f4.png)
 
 
 
-### Part 2 - Upload your "Client" App to S3
+
+
+### Part 4 - Upload your "Client" App to S3
 
 #### 1. From your **AWS Console** Select ***S3***:
 
