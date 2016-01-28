@@ -782,6 +782,12 @@ You should now be good to go!
   Create your custom policy. We've incuded the necessary effects, actions and resources to have complete access. Then click 'Apply Policy':
   ![create custom policy](https://cloud.githubusercontent.com/assets/12450298/12649574/0f1dbcd8-c5d7-11e5-864e-d9e04b80882f.png)
 
+  Once your group has been created you'll need to add a user to it. Any user who is added to that group will have the same permissions:
+  ![create user](https://cloud.githubusercontent.com/assets/12450298/12649893/73b3e590-c5d8-11e5-9cec-88bee1ac5c4d.png)
+
+  Go back to the group you just created and then click 'Add Users to Group' and then select a user to add. The user should be the one that has the access key id and secret access key assigned to it that you're using for the AWS CLI. If you haven't created a user you can do that here.
+  ![]
+
 
 
 
