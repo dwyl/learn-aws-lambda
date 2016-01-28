@@ -782,11 +782,55 @@ You should now be good to go!
   Create your custom policy. We've incuded the necessary effects, actions and resources to have complete access. Then click 'Apply Policy':
   ![create custom policy](https://cloud.githubusercontent.com/assets/12450298/12649574/0f1dbcd8-c5d7-11e5-864e-d9e04b80882f.png)
 
-  Once your group has been created you'll need to add a user to it. Any user who is added to that group will have the same permissions:
+  Once your group has been created you'll need to add a user to it. Any user who is added to that group will have the same permissions. If you haven't created a user you can do that here:
   ![create user](https://cloud.githubusercontent.com/assets/12450298/12649893/73b3e590-c5d8-11e5-9cec-88bee1ac5c4d.png)
 
-  Go back to the group you just created and then click 'Add Users to Group' and then select a user to add. The user should be the one that has the access key id and secret access key assigned to it that you're using for the AWS CLI. If you haven't created a user you can do that here.
-  ![]
+  Go back to the group you just created and then click 'Add Users to Group' and then select a user to add. The user should be the one that has the access key id and secret access key assigned to it that you're using for the AWS CLI.
+  ![add users](https://cloud.githubusercontent.com/assets/12450298/12650158/9c0df796-c5d9-11e5-91da-dc4f45d22c98.png)
+
+  We should now be able to take our script for a spin!
+
+10. In the command line, run the script in your ```package.json```. Ours is as follows:
+  ```$ npm run upload```
+  ```bash
+  Enter the name of the files you wish to zip (eg. lambdaFunction.js node_modules): upload.js
+  Enter the name of the output zip file (eg. lambdaFunction): upload
+  Enter the name of the s3 bucket you wish to upload to: lambda-function-container
+  Enter the name of your lambda function: Upload
+  Enter the ARN of the role you wish to implement: arn:aws:iam::655240711487:role/lambda_basic_execution
+  ```
+
+  After you've hit enter it should return this:
+  ```bash
+  adding: upload.js (deflated 17%)
+  {
+      "ETag": "\"519e9cfc9a2ee33412ba813c82f33a56fa3\""
+    }   
+  {
+    "CodeSha256": "nbYYHfHKyYSlb09Dpw7vf7wB93F+9V8XEmaTBU=",
+    "FunctionName": "Upload",
+    "CodeSize": 249,
+    "MemorySize": 128,
+    "FunctionArn": "arn:aws:lambda:eu-west-1:655240711487:function:Upload",
+    "Version": "$LATEST",
+    "Role": "arn:aws:iam::655240711487:role/lambda_basic_execution",
+    "Timeout": 3,
+    "LastModified": "2016-01-28T13:31:28.627+0000",
+    "Handler": "upload.handler",
+    "Runtime": "nodejs",
+    "Description": "Bash Script Tutorial"
+  }
+  ```
+
+11. Go to S3 to check if the deployment package has been uploaded. You should see your ```.ZIP``` file:
+
+  ![s3 uploaded](https://cloud.githubusercontent.com/assets/12450298/12650714/bcb0664e-c5db-11e5-9d08-a2bf2f2c32ff.png)
+
+12. Go to Lambda to check if your Lambda function has been enabled:
+
+  ![lambda enabled](https://cloud.githubusercontent.com/assets/12450298/12650757/ee4b886e-c5db-11e5-8505-08b3b4bc0958.png)
+
+  That's all! You should now be able to upload and deploy a Lambda function with a single bash script.
 
 
 

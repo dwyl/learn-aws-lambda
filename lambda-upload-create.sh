@@ -23,7 +23,7 @@ aws s3api put-object --bucket $BucketName --key "./$ZipFileName.zip" --body "./$
 aws lambda create-function --function-name $FunctionName --runtime nodejs \
 --role $Role --handler "$ZipFileName.handler" \
 --code S3Bucket="$BucketName",S3Key="./$ZipFileName.zip" \
---description $Description
+--description "$Description"
 
 
 
