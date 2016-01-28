@@ -792,6 +792,8 @@ You should now be good to go!
 
 10. In the command line, run the script in your ```package.json```. Ours is as follows:
   ```$ npm run upload```
+
+  This should prompt the ```echo``` and ```read``` commands first:
   ```bash
   Enter the name of the files you wish to zip (eg. lambdaFunction.js node_modules): upload.js
   Enter the name of the output zip file (eg. lambdaFunction): upload
