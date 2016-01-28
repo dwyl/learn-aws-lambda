@@ -16,7 +16,47 @@ Everything else will be covered step-by-step!
 
 ## *How*?
 
-### 1. *Login* to **AWS Console** and Select ***S3*** from the menu:
+
+### Part 1 - Create The DynamoDB Table to Hold your Notes
+
+
+#### 1. *Login* to **AWS Console** and Select ***DynamoDB*** from the menu:
+
+![lambda-locate-dynamo-db](https://cloud.githubusercontent.com/assets/194400/12698876/e93a01f4-c7a0-11e5-9936-052981c03992.png)
+
+#### 2. In the DynamoDB view click "***Create Table***":
+
+![dynamodb-create-table](https://cloud.githubusercontent.com/assets/194400/12698902/e5a7ee2e-c7a1-11e5-9516-50bcdd73cc10.png)
+
+#### 3. Create your DynamoDB Table:
+
+Call your table "***Notes***" and give it a "*Primary Key*" called `Id` of type `String`.
+Then click the "***Create***" button:
+
+![dynamodb-table-notes](https://cloud.githubusercontent.com/assets/194400/12698941/7c4379ac-c7a2-11e5-842d-b1f506439157.png)
+
+#### 4. Create an "*Item*" (*Record*) in your *Note* Table:
+
+![dynamodb-create-item](https://cloud.githubusercontent.com/assets/194400/12699021/cc6414b2-c7a4-11e5-845f-215615ae9488.png)
+
+From the "Tree/Text" selector, chose "Text":
+
+![dynamodb-select-text](https://cloud.githubusercontent.com/assets/194400/12699035/5bccb8fc-c7a5-11e5-9867-8da49fed4a7c.png)
+
+Then paste this JSON in as the record and click the "***Save***" button:
+
+```js
+{
+  "Id": "1",
+  "Notes": "Hello World!"
+}
+```
+
+
+### Part 2 - Upload your "Client" App to S3
+
+#### 1. From your **AWS Console** Select ***S3***:
+
 
 ![lambda-01-dashboard-select-s3](https://cloud.githubusercontent.com/assets/194400/12650770/fd48737c-c5db-11e5-861c-9139edac6e63.png)
 
@@ -42,3 +82,9 @@ You should expect to see something like this:
 ```sh
 curl --header "x-api-key: LhGU6jr5C19QrT8yexCNoaBYeYHy9iwa5ugZlRzm" https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod
 ```
+
+
+## Background Reading
+
++ Amazon API Gateway Tutorial by Auth0:
+https://auth0.com/docs/integrations/aws-api-gateway
