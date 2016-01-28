@@ -717,8 +717,8 @@ Default region name [None]: eu-west-1
 Default output format [None]: ENTER
 ```
 Enter your aws access key, secret access key and region then press enter on the last option.  
-You should now be good to go!
-5. Next write a Lambda function in your text editor if you haven't already. Check out our **[previous example](https://github.com/dwyl/learn-aws-lambda#hello-world-example-zip)** up until step 4 _(we'll be automating the zipping in this example)_.
+You should now be good to go!  
+5. Next write a Lambda function in your text editor if you haven't already. Check out our **[previous example](https://github.com/dwyl/learn-aws-lambda#hello-world-example-zip)** up until step 4 _(we'll be automating the zipping in this example)_.  
 6. Once you've done this you'll want to create a new S3 bucket that will store all of your uploaded Lambda functions. Click on the S3 console on the AWS Management Console window:
 
 ![s3 console](https://cloud.githubusercontent.com/assets/12450298/12646827/32f97802-c5ca-11e5-84a8-b49e2cd0e929.png)
