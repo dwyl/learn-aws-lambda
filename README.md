@@ -252,7 +252,7 @@ exports.handler = function(event, context) {
     console.log('Received event:', JSON.stringify(event, null, 2));
     console.log('context:', JSON.stringify(context, null, 2));
     event.key1 = event.key1 || 'Hello'; // set default values
-    event.key2 = event.key1 || 'World!';
+    event.key2 = event.key2 || 'World!';
     console.log('value1 =', event.key1);
     console.log('value2 =', event.key2);
     var date = new Date();
@@ -583,7 +583,7 @@ Some initial set up of your project repo is required. This involves having a lam
 
   We need to give Codeship access to the lambda function on AWS so it can update and invoke the function. AWS IAM best practices suggest creating a Group with an access policy to which Users can be added.
 
-  Navigate to the 'Identity and Access Management' section of the AWS console.   
+  Navigate to the 'Identity and Access Management' section of the AWS console.
 
   ![IAM dashboard](https://cloud.githubusercontent.com/assets/5912647/12616879/1815056c-c505-11e5-90b9-81ae434c1ed3.png)
 
@@ -625,7 +625,7 @@ Some initial set up of your project repo is required. This involves having a lam
                   "lambda:InvokeFunction",
                   "lambda:GetFunction"
               ],
-              "Resource": [                    
+              "Resource": [
                 "YOUR_LAMBDA_FUNCTION_ARN_HERE"
               ]
           }
