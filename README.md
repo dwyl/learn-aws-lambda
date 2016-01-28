@@ -62,7 +62,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Testing Lambda Functions](#testing-lambda-functions)
 * [Deploying Lambda Functions using Gulp](#deploying-lambda-functions-using -gulp)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
-* [Upload Lambda Function to S3 and deploy to Lambda](https://github.com/dwyl/learn-aws-lambda/tree/uploadScript#upload-your-lambda-function-to-an-s3-bucket-and-automatically-deploy-it-to-lambda-bash-script-example)
+* [Upload Lambda Function to S3 and deploy to Lambda](#upload-your-lambda-function-to-an-s3-bucket-and-automatically-deploy-it-to-lambda-bash-script-example)
 
 ### 'HELLO WORLD!' Example (inline)
 
