@@ -22,3 +22,7 @@ Everything else will be covered step-by-step!
 
 2. If you don't already have a "*Bucket*" on S3, create one now.
 Then, uplad the `notes.html` file into the bucket.
+
+```sh
+curl --header "x-api-key: LhGU6jr5C19QrT8yexCNoaBYeYHy9iwa5ugZlRzm" https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/Concatenate
+```

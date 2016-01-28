@@ -14,18 +14,19 @@
   <br/>
   <button id="save" class="pure-button pure-button-primary">Save</button>
 
+<!-- Litterally *Everyone* Knows jQuery ... see: http://trends.builtwith.com/javascript/jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
+  var API_KEY = 'x1TMsafJaB4z4mWpmhjck8XtU1yrryAy9aolqpvU';
+
   $(document).ready(function() {
 
     function getNotes () {
 
       $.ajax({
         type: "GET",
-        headers: {
-          'x-api-key' : 'YOUR API GATEWAY KEY HERE'
-        },
-        url: "GET URL",
+        headers: { 'x-api-key' : API_KEY },
+        url: "https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod/",
         dataType: "json",
         success: function(res, status, xhr) {
           console.log(' - - - - - - - - getNotes res:')
@@ -33,20 +34,20 @@
           // $('#notes').val(res.notes);
         },
         error: function(xhr, err) {
-          console.log(xhr);GET
+          console.log(xhr);
           console.log(err);
         }
       });
     }
 
+    getNotes();
+
     function postNotes () {
 
       $.ajax({
         type: "POST",
-        headers: {
-          'x-api-key' : 'YOUR API GATEWAY KEY HERE'
-        },
-        url: "POST URL",
+        headers: { 'x-api-key' : API_KEY },
+        url: "https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod/",
         data: {"notes" : $('#notes').val() },
         dataType: "json",
         success: function(res, status, xhr) {
