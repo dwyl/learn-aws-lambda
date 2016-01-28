@@ -712,15 +712,15 @@ We will be writing our own bash script that will involve the use of some of the 
 3. Install the AWS CLI via a method of your choice **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**.
 
 4. Once it's installed you have to configure it. Type ```aws configure``` in the command line. You should see something like this:
-```bash
-$ aws configure
-AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
-AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-Default region name [None]: eu-west-1
-Default output format [None]: ENTER
-```
-Enter your aws access key, secret access key and region then press enter on the last option.  
-You should now be good to go!
+  ```bash
+  $ aws configure
+  AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+  AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  Default region name [None]: eu-west-1
+  Default output format [None]: ENTER
+  ```
+  Enter your aws access key, secret access key and region then press enter on the last option.  
+  You should now be good to go!
 
 5. Next write a Lambda function in your text editor if you haven't already. Check out our **[previous example](https://github.com/dwyl/learn-aws-lambda#hello-world-example-zip)** up until step 4 _(we'll be automating the zipping in this example)_.  
 
