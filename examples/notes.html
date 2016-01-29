@@ -6,7 +6,7 @@
   <link rel="shortcut icon" href="https://s3-eu-west-1.amazonaws.com/dwyl/favicon.ico">
   <!-- CSS Styles are 100% Optional! -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.2.2/css/flat-ui.min.css">
-  <style>body { margin-left: 2em;} #save { float: right;}</style>
+  <style>body { margin-left: 2em;} #save { float: right;} #notes {width: 95%; }</style>
 </head>
 <body>
   <h1>Lambda Notes</h1>
@@ -34,8 +34,7 @@
           console.log(' - - - - - - - - getNotes res:')
           console.log(res);
           $('#notes').val(res.notes)
-          $('#form').fadeIn('slow');
-          // $('#notes').val(res.notes);
+          $('#form').fadeIn('slow'); // this is why I'm using jQuery ... feel free to remove.
         },
         error: function(xhr, err) {
           console.log(' - - - - - - - - xhr:')
@@ -45,14 +44,12 @@
         }
       });
     }
+    getNotes(); // initialise the notes on the page
 
-    getNotes();
-
+    // Ajax without JQuery if you prefer:
     function postNotes () {
-      var url = baseURL + '/SaveNotes';
-      console.log('>> POST url: ', url)
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', url);
+      xhr.open('POST', baseURL + '/SaveNotes');
       xhr.onreadystatechange = function() {
         // un-comment these console.logs in for debugging
         console.log( xhr.status, xhr.statusText )
@@ -67,9 +64,8 @@
       console.log('Save Button Clicked!');
       postNotes();
     });
-
-
   });
+
 </script>
 
 </body>

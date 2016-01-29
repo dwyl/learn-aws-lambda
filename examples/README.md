@@ -2,8 +2,13 @@
 # Example Lambda App: Notepad
 
 In this tutorial we are going to build a little app
-that allows us to take notes and save them to Amazon DynamoDB 
+that allows us to take notes and save them to Amazon DynamoDB
 via an AWS Lambda Function (*available from AWS API Gateway*).
+
+## *Try it*: https://s3-eu-west-1.amazonaws.com/dwyl/notes.html
+
+[![lambda-notes](https://cloud.githubusercontent.com/assets/194400/12956276/24059c68-d01f-11e5-90ee-d9100b692ef3.png)](https://s3-eu-west-1.amazonaws.com/dwyl/notes.html)
+
 
 ### Pre-requisites
 
@@ -154,20 +159,19 @@ var DOC = require('dynamodb-doc');
 var dynamo = new DOC.DynamoDB();
 
 exports.handler = function(event, context) {
-   var cb = function(err, data) {
-      if(err) {
-         console.log('error on GetNotes: ',err);
-         context.done('Unable to retrieve notes', null);
+  var cb = function(err, data) {
+    if(err) {
+      console.log('error on GetNotes: ',err);
+      context.done('Unable to retrieve notes', null);
+    } else {
+      if(data.Item && data.Item.notes) {
+        context.done(null, data.Item);
       } else {
-         if(data.Item && data.Item.notes) {
-             context.done(null, data.Item);
-         } else {
-              context.done(null, {});
-         }
+        context.done(null, {});
       }
-   };
-
-   dynamo.getItem({TableName:"Notes", Key:{Id:"1"}}, cb);
+    }
+  };
+  dynamo.getItem({TableName:"Notes", Key:{Id:"1"}}, cb);
 };
 ```
 
@@ -201,7 +205,7 @@ Then enter the following details:
 + Handler: `index.handler`
 + Role: `APIGatewayLambdaDynamoDB`
 
-Then ***Paste*** the following code:
+Then ***paste*** the following code:
 
 ```js
 var AWS = require('aws-sdk');
@@ -403,7 +407,7 @@ Copy the `Invoke URL` displayed as you will use it in the next two steps.
 
 #### 4. Test it in your Terminal with `cURL`
 
-To *confirm* that the CORS (``) header is being set for the endpoint, 
+To *confirm* that the CORS (``) header is being set for the endpoint,
 
 ```sh
 curl -v https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
@@ -413,7 +417,7 @@ You should expect to see output similar to the following:
 
 ![aws-api-gateway-curl-confims-access-control-header](https://cloud.githubusercontent.com/assets/194400/12952679/2ffb2c00-d00f-11e5-9b56-4548dd3304f4.png)
 
-The important line is: `< Access-Control-Allow-Origin: *` which *confirms* 
+The important line is: `< Access-Control-Allow-Origin: *` which *confirms*
 that we can access the API endpoint from *any origin*.
 
 
@@ -459,9 +463,7 @@ You should expect to see something like this:
 
 ![s3-make-notes](https://cloud.githubusercontent.com/assets/194400/12698505/d70f145c-c795-11e5-91e4-6ac5aaac243f.png)
 
-```sh
-curl --header "x-api-key: LhGU6jr5C19QrT8yexCNoaBYeYHy9iwa5ugZlRzm" https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod
-```
+Try it!
 
 
 ## Background Reading
@@ -471,4 +473,17 @@ https://auth0.com/docs/integrations/aws-api-gateway
 + Measuring response time with cURL:
 http://stackoverflow.com/questions/18215389/how-do-i-measure-request-and-response-times-at-once-using-curl
 
-curl https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
+## Performance?
+
+try:
+
+For the API Gateway Endpoint
+```sh
+ab -n 10000 -c 1000 https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
+```
+
+For the notes "app":
+
+```sh
+ab -n 10000 -c 1000 https://s3-eu-west-1.amazonaws.com/dwyl/notes.html
+````
