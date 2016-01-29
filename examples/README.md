@@ -306,6 +306,18 @@ You should see:
 ![aws-lambda-curl-getnotes-endpoint-](https://cloud.githubusercontent.com/assets/194400/12768433/7e7e9d84-ca07-11e5-8648-d51ccf99d690.png)
 
 
+
+
+### CORS?
+
+If you attempt to access this endpoint via XMLHttpRequest ("*Ajax*") in the
+browser you will see a `No 'Access-Control-Allow-Origin'` Error:
+
+![aws-lambda-cors-error](https://cloud.githubusercontent.com/assets/194400/12768553/33c41e3a-ca08-11e5-96e4-1844bee177c0.png)
+
+http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html#how-to-cors-console
+
+
 ### Step 5: Upload your "Client" App to S3
 
 #### 1. From your **AWS Console** Select ***S3***:
@@ -341,3 +353,7 @@ curl --header "x-api-key: LhGU6jr5C19QrT8yexCNoaBYeYHy9iwa5ugZlRzm" https://mhag
 
 + Amazon API Gateway Tutorial by Auth0:
 https://auth0.com/docs/integrations/aws-api-gateway
++ Measuring response time with cURL:
+http://stackoverflow.com/questions/18215389/how-do-i-measure-request-and-response-times-at-once-using-curl
+
+curl https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
