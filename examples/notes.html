@@ -19,7 +19,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
   // var API_KEY = 'x1TMsafJaB4z4mWpmhjck8XtU1yrryAy9aolqpvU';
-  var baseURL = 'https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/';
+  var baseURL = 'https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod';
 
   $(document).ready(function() {
 
@@ -28,7 +28,7 @@
       $.ajax({
         type: "GET",
         // headers: { 'x-api-key' : API_KEY },
-        url: baseURL + 'GetNotes',
+        url: baseURL + '/GetNotes',
         dataType: "json",
         success: function(res, status, xhr) {
           console.log(' - - - - - - - - getNotes res:')
@@ -49,7 +49,7 @@
     getNotes();
 
     function postNotes () {
-      var url = baseURL + 'SaveNotes';
+      var url = baseURL + '/SaveNotes';
       console.log('>> POST url: ', url)
       var xhr = new XMLHttpRequest();
       xhr.open('POST', url);

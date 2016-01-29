@@ -1,8 +1,8 @@
 
 # Example Lambda App: Notepad
 
-In this micro-tutorial we are going to build a little app
-that allows us to take notes and save them to Amazon S3
+In this tutorial we are going to build a little app
+that allows us to take notes and save them to Amazon DynamoDB 
 via an AWS Lambda Function (*available from AWS API Gateway*).
 
 ### Pre-requisites
@@ -17,7 +17,7 @@ Everything else will be covered step-by-step!
 ## *How*?
 
 This step-by-step guide will take you from zero to Lambda-based
-Note taking app in the next 10 minutes.
+Note taking app in the next 15 minutes.
 
 
 ### Step 1: Create The DynamoDB Table to Hold your Notes
@@ -60,6 +60,7 @@ You should now have one item in your *Notes* table:
 
 ![dynamo-db-showing-notes-item](https://cloud.githubusercontent.com/assets/194400/12699057/ed299e5a-c7a5-11e5-87d1-4be2729b378c.png)
 
+<br />
 
 ### Step 2: Give Lambda Permission to Access the DynamoDB Table
 
@@ -121,6 +122,7 @@ To locate yours, view the details of your DynamoDB Table:
 
 ![dynamodb-resource-name](https://cloud.githubusercontent.com/assets/194400/12699229/c958863e-c7ab-11e5-9a19-fce240c762f4.png)
 
+<br />
 
 ### Step 3: Create your Lambda Function(s)
 
@@ -265,6 +267,8 @@ see the following output:
 
 ![aws-getnotes-updated-test-output](https://cloud.githubusercontent.com/assets/194400/12767169/aeca5404-c9ff-11e5-99f4-49abf2cd5551.png)
 
+<br />
+
 ### Step 4: Expose your Lambda Functions through AWS API Gateway
 
 There are *three* ways to make your Lambda functions accessible
@@ -336,6 +340,7 @@ Which should return:
 ```sh
 {"Id":"1","notes":"Updated Notes!"}
 ```
+<br />
 
 ### Step 5. Enable CORS for the Endpoints
 
@@ -350,25 +355,85 @@ browser you will see a `No 'Access-Control-Allow-Origin'` Error:
 > Official CORS Docs for Lambda:
 http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html#how-to-cors-console
 
+#### 1. In your API Gateway click "*Enable CORS*"
+
+Select the resource/method you want to enable CORS for,
+click "***Enable CORS***" button.
+
+![aws-api-gateway-enable-cors](https://cloud.githubusercontent.com/assets/194400/12949495/0f49e2f8-d000-11e5-91f5-45b22fc434b7.png)
+
+#### 2. Click: "*Enable CORS and replace existing CORS headers*"
+
+Leave all the default values as they are.
+(*you can always come back and change them later...*)
+
+![aws-awpi-gateway-enable-cors-and-replace](https://cloud.githubusercontent.com/assets/194400/12949601/aa98f1e0-d000-11e5-9610-476bbb431b71.png)
+
+#### 3. Click "*Yes, Replace Existing Values*"
+
+In the "*modal*" window that pops up, click the button labeled "*Yes, Replace Existing Values*":
+
+![aws-api-gateway-replace-exisiting-values](https://cloud.githubusercontent.com/assets/194400/12949769/91cf5f72-d001-11e5-891e-28b84d2ff578.png)
+
+#### 4. Confirmation CORS ENabled
+
+You should see a confirmation message similar to this:
+
+![aws-api-gateway-cors-enabled](https://cloud.githubusercontent.com/assets/194400/12949968/af135c04-d002-11e5-9462-182f569e5853.png)
 
 
-
+<br />
 
 ### Step 6. Deploy your API!
 
+#### 1. Click on "*Deploy API*"
+
+![aws-api-gateway-deploy-api](https://cloud.githubusercontent.com/assets/194400/12947112/1e151550-cff1-11e5-832c-b439cb33d3eb.png)
+
+#### 2. Configure the API to "*prod*"
+
+![aws-api-gateway-deploy-prod](https://cloud.githubusercontent.com/assets/194400/12950590/d78c21fe-d005-11e5-96ee-578f53bfc9f0.png)
+
+#### 3. Confirm your Configuration > "*Save Changes*"
+
+![aws-api-gateway-deploy-confirm](https://cloud.githubusercontent.com/assets/194400/12951660/53e5068a-d00b-11e5-965b-5d995851f7fb.png)
+
+Copy the `Invoke URL` displayed as you will use it in the next two steps.
 
 
+#### 4. Test it in your Terminal with `cURL`
 
+To *confirm* that the CORS (``) header is being set for the endpoint, 
+
+```sh
+curl -v https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
+```
+
+You should expect to see output similar to the following:
+
+![aws-api-gateway-curl-confims-access-control-header](https://cloud.githubusercontent.com/assets/194400/12952679/2ffb2c00-d00f-11e5-9b56-4548dd3304f4.png)
+
+The important line is: `< Access-Control-Allow-Origin: *` which *confirms* 
+that we can access the API endpoint from *any origin*.
+
+
+<br />
 
 ### Step 7. Update the `baseURL` in `notes.html`
 
-curl -v -H "Content-Type: application/json" -X POST -d '{"Id":"1","notes":"Daminit!!!"}' https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/SaveNotes
+Open the `notes.html` file and scroll down to the JavaScript section where `baseURL` is defined.
+
+Replace the *value* of `baseURL` with the API Gateway Invoke URL you used for your `cURL` request above.
+
+e.g:
+
+```js
+  var baseURL = 'https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod';
+```
 
 
 
-
-
-### Step 8: Upload your "Client" App to S3
+### Step 8: Upload your "Client" `notes.html` App to S3
 
 #### 1. From your **AWS Console** Select ***S3***:
 
