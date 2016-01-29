@@ -20,8 +20,9 @@ This step-by-step guide will take you from zero to Lambda-based
 Note taking app in the next 10 minutes.
 
 
-### Part 1 - Create The DynamoDB Table to Hold your Notes
+### Step 1: Create The DynamoDB Table to Hold your Notes
 
+We need a place to store our Notes (data). DynamoDB is a great place for it.
 
 #### 1. *Login* to **AWS Console** and Select ***DynamoDB*** from the menu:
 
@@ -51,7 +52,7 @@ Then paste this JSON in as the record and click the "***Save***" button:
 ```js
 {
   "Id": "1",
-  "Notes": "Hello World!"
+  "notes": "Hello World!"
 }
 ```
 
@@ -60,7 +61,7 @@ You should now have one item in your *Notes* table:
 ![dynamo-db-showing-notes-item](https://cloud.githubusercontent.com/assets/194400/12699057/ed299e5a-c7a5-11e5-87d1-4be2729b378c.png)
 
 
-### Give Lambda Permission to Access the DynamoDB Table
+### Step 2: Give Lambda Permission to Access the DynamoDB Table
 
 #### 1. From the AWS Console Select "***Identity & Access Management***"
 
@@ -121,10 +122,73 @@ To locate yours, view the details of your DynamoDB Table:
 ![dynamodb-resource-name](https://cloud.githubusercontent.com/assets/194400/12699229/c958863e-c7ab-11e5-9a19-fce240c762f4.png)
 
 
+### Step 3: Create your Lambda Function(s)
+
+#### 1. Create a Lambda Function that Gets a Notes Record from DynamoDB
+
+From the AWS Console, select Lambda:
+
+![aws-menu-click-lambda](https://cloud.githubusercontent.com/assets/194400/12714195/23869db0-c8cb-11e5-86d6-f7564c0e8957.png)
+
+Then click "***Create a Lambda function***":
+
+![aws-create-lambda-function](https://cloud.githubusercontent.com/assets/194400/12714210/46a81832-c8cb-11e5-8e15-46ca2cffc9c2.png)
+
+
+When prompted to chose from a "*Blueprint*" click "***Skip***":
+
+![aws-lambda-select-blueprint](https://cloud.githubusercontent.com/assets/194400/12714483/02529976-c8cd-11e5-8dec-e731c7b6d397.png)
+
+#### 2. Name your Lambda function "*GetNotes*"
+
+![aws-lambda-getnotes-function-name-and-desc](https://cloud.githubusercontent.com/assets/194400/12714998/a48fe52a-c8cf-11e5-8868-f1d265e70919.png)
+
+#### 3. Paste this code into the in-line editor
+
+
+```js
+var AWS = require('aws-sdk');
+var DOC = require('dynamodb-doc');
+var dynamo = new DOC.DynamoDB();
+
+exports.handler = function(event, context) {
+   var cb = function(err, data) {
+      if(err) {
+         console.log('error on GetNotes: ',err);
+         context.done('Unable to retrieve notes', null);
+      } else {
+         if(data.Item && data.Item.notes) {
+             context.done(null, data.Item);
+         } else {
+              context.done(null, {});
+         }
+      }
+   };
+
+   dynamo.getItem({TableName:"Notes", Key:{Id:"1"}}, cb);
+};
+```
+
+#### 4. Test your `GetNotes` Lambda Function
+
+Confirm that your `GetNotes` Lambda function can access DynamoDB by running a "*Test*":  
+(*click the* "***Test***" *button to run your function*)
+
+![aws-lambda-service-test](https://cloud.githubusercontent.com/assets/194400/12765442/9b54d60a-c9f6-11e5-8e61-539cfd2e5d58.png)
+
+In the logs below your Lambda code, you should expect to see:
+
+```js
+{
+  "Id": "1",
+  "notes": "Hello World!"
+}
+```
 
 
 
-### Part 4 - Upload your "Client" App to S3
+
+### Step 5: Upload your "Client" App to S3
 
 #### 1. From your **AWS Console** Select ***S3***:
 
