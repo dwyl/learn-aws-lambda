@@ -6,6 +6,7 @@
   "scripts": {
     "upload": "./lambda-upload-create.sh",
     "test": "./node_modules/lab/bin/lab ./lambda-testing/test/index.js -m 0 -c -a code -r lcov -o lcov.info -r console -o stdout",
+    "ava:test": "ava ./lambda-testing/test/avatest.js",
     "coverage": "./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
   },
   "repository": {
@@ -25,8 +26,11 @@
   },
   "homepage": "https://github.com/dwyl/learn-aws-lambda#readme",
   "devDependencies": {
+    "ava": "^0.11.0",
     "aws-lambda-mock-context": "^1.1.0",
+    "aws-lambda-pify": "^1.1.0",
     "code": "^2.0.1",
-    "lab": "^7.2.0"
+    "lab": "^7.2.0",
+    "simple-mock": "^0.6.0"
   }
 }

@@ -1,40 +1,61 @@
 'use strict';
 
-var context = require('aws-lambda-mock-context');
-var Code = require('code');
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
-var describe = lab.experiment;
-var expect = Code.expect;
-var it = lab.test;
+var context             = require('aws-lambda-mock-context');
+var promisify           = require('aws-lambda-pify');
+var Code                = require('code');
+var Lab                 = require('lab');
+var lab                 = exports.lab = Lab.script();
+var describe            = lab.experiment;
+var expect              = Code.expect;
+var it                  = lab.test;
+var simple              = require('simple-mock');
+var createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
 
-var lambdaToTest = require('../functions/LambdaTest.js');
+/**
+   Create mock event and context objects
+**/
+var ctx                 = context();
+var testEvent           = { key1: 'name' }
+var testDynamoDBEvent   = createDynamoDBEvent();
 
-// creating context object
-var ctx = context();
-// text event object
-var testEvent = require('./data.json');
+/**
+   Promisify handlers and pass in mock context
+**/
+var LambdaTest         = promisify(require('../functions/LambdaTest.js').handler, ctx);
+var DynamoDBLambdaTest = promisify(require('../functions/DynamoDBLambdaTest.js').handler, ctx)
 
-var response = null;
-var error = null;
 
-describe('Test a simple Lambda function', function(){
-  it("Capture response", function(done) {
-    lambdaToTest.handler(testEvent, ctx);
-    //capture the response or errors
-    ctx.Promise
-      .then(function(resp) {
-        response = resp;
-        done();
-      })
-      .catch(function(err) {
-        error = err;
+describe('LambdaTest', function(){
+  it("LambdaTest: returns value when given event with key1 property", function(done) {
+    LambdaTest(testEvent)
+      .then(function(response) {
+        expect(response).to.equal('name');
         done();
       })
   })
+  it("LambdaTest: returns error when given empty event", function(done) {
+    LambdaTest({})
+      .then()
+      .catch(function(error){
+        expect(error).to.equal('no key1');
+        done();
+      })
+  })
+})
 
-  it("Check response", function(done) {
-    expect(response).to.equal('name');
-    done();
+describe('DynamoDB Triggered Lambda Test', function(){
+  it("DynamoDBTest: returns number of records in the event", function(done) {
+    // // stub and spy on console log
+    var consolelog = simple.mock(console, "log").returnWith("");
+
+    DynamoDBLambdaTest(testDynamoDBEvent)
+      .then(function(response) {
+        expect(response).to.equal(3); // three records in the event
+        expect(consolelog.callCount).to.equal(9); // console.log called three times per record.
+        done();
+      })
+
+    consolelog.reset();
+
   })
 })
