@@ -265,6 +265,32 @@ see the following output:
 
 ![aws-getnotes-updated-test-output](https://cloud.githubusercontent.com/assets/194400/12767169/aeca5404-c9ff-11e5-99f4-49abf2cd5551.png)
 
+### Step 4: Expose your Lambda Functions through AWS API Gateway
+
+There are *three* ways to make your Lambda functions accessible
+to the outside world using the AWS API Gateway;
+we are going to use the "*easy*" way.
+
+While viewing your `GetNotes` Lambda function, click on the
+***API endpoints*** tab and then click "**Add API Endpoint**"
+
+![aws-lambda-create-api-endpoint](https://cloud.githubusercontent.com/assets/194400/12767909/1feedb88-ca04-11e5-9e7f-0823681ef6e3.png)
+
+Then configure your endpoint with the followin:
+
++ API endpoint type: `API Gateway`
++ API name: `LambdaMicroservice`
++ Resource name: `/GetNotes`
++ Method: `GET`
++ Deployment stage: `prod`
++ Security: `Open` (*expect to see a warning message*)
+
+
+
+
+
+
+
 ### Step 5: Upload your "Client" App to S3
 
 #### 1. From your **AWS Console** Select ***S3***:
