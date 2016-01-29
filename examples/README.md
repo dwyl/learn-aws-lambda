@@ -297,8 +297,13 @@ your API endpoint for function `GetNotes` has been added at a *Specific* URL.
 In the case of our *example* the URL is:  
 `https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes`
 
+Try "curl-ing" the endpoint:
+```sh
+curl https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
+```
+You should see:
 
-
+![aws-lambda-curl-getnotes-endpoint-](https://cloud.githubusercontent.com/assets/194400/12768433/7e7e9d84-ca07-11e5-8648-d51ccf99d690.png)
 
 
 ### Step 5: Upload your "Client" App to S3
