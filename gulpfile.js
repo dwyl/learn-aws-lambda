@@ -107,7 +107,7 @@ gulp.task('upload', function() {
       };
 
       lambda.createFunction (params, function (err, data) {
-        if (err) console.error("CREATE ERRROR", err);
+        if (err) console.error("CREATE ERROR", err);
         else console.log('Function ' + functionName + ' has been created.');
       });
 
