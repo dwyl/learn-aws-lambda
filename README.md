@@ -68,10 +68,10 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Create a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
 * [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
-* [Testing Lambda Functions](#testing-lambda-functions)
-* [Deploying Lambda Functions using Gulp](#deploying-lambda-functions-using -gulp)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
+* [Testing Lambda Functions](#testing-lambda-functions)
 * [Upload Lambda Function to S3 and deploy to Lambda](#upload-your-lambda-function-to-an-s3-bucket-and-automatically-deploy-it-to-lambda-bash-script-example)
+* [Deploying Lambda Functions using Gulp](#deploying-lambda-functions-using-gulp)
 * [Versioning and Aliasing Lambda Functions](#versioning-and-aliasing-lambda-functions)
 
 ### 'HELLO WORLD!' Example (inline)
@@ -545,12 +545,6 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
   More info and an example can be found [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
 
-### Deploying Lambda Functions using Gulp
-
-  Gulp can be used to automate the packaging and deployment of Lambda functions.
-
-  More info on setting up gulp with aws-lambda can be found [here](https://medium.com/@AdamRNeary/a-gulp-workflow-for-amazon-lambda-61c2afd723b6#.4rfsrda09)
-
 ### Continuous Integration using Codeship
 
 After writing your tests, the next step is to set up Continuous Integration (CI) for your Lambda Functions so every time you push up your code to GitHub, the tests are run and the code is deployed to AWS if the tests pass. This example goes through how to set up CI using Codeship.
@@ -624,7 +618,8 @@ Some initial set up of your project repo is required. This involves having a lam
                   "lambda:UpdateFunctionCode",
                   "lambda:UpdateFunctionConfiguration",
                   "lambda:InvokeFunction",
-                  "lambda:GetFunction"
+                  "lambda:GetFunction",
+                  "lambda:CreateFunction",
               ],
               "Resource": [                    
                 "YOUR_LAMBDA_FUNCTION_ARN_HERE"
@@ -790,7 +785,7 @@ We will be writing our own bash script that will involve the use of some of the 
   Select the 'Custom Policy' and then press the 'Select' button:
   ![custom policy](https://cloud.githubusercontent.com/assets/12450298/12649566/095d28ba-c5d7-11e5-812d-97ea278cb285.png)
 
-  Create your custom policy. We've incuded the necessary effects, actions and resources to have complete access. Then click 'Apply Policy':
+  Create your custom policy. We've included the necessary effects, actions and resources to have complete access. Then click 'Apply Policy':
   ![create custom policy](https://cloud.githubusercontent.com/assets/12450298/12649574/0f1dbcd8-c5d7-11e5-864e-d9e04b80882f.png)
 
   Once your group has been created you'll need to add a user to it. Any user who is added to that group will have the same permissions. If you haven't created a user you can do that here:
@@ -845,7 +840,225 @@ We will be writing our own bash script that will involve the use of some of the 
 
   That's all! You should now be able to upload and deploy a Lambda function with a single bash script.
 
+### Deploying Lambda Functions using Gulp
 
+  [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/API.md) can be used to automate the zipping, deployment and testing of Lambda functions on AWS. The Codeship deployment script can then be reduced to a single command `gulp deploy`!
+
+  The syntax to create a new Gulp task is"
+
+  ```js
+  gulp.task('name of task', function() {
+    return  //gulp functions to run
+  })
+  ```
+
+  There many plugins for performing actions like retrieving, moving and zipping files. These actions are also chainable.
+
+  We will go through a simple gulp script with tasks for each of the steps involved.
+
+  1. Require in all the relevant modules and files. We'll be using the aws-sdk to deploy and invoke the lambda function. We also need to read in the `package.json` file in order to add the node modules to the zip file.
+
+    ```js
+    var AWS         = require('aws-sdk');
+    var gulp        = require('gulp');
+    var zip         = require('gulp-zip');
+    var install     = require('gulp-install');
+    var runSequence = require('run-sequence');
+    var fs          = require('fs');
+
+    var packageJson = require('./package.json');
+    ```
+
+  2. Declare Constants.
+
+    ```js
+    var region       = 'eu-west-1';  //AWS region
+    var functionName = 'LambdaTest';  
+    var outputName   = 'LambdaTest.zip'; //name to be given to output zip file
+
+    // the ARN of the execution role to be given to the lambda function - change this to a role from your account
+    var IAMRole = 'arn:aws:iam::685330956565:role/lambda_basic_execution';
+
+    // the paths of the files to be added to the zip folder
+    var filesToPack = ['./lambda-testing/functions/LambdaTest.js'];
+
+    ```
+
+    **Make sure the IAM role is changed to the ARN of a role from your AWS account and the region is set to the AWS region you want to deploy the Lambda function to!**
+
+  3. Create an archive folder and add the project files    
+
+    ```js
+    gulp.task('js', function () {
+      return gulp.src(filesToPack, {base: './lambda-testing/functions'})
+        .pipe(gulp.dest('dist/'));
+    });
+    ```
+
+    `gulp.src` takes an array of file paths as the first argument and an options object as the second. If you specify a base file path in the options only the folders/files after the base are copied i.e. in this case, only the LambdaTest.js file is copied into the archive folder (`dist`).  
+
+  4. Add the node modules to the archive folder
+
+    ```js
+    gulp.task('node-modules', function () {
+      return gulp.src('./package.json')
+        .pipe(gulp.dest('dist/'))
+        .pipe(install({production: true}));
+    });
+    ```
+
+    In this task, the `package.json` file is copied to the archive folder and the 'gulp-install' module is used to do an `npm install --production` of all the listed dependencies.
+
+  5. Zip up the archive folder and save it.
+
+    ```js
+    gulp.task('zip', function () {
+      return gulp.src(['dist/**', '!dist/package.json'])
+        .pipe(zip(outputName))
+        .pipe(gulp.dest('./'));
+    });
+    ```
+
+    All the files in the dist folder apart from the `package.json` file are zipped up using the 'gulp-zip' module and save in the root of the project folder.
+
+  6. Upload the zip file to AWS. If the function already exists, update it, otherwise create a new Function.
+
+    We can create an 'upload' task with gulp
+
+    ```js
+    gulp.task('upload', function() {})
+    ```
+
+    Inside the function we first have to do a bit of set up:
+
+    ```js
+    AWS.config.region = region; // this is set to eu-west-1 from the constants declared in step 1
+    var lambda = new AWS.Lambda();
+    var zipFile = './' + outputName; // the outputName has also been set in step 1
+    ```
+
+    First we need to check if the function already exists on AWS before deciding whether to create a function or update a function.
+
+    ```js
+    lambda.getFunction({ FunctionName: functionName }, function(err, data) {
+      if (err) createFunction();
+      else updateFunction();
+    });
+    ```
+
+    We also need a function to retrieve the saved zip file in order to pass it in as a parameter in our create function command.
+
+    ```js
+    function getZipFile (callback) {
+      fs.readFile(zipFile, function (err, data) {
+            if (err) console.log(err);
+            else {
+              callback(data);
+            }
+      });
+    }
+    ```
+    The `getZipFile` function takes a callback which gets called with the file data if the file is read successfully.
+
+    Using the aws-sdk we can then define a function to create a new Lambda function from this zip file.
+
+    ```js
+    function createFunction () {
+
+      getZipFile(function (data) {
+        var params = {
+          Code: {
+            ZipFile: data // buffer with the zip file data
+          },
+          FunctionName: functionName, // functionName was set in the constants in step 1
+          Handler: 'LambdaTest.handler',  // need to set this as the name of our lambda function file is LambdaTest.js
+          Role: IAMRole,  // IAMRole was set in the constants in step 1
+          Runtime: 'nodejs'
+        };
+
+        lambda.createFunction (params, function (err, data) {
+          if (err) console.error(err);
+          else console.log('Function ' + functionName + ' has been created.');
+        });
+      });
+
+    }
+    ```
+    Similarly we can also define `updateFunction`:
+
+    ```js
+    function updateFunction () {
+
+      getZipFile(function (data) {
+        var params = {
+          FunctionName: functionName,
+          ZipFile: data
+        };
+
+        lambda.updateFunctionCode(params, function(err, data) {
+          if (err) console.error(err);
+          else console.log('Function ' + functionName + ' has been updated.');
+        });
+      });
+    }
+    ```
+
+  7. Invoke the function with a test event to check the live version is working as expected.
+
+    We have to first get the function to make sure it exists and only invoke it if there isn't an error.
+
+    In the parameters for invoking the function, a JSON object can be specified as the 'Payload' and the 'InvocationType' can be specified as 'RequestResponse' if you want to get a response body.
+
+    ```js
+    gulp.task('test-invoke', function() {
+      var lambda = new AWS.Lambda();
+
+      var params = {
+        FunctionName: functionName,
+        InvocationType: 'RequestResponse',
+        LogType: 'Tail',
+        Payload: '{ "key1" : "name" }'
+      };
+
+      lambda.getFunction({ FunctionName: functionName }, function(err, data) {
+        if (err) console.log("Function" + functionName +  "not found", err);
+        else invokeFunction();
+      });
+
+      function invokeFunction() {
+        lambda.invoke(params, function(err, data) {
+          if (err) console.log(err, err.stack);
+          else console.log(data);
+        })
+      }
+    })
+    ```
+
+  8. Create a deployment task that runs all the above tasks in series in the correct order.
+
+    The `runSequence` module takes a comma separated list of gulp task names or a list of arrays with gulp tasks, and ends with a callback. The tasks are run in the order they are specified. To run two tasks in parallel specify them in the same array.
+
+    ```js
+    gulp.task('deploy', function (callback) {
+      return runSequence(
+        ['js', 'node-modules'],
+        ['zip'],
+        ['upload'],
+        ['test-invoke'],
+        callback
+      );
+    });
+    ```
+
+    **In the AWS console you can only view functions by region, so if you can't see the function after it has been created, check you're looking at the correct region (in the dropdown menu in the top right of the console)**
+
+    ![AWSregion](https://cloud.githubusercontent.com/assets/5912647/12677661/75d12846-c692-11e5-878d-990487be9910.png)
+
+  9. Add the deployment script to Codeship or your package.json
+
+    In Codeship just add `gulp-deploy` to your Deployment script and you're good to go!
+
+    **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
 
 ### Versioning and Aliasing Lambda Functions
 

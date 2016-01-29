@@ -1,9 +1,9 @@
-var AWS = require('aws-sdk');
-var gulp = require('gulp');
-var zip = require('gulp-zip');
-var install = require('gulp-install');
+var AWS         = require('aws-sdk');
+var gulp        = require('gulp');
+var zip         = require('gulp-zip');
+var install     = require('gulp-install');
 var runSequence = require('run-sequence');
-var fs = require('fs');
+var fs          = require('fs');
 
 var packageJson = require('./package.json');
 
@@ -36,6 +36,7 @@ gulp.task('node-mods', function () {
 /**
  * Create an archive based on the dest folder.
  */
+
 gulp.task('zip', function () {
   return gulp.src(['dist/**', '!dist/package.json'])
     .pipe(zip(outputName))
