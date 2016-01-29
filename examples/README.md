@@ -223,7 +223,7 @@ exports.handler = function(event, context) {
 };
 ```
 
-![aws-lambda-setnotes-function](https://cloud.githubusercontent.com/assets/194400/12766070/9cf3c02c-c9f9-11e5-8412-95c621158821.png)
+![aws-lambda-setnotes-function](https://cloud.githubusercontent.com/assets/194400/12767103/3b4ffa24-c9ff-11e5-91c3-94aaa554b8a5.png)
 
 
 Leave all other ("*Advanced*") settings as default and click "***Next***"
@@ -241,8 +241,29 @@ You should expect to see a message confirming your Lambda Function was created:
 
 #### 6. *Test* the `SaveNotes` Lambda Function
 
+Testing this Lambda function is *similar* to the previous one,
+the only difference is that you will be prompted to input some test event *data*.
 
+*Paste* the following:
 
+```js
+{
+  "Id": "1",
+  "notes": "These are my Lambda Notes!"
+}
+```
+And then click the "***Save and Test***" button:
+
+![aws-savenotes-test-data](https://cloud.githubusercontent.com/assets/194400/12766992/8ca30f84-c9fe-11e5-9fb2-4193e2264c90.png)
+
+You should expect to see the following:
+
+![aws-savenotes-test-output](https://cloud.githubusercontent.com/assets/194400/12767136/75d6dac8-c9ff-11e5-88fe-661fd920de5b.png)
+
+Now if you go back and *Test* the `GetNotes` function, you should expect to
+see the following output:
+
+![aws-getnotes-updated-test-output](https://cloud.githubusercontent.com/assets/194400/12767169/aeca5404-c9ff-11e5-99f4-49abf2cd5551.png)
 
 ### Step 5: Upload your "Client" App to S3
 
