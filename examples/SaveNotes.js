@@ -1,6 +1,7 @@
 var AWS = require('aws-sdk');
 var DOC = require('dynamodb-doc');
 var dynamo = new DOC.DynamoDB();
+
 exports.handler = function(event, context) {
   var item = {
     Id:"1",

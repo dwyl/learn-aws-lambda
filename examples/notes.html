@@ -9,16 +9,17 @@
   <style>body { margin-left: 2em;} #save { float: right;}</style>
 </head>
 <body>
-  <h1>Notes</h1>
-
+  <h1>Lambda Notes</h1>
+  <div id="form" style="display: none;">
   <textarea id="notes" name="textarea" rows="10" cols="60" placeholder="Make your notes here"></textarea>
   <br/>
   <button id="save" class="btn btn-block btn-lg btn-success">Save</button>
-
+</div>
 <!-- Litterally *Everyone* Knows jQuery ... see: http://trends.builtwith.com/javascript/jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
-  var API_KEY = 'x1TMsafJaB4z4mWpmhjck8XtU1yrryAy9aolqpvU';
+  // var API_KEY = 'x1TMsafJaB4z4mWpmhjck8XtU1yrryAy9aolqpvU';
+  var baseURL = 'https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/';
 
   $(document).ready(function() {
 
@@ -27,11 +28,13 @@
       $.ajax({
         type: "GET",
         // headers: { 'x-api-key' : API_KEY },
-        url: "https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes",
+        url: baseURL + 'GetNotes',
         dataType: "json",
         success: function(res, status, xhr) {
           console.log(' - - - - - - - - getNotes res:')
           console.log(res);
+          $('#notes').val(res.notes)
+          $('#form').fadeIn('slow');
           // $('#notes').val(res.notes);
         },
         error: function(xhr, err) {
@@ -46,23 +49,18 @@
     getNotes();
 
     function postNotes () {
-
-      $.ajax({
-        type: "POST",
-        headers: { 'x-api-key' : API_KEY },
-        url: "https://mhaggkho54.execute-api.eu-west-1.amazonaws.com/prod/",
-        data: {"notes" : $('#notes').val() },
-        dataType: "json",
-        success: function(res, status, xhr) {
-          console.log(' - - - - - - - - getNotes res:')
-          console.log(res);
-
-        },
-        error: function(xhr, err) {
-          console.log(xhr);
-          console.log(err);
-        }
-      });
+      var url = baseURL + 'SaveNotes';
+      console.log('>> POST url: ', url)
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.onreadystatechange = function() {
+        // un-comment these console.logs in for debugging
+        console.log( xhr.status, xhr.statusText )
+        console.log(xhr.responseText);
+        return;
+      };
+      var encoded = JSON.stringify({"notes":document.getElementById('notes').value });
+      xhr.send(encoded);
     }
 
     $( "#save" ).click(function() {

@@ -297,28 +297,78 @@ your API endpoint for function `GetNotes` has been added at a *Specific* URL.
 In the case of our *example* the URL is:  
 `https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes`
 
+#### Test Endpoint Using `cURL`
+
 Try "curl-ing" the endpoint:
 ```sh
-curl https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
+curl -v https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
 ```
 You should see:
 
 ![aws-lambda-curl-getnotes-endpoint-](https://cloud.githubusercontent.com/assets/194400/12768433/7e7e9d84-ca07-11e5-8648-d51ccf99d690.png)
 
+#### Repeat the previous steps for the `/SaveNotes` Lambda Function
 
 
++ API endpoint type: `API Gateway`
++ API name: `LambdaMicroservice`
++ Resource name: `/SaveNotes`
++ Method: `POST`
++ Deployment stage: `prod`
++ Security: `Open` (*expect to see a warning message*)
 
-### CORS?
+Once you have successfully created the endpoint, you can test it.
 
-If you attempt to access this endpoint via XMLHttpRequest ("*Ajax*") in the
+### `cURL` /SaveNotes endpoint with POST data
+
+```sh
+curl -v -H "Content-Type: application/json" -X POST -d '{"Id":"1","notes":"Updated Notes!"}' https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/SaveNotes
+```
+Running that command will return an *empty* Object as response.
+
+We can *confirm* that the notes were *updated* by re-running the `GetNotes`
+curl command:
+
+```sh
+curl https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes
+```
+Which should return:
+```sh
+{"Id":"1","notes":"Updated Notes!"}
+```
+
+### Step 5. Enable CORS for the Endpoints
+
+Right now your API endpoints are accessible via `cURL`
+or "*Postman*" but will be *blocked* by browser's "*Same Origin Policy*".
+
+If you attempt to access the API Gateway endpoint via XMLHttpRequest ("*Ajax*") in the
 browser you will see a `No 'Access-Control-Allow-Origin'` Error:
 
 ![aws-lambda-cors-error](https://cloud.githubusercontent.com/assets/194400/12768553/33c41e3a-ca08-11e5-96e4-1844bee177c0.png)
 
+> Official CORS Docs for Lambda:
 http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html#how-to-cors-console
 
 
-### Step 5: Upload your "Client" App to S3
+
+
+
+### Step 6. Deploy your API!
+
+
+
+
+
+### Step 7. Update the `baseURL` in `notes.html`
+
+curl -v -H "Content-Type: application/json" -X POST -d '{"Id":"1","notes":"Daminit!!!"}' https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/SaveNotes
+
+
+
+
+
+### Step 8: Upload your "Client" App to S3
 
 #### 1. From your **AWS Console** Select ***S3***:
 
