@@ -1091,7 +1091,7 @@ Here we will implement the previous example of uploading a Lambda function to S3
       }
     });
     ```
-    Next we need to add our new task to the list of tasks in our runSequence that we've already created. We want it to come after zipping but before our 'upload' task:
+2. Next we need to add our new task to the list of tasks in our runSequence that we've already created. We want it to come after zipping but before our 'upload' task:
 
     ```JavaScript
     gulp.task('deploy', function (callback) {
@@ -1106,7 +1106,7 @@ Here we will implement the previous example of uploading a Lambda function to S3
     });
     ```
 
-    In order for our Lambda function to be deployed from S3, we're going to have to adjust our 'createFunction' & 'updateFunction' Lambda methods that we created previously.
+3. In order for our Lambda function to be deployed from S3, we're going to have to adjust our 'createFunction' & 'updateFunction' Lambda methods that we created previously.
 
     We needed to change the 'Code' parameter from ```ZipFile: data``` to:
     ```JavaScript
@@ -1144,7 +1144,8 @@ Here we will implement the previous example of uploading a Lambda function to S3
         });
     }
     ```
-    Because we added some more AWS methods, we'll need to update our policy so that it supports this. Go to your IAM console and add the necessary methods. Here's ours:
+4. Because we added some more AWS methods, we'll need to update our policy so that it supports this. Go to your IAM console and add the necessary methods. Here's ours:
+
     ![policy](https://cloud.githubusercontent.com/assets/12450298/12679928/e3ee941a-c69e-11e5-9e39-4ea1dcf95fda.png)
     We included a 'getObject' method to check if the object had been uploaded already.
     ```JavaScript
@@ -1159,6 +1160,10 @@ Here we will implement the previous example of uploading a Lambda function to S3
       });
     }
     ```
+5. Your script should be good to go! Once you've run it go to your S3 and Lambda consoles to check if your Lambda function has been uploaded and deployed:
+
+  ![uploaded](https://cloud.githubusercontent.com/assets/12450298/12680122/0be2f64a-c6a0-11e5-91e4-c452adf3e766.png)
+  ![deployed](https://cloud.githubusercontent.com/assets/12450298/12680144/2241d87a-c6a0-11e5-8e15-2c5fc32e3470.png)
 
 
 ### Versioning and Aliasing Lambda Functions
