@@ -229,6 +229,14 @@ exports.handler = function(event, context) {
 Leave all other ("*Advanced*") settings as default and click "***Next***"
 
 
+![aws-lambda-click-next](https://cloud.githubusercontent.com/assets/194400/12766168/39d0019e-c9fa-11e5-881c-6067af0ed429.png)
+
+Review the function and click "***Create Function***":
+
+![aws-lambda-create-function](https://cloud.githubusercontent.com/assets/194400/12766675/c2dced88-c9fc-11e5-8014-012f9ab73846.png)
+
+
+
 
 ### Step 5: Upload your "Client" App to S3
 
