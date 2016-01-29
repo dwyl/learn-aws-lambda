@@ -12,8 +12,8 @@ var region       = 'eu-west-1';
 var functionName = 'LambdaTest';
 var outputName   = 'LambdaTest.zip';
 
-var IAMRole = 'arn:aws:iam::685330956565:role/lambda_basic_execution';
-var filesToPack = ['./lambda-testing/functions/LambdaTest.js'];
+var IAMRole      = 'arn:aws:iam::685330956565:role/lambda_basic_execution';
+var filesToPack  = ['./lambda-testing/functions/LambdaTest.js'];
 
 /**
  * Adds the project files to the archive folder.
@@ -41,6 +41,14 @@ gulp.task('zip', function () {
     .pipe(zip(outputName))
     .pipe(gulp.dest('./'));
 });
+
+/**
+* Upload deployment package to S3 (lambda function file + dependencies)
+*/
+// gulp.task('upload-to-s3', function () {
+//   var s3 = new AWS.S3();
+//
+// });
 
 /**
  *  update or create the lambda functon
