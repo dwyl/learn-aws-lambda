@@ -49,6 +49,7 @@ gulp.task('zip', function () {
 //   var s3 = new AWS.S3();
 //
 // });
+// codeship
 
 /**
  *  update or create the lambda functon
