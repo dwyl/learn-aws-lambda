@@ -235,6 +235,12 @@ Review the function and click "***Create Function***":
 
 ![aws-lambda-create-function](https://cloud.githubusercontent.com/assets/194400/12766675/c2dced88-c9fc-11e5-8014-012f9ab73846.png)
 
+You should expect to see a message confirming your Lambda Function was created:
+
+![aws-lambda-congrats](https://cloud.githubusercontent.com/assets/194400/12766831/966842ec-c9fd-11e5-9d13-51176a82ca02.png)
+
+#### 6. *Test* the `SaveNotes` Lambda Function
+
 
 
 
