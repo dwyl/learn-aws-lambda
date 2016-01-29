@@ -285,7 +285,17 @@ Then configure your endpoint with the followin:
 + Deployment stage: `prod`
 + Security: `Open` (*expect to see a warning message*)
 
+Once you have entered/selected the data, click "***Submit***":
 
+![aws-lambda-add-api-endpoint-getnotes](https://cloud.githubusercontent.com/assets/194400/12768075/2da8d0c0-ca05-11e5-8f0c-42c1f29b5bb4.png)
+
+You should see a *confirmation*  message informing you that
+your API endpoint for function `GetNotes` has been added at a *Specific* URL.
+
+![lambda-api-endpoint-exposed](https://cloud.githubusercontent.com/assets/194400/12768188/ffdc6b06-ca05-11e5-88c0-d82b4720cb68.png)
+
+In the case of our *example* the URL is:  
+`https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod/GetNotes`
 
 
 
