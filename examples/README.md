@@ -185,6 +185,48 @@ In the logs below your Lambda code, you should expect to see:
 }
 ```
 
+#### 5. Create Your *Second* Lambda Function to *Save* Notes to DynamoDB
+
+The steps are similar to the previous Lambda function you *just* created.
+Again, click "*Skip*" when asked if you want to use a "*boilerplate*" for
+your new function.
+
+Then enter the following details:
+
++ Name: `SaveNotes`
++ Description: `Save ("Put") Notes to DynamoDB Notes Table`
++ Runtime: `Node.js`
++ Handler: `index.handler`
++ Role: `APIGatewayLambdaDynamoDB`
+
+Then ***Paste*** the following code:
+
+```js
+var AWS = require('aws-sdk');
+var DOC = require('dynamodb-doc');
+var dynamo = new DOC.DynamoDB();
+exports.handler = function(event, context) {
+    var item = { Id:"1",
+              notes: event.notes // notes passed in as PUT request body
+            };
+
+    var cb = function(err, data) {
+        if(err) {
+            console.log(err);
+            context.fail('unable to update notes at this time');
+        } else {
+            console.log(data);
+                context.done(null, data);
+        }
+    };
+    dynamo.putItem({TableName:"Notes", Item:item}, cb);
+};
+```
+
+![aws-lambda-setnotes-function](https://cloud.githubusercontent.com/assets/194400/12766070/9cf3c02c-c9f9-11e5-8412-95c621158821.png)
+
+
+Leave all other ("*Advanced*") settings as default and click "***Next***"
 
 
 
