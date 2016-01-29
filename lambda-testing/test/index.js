@@ -31,10 +31,10 @@ describe('Test a simple Lambda function', function(){
         error = err;
         done();
       })
-  })
+  });
 
   it("Check response", function(done) {
     expect(response).to.equal('name');
     done();
   })
-})
+});
