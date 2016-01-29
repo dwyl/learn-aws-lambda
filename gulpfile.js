@@ -1,32 +1,25 @@
-var AWS         = require('aws-sdk');
-var gulp        = require('gulp');
-var zip         = require('gulp-zip');
-var install     = require('gulp-install');
+var AWS = require('aws-sdk');
+var gulp = require('gulp');
+var zip = require('gulp-zip');
+var install = require('gulp-install');
 var runSequence = require('run-sequence');
+var fs = require('fs');
+
 var packageJson = require('./package.json');
-var region      = 'eu-west-1';
-var fs          = require('fs');
-var testEvent   = require('./lambda-testing/tests/data.json') || {};
 
-// var functionName = packageJson.name + '-v' + getMajorVersion(packageJson.version);
-
-// function getMajorVersion (version) {
-//   return version.substring(0, version.indexOf('.'));
-// }
-// var outputName = packageJson.name + '.zip';
-
+//constants
+var region       = 'eu-west-1';
 var functionName = 'LambdaTest';
+var outputName   = 'LambdaTest.zip';
 
-var outputName = functionName + '.zip';
-
-var IAMRole = 'arn:aws:lambda:us-east-1:685330956565:role/lambda_basic_execution';
-var filesToPack = ['./lambda-testing/functions/LambdaTesting.js'];
+var IAMRole = 'arn:aws:iam::685330956565:role/lambda_basic_execution';
+var filesToPack = ['./lambda-testing/functions/LambdaTest.js'];
 
 /**
  * Adds the project files to the archive folder.
  */
 gulp.task('js', function () {
-  return gulp.src(filesToPack, {base: './'})
+  return gulp.src(filesToPack, {base: './lambda-testing/functions'})
     .pipe(gulp.dest('dist/'));
 });
 
@@ -44,7 +37,7 @@ gulp.task('node-mods', function () {
  * Create an archive based on the dest folder.
  */
 gulp.task('zip', function () {
-  return gulp.src(['dist/**/*'])
+  return gulp.src(['dist/**', '!dist/package.json'])
     .pipe(zip(outputName))
     .pipe(gulp.dest('./'));
 });
@@ -70,7 +63,7 @@ gulp.task('upload', function() {
           ZipFile: data
         },
         FunctionName: functionName,
-        Handler: 'index.handler',
+        Handler: 'LambdaTest.handler',
         Role: IAMRole,
         Runtime: 'nodejs'
       };
@@ -113,22 +106,25 @@ gulp.task('test-invoke', function() {
   var lambda = new AWS.Lambda();
 
   var params = {
-    FunctionName: 'STRING_VALUE', /* required */
-    InvocationType: 'Event',
+    FunctionName: functionName,
+    InvocationType: 'RequestResponse',
     LogType: 'Tail',
-    Payload: testEvent
+    Payload: '{ "key1" : "name" }'
   };
 
   lambda.getFunction({ FunctionName: functionName }, function(err, data) {
-    if (err) console.log("FUNCTION NOT FOUND");
+    if (err) console.log("FUNCTION NOT FOUND", err);
     else invokeFunction();
   });
 
-  lamda.invokeFunction(params, function(err, data) {
-    if (err) console.log(err, err.stack);
-    else console.log(data);
-  })
+  function invokeFunction() {
+    lambda.invoke(params, function(err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log(data);
+    })
+  }
 })
+
 
 gulp.task('deploy', function (callback) {
   return runSequence(
