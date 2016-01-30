@@ -1060,7 +1060,7 @@ We will be writing our own bash script that will involve the use of some of the 
 
     **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
 
-#### Upload to S3 and Deploy From There With Gulp
+#### Upload to S3 and Deploy to Lambda With Gulp
 Here we will implement the previous example of uploading a Lambda function to S3 and then deploying it from the bucket. Intead of using a bash script we can use Gulp. We can make some small adjustments to the Gulp example that we just created in order to deploy from S3. This is a continuation from that so please check it out before you look at this one:
 
 1. We're going to want to create a new Gulp task that will upload our zip file. We've called our task 'upload-to-s3' and we've included it just after our zip task.
