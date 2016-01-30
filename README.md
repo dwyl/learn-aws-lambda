@@ -1060,6 +1060,113 @@ We will be writing our own bash script that will involve the use of some of the 
 
     **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
 
+#### Upload to S3 and Deploy From There With Gulp
+Here we will implement the previous example of uploading a Lambda function to S3 and then deploying it from the bucket. Intead of using a bash script we can use Gulp. We can make some small adjustments to the Gulp example that we just created in order to deploy from S3. This is a continuation from that so please check it out before you look at this one:
+
+1. We're going to want to create a new Gulp task that will upload our zip file. We've called our task 'upload-to-s3' and we've included it just after our zip task.
+
+    The first thing we do is create a new S3 instance using the AWS SDK because we'll need to access some S3 methods. We then declare the path of the zip file we want to upload to be used as the S3 Key. We then created a 'getZipFile' function that will get the 'Body' for the parameters and also wrap around the 'putObject' method. We then write the S3 method which takes params _(an object with 'Bucket', 'Key' and 'Body' within it)_ and a callback that handles errors is called when a response from the service is returned.
+    ```JavaScript
+    gulp.task('upload-to-s3', function () {
+      var s3 = new AWS.S3();
+      var zipFilePath = './' + outputName;
+      getZipFile(function (data) {
+        var params = {
+          Bucket: 'lambda-function-container',
+          Key: zipFilePath,
+          Body: data
+        };
+        s3.putObject(params, function(err, data) {
+          if (err) console.log('Object upload unsuccessful!');
+          else console.log('Object ' + outputName + ' was uploaded!');
+        });
+      });
+      function getZipFile (next) {
+        fs.readFile(zipFilePath, function (err, data) {
+              if (err) console.log(err);
+              else {
+                next(data);
+              }
+        });
+      }
+    });
+    ```
+2. Next we need to add our new task to the list of tasks in our runSequence that we've already created. We want it to come after zipping but before our 'upload' task:
+
+    ```JavaScript
+    gulp.task('deploy', function (callback) {
+      return runSequence(
+        ['js', 'node-mods'],
+        ['zip'],
+        ['upload-to-s3'],
+        ['upload'],
+        ['test-invoke']
+        callback
+      );
+    });
+    ```
+
+3. In order for our Lambda function to be deployed from S3, we're going to have to adjust our 'createFunction' & 'updateFunction' Lambda methods that we created previously.
+
+    We needed to change the 'Code' parameter from ```ZipFile: data``` to:
+    ```JavaScript
+    function createFunction () {
+        var params = {
+          Code: {
+            S3Bucket: bucketName,
+            S3Key: zipFile
+          },
+          FunctionName: functionName,
+          Handler: 'LambdaTest.handler',
+          Role: IAMRole,
+          Runtime: 'nodejs'
+        };
+
+        lambda.createFunction (params, function (err, data) {
+          if (err) console.error("CREATE ERROR", err);
+          else console.log('Function ' + functionName + ' has been created.');
+        });
+
+    }
+    ```
+    We then needed to do the same with our 'updateFunction':
+    ```JavaScript
+    function updateFunction () {
+        var params = {
+          FunctionName: functionName,
+          S3Bucket: bucketName,
+          S3Key: zipFile
+        };
+
+        lambda.updateFunctionCode(params, function(err, data) {
+          if (err) console.error(err);
+          else console.log('Function ' + functionName + ' has been updated.');
+        });
+    }
+    ```
+4. Because we added some more AWS methods, we'll need to update our policy so that it supports this. Go to your IAM console and add the necessary methods. Here's ours:
+
+    ![policy](https://cloud.githubusercontent.com/assets/12450298/12679928/e3ee941a-c69e-11e5-9e39-4ea1dcf95fda.png)
+    We included a 'getObject' method to check if the object had been uploaded already.
+    ```JavaScript
+    function checkObject (fn) {
+      var params = {
+        Bucket: bucketName,
+        Key: zipFile
+      };
+      s3.getObject(params, function (err, data) {
+        if (err) console.log('BUCKET ERROR', err);
+        else fn();
+      });
+    }
+    ```
+5. Your script should be good to go! Once you've run it go to your S3 and Lambda consoles to check if your Lambda function has been uploaded and deployed:
+
+  ![uploaded](https://cloud.githubusercontent.com/assets/12450298/12680122/0be2f64a-c6a0-11e5-91e4-c452adf3e766.png)
+  
+  ![deployed](https://cloud.githubusercontent.com/assets/12450298/12680144/2241d87a-c6a0-11e5-8e15-2c5fc32e3470.png)
+
+
 ### Versioning and Aliasing Lambda Functions
 
 Multiple versions of a Lambda function can be running at the same time on AWS. Each one has a unique ARN. This allows different versions to be used in different stages of the development workflow e.g. development, beta, staging, production etc. Versions are immutable.
