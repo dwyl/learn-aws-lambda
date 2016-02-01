@@ -268,6 +268,140 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
 
 <br />
 
+### Create an API with GET/POST Methods that uses Lambda functions to retrieve/update records from a DynamoDB table
+
+1. First we'll need to create a table in DynamoDB. Go to the DynamoDB console and then click the 'Create Table' button. Give your table a name _(call it something relevant to the type of data your DynamoDB table will hold)_. We've called ours 'Users'. The 'Primary key' is made up of a 'Partition key' _(hash key)_ and an optional 'Sort key'. _(The partition key is used to partition data across hosts for scalability and availability)_:
+
+
+  ![create table](https://cloud.githubusercontent.com/assets/5912647/12557398/7114929c-c382-11e5-9c48-5c2bf15649ac.png)
+
+  ![table name](https://cloud.githubusercontent.com/assets/12450298/12714300/c9a4e152-c8cb-11e5-8c35-370393cef70e.png)
+
+  For 'Table settings' just check the 'Use default settings' checkbox and then click the blue 'Create' button:
+
+  ![table setup](https://cloud.githubusercontent.com/assets/12450298/12714466/db3a51d0-c8cc-11e5-882f-a3b09df203a4.png)
+
+2. Once the table is created, click on the 'Alarms' tab and then delete the basic alarms if they have been created:
+
+  ![alarms](https://cloud.githubusercontent.com/assets/12450298/12714608/9da7b6ea-c8cd-11e5-8b5c-f09f94d3e66a.png)
+
+  Then click on the 'Capacity' tab and then specify the 'Read' and 'Write' capacity units as 3 each and then click 'Save':
+
+  ![capacity](https://cloud.githubusercontent.com/assets/12450298/12714552/5fe19b1e-c8cd-11e5-919a-780c3bb06316.png)
+
+3. Next we will have to create a policy that allows your AWS functions to access Cloudwatch logs as well as the table you just created. Go to the IAM console, select 'Roles' and then 'Create new role'. We've called ours 'APIGatewayLambdaExecRole':
+
+  ![create role](https://cloud.githubusercontent.com/assets/12450298/12714889/11c25804-c8cf-11e5-8b32-e01f9673b8cf.png)
+
+  Select the 'AWS Lambda' role:
+
+  ![lambda role](https://cloud.githubusercontent.com/assets/12450298/12714963/651140f6-c8cf-11e5-87f5-f547605f757a.png)
+
+  And then click 'Next step' to skip the 'Attach Policy' section:
+
+  ![skip attach policy](https://cloud.githubusercontent.com/assets/12450298/12714986/8de42822-c8cf-11e5-9fc8-9aad5ed4b799.png)
+
+  In the 'Review' section click the blue 'Create Role' button to finish:
+
+  ![review role](https://cloud.githubusercontent.com/assets/12450298/12715013/bcb3bc1c-c8cf-11e5-8fce-37f32546d0b5.png)
+
+  Click on the title of the role you just created then click the down arrow for 'Inline Policies'. Follow the link to create an inline policy:
+
+  ![inline policies](https://cloud.githubusercontent.com/assets/12450298/12715091/385b678e-c8d0-11e5-8006-1d65487b933e.png)
+
+  Click on the 'Custom Policy' radio button and then click 'Select':
+
+  ![custom policy](https://cloud.githubusercontent.com/assets/12450298/12715150/857ad6e4-c8d0-11e5-9688-c6237746e742.png)
+
+  Give your custom policy a name _(we've called ours 'LogAndDynamoDBAccess')_ and then enter the following in the 'Policy Document' section. **Make sure your "Resource" at the bottom is set to the ARN of your table and the second "SID" is set to "_YourTableName_DynamoDBReadWrite"**. _(the ARN can be found in your 'Table details' by going to your DynamoDB console and clicking on your table.)_:
+
+  ```
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AccessCloudwatchLogs",
+            "Action": [
+                "logs:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Sid": "UsersDynamoDBReadWrite",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:eu-west-1:655240720487:table/Users"
+            ]
+        }
+    ]
+  }
+  ```
+
+4. Now we need to create the Lambda functions for adding and retrieving data to and from the table _(we'll be creating our functions in a text editor, zipping them up and then uploading them to Lambda. Follow the instructions in the previous 'HELLO WORLD!' .zip example on how to do this)_:
+
+  Create a new ```.js``` file that will contain our first Lambda function. This function will GET information from the DynamoDB table. We've called the file ```getUserInfo.js```. Here is the code:
+
+  ```JavaScript
+  var AWS = require('aws-sdk');
+  var DOC = require('dynamodb-doc');
+  var dynamo = new DOC.DynamoDB();
+
+  exports.handler = function(event, context) {
+    var callback = function(err, data) {
+      if (err) {
+        console.log('error on getUserInfo: ', err);
+        context.done('Unable to retrieve user information', null);
+      } else {
+        if(data.Item && data.Item.users) {
+          context.done(null, data.Item.users);
+        } else {
+          context.done(null, {});
+        }
+      }
+    };
+
+    dynamo.getItem({TableName:"Users", Key:{username:"default"}}, callback);
+  };
+  ```
+  Zip up the file and then upload it to Lambda.
+
+  ```zip -r getUserInfo.zip getUserInfo.js```
+
+  ![getuserinfo](https://cloud.githubusercontent.com/assets/12450298/12716616/ceb37a6a-c8d9-11e5-80be-54ebf8b9754d.png)
+
+  For the Role, select the one we created earlier. Then click 'Next' and then 'Create function':
+
+  ![role](https://cloud.githubusercontent.com/assets/12450298/12716846/6d4dcd82-c8db-11e5-9b01-3dccc12d8fa5.png)
+
+  Create a second ```.js``` file that will contain our second Lambda function. This function will UPDATE information in our DynamoDB table. We've called the file ```updateUserInfo.js```. Here is the code:
+
+  ```JavaScript
+  var AWS = require('aws-sdk');
+  var DOC = require('dynamodb-doc');
+  var dynamo = new DOC.DynamoDB();
+
+  exports.handler = fucntion(event, context) {
+    var item = { username:"default",
+                 users: event.users || {}
+            };
+
+    var callback = function(err, data) {
+      if (err) {
+        console.log
+      }
+    };
+  };
+  ```
+
+
+
 ### Triggering a Lambda function using an event from DynamoDB
 Lambda functions can be set up to be triggered by events from other AWS services like Dynamo DB tables. This can be used to build applications that react to data modifications.
 
@@ -1163,7 +1297,7 @@ Here we will implement the previous example of uploading a Lambda function to S3
 5. Your script should be good to go! Once you've run it go to your S3 and Lambda consoles to check if your Lambda function has been uploaded and deployed:
 
   ![uploaded](https://cloud.githubusercontent.com/assets/12450298/12680122/0be2f64a-c6a0-11e5-91e4-c452adf3e766.png)
-  
+
   ![deployed](https://cloud.githubusercontent.com/assets/12450298/12680144/2241d87a-c6a0-11e5-8e15-2c5fc32e3470.png)
 
 
