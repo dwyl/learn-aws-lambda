@@ -370,7 +370,7 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
     dynamo.getItem({TableName:"Users", Key:{username:"default"}}, callback);
   };
   ```
-  Zip up the file and then upload it to Lambda.
+  Zip up the file and then upload it to Lambda:
 
   ```zip -r getUserInfo.zip getUserInfo.js```
 
@@ -405,6 +405,10 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
     dynamo.putItem({TableName:"Users", Item:item}, callback);
   };
   ```
+  Again zip up the file and then upload it to Lambda:
+  ```zip -r updateUserInfo.zip updateUserInfo.js```
+
+  Follow the same steps as the previous function to create the second one, giving it the same role. 
 
 
 
