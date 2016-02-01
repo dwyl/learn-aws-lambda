@@ -12,8 +12,8 @@ var region       = 'eu-west-1';
 var functionName = 'LambdaTest';
 var outputName   = 'LambdaTest.zip';
 
-var IAMRole = 'arn:aws:iam::685330956565:role/lambda_basic_execution';
-var filesToPack = ['./lambda-testing/functions/LambdaTest.js'];
+var IAMRole      = 'arn:aws:iam::655240720487:role/lambda_basic_execution';
+var filesToPack  = ['./lambda-testing/functions/LambdaTest.js'];
 
 /**
  * Adds the project files to the archive folder.
@@ -44,24 +44,61 @@ gulp.task('zip', function () {
 });
 
 /**
+* Upload deployment package to S3 (lambda function file + dependencies)
+*/
+gulp.task('upload-to-s3', function () {
+  var s3 = new AWS.S3();
+  var zipFilePath = './' + outputName;
+  getZipFile(function (data) {
+    var params = {
+      Bucket: 'lambda-function-container',
+      Key: zipFilePath,
+      Body: data
+    };
+    s3.putObject(params, function(err, data) {
+      if (err) console.log('Object upload unsuccessful!');
+      else console.log('Object ' + outputName + ' was uploaded!');
+    });
+  });
+  function getZipFile (next) {
+    fs.readFile(zipFilePath, function (err, data) {
+          if (err) console.log(err);
+          else {
+            next(data);
+          }
+    });
+  }
+});
+
+/**
  *  update or create the lambda functon
  */
 gulp.task('upload', function() {
   AWS.config.region = region;
   var lambda = new AWS.Lambda();
+  var s3 = new AWS.S3();
   var zipFile = './' + outputName;
+  var bucketName = 'lambda-function-container';
 
   lambda.getFunction({ FunctionName: functionName }, function(err, data) {
-    if (err) createFunction();
-    else updateFunction();
+    if (err) checkObject(createFunction);
+    else checkObject(updateFunction);
   });
-
+  function checkObject (fn) {
+    var params = {
+      Bucket: bucketName,
+      Key: zipFile
+    };
+    s3.getObject(params, function (err, data) {
+      if (err) console.log('BUCKET ERROR', err);
+      else fn();
+    });
+  }
   function createFunction () {
-
-    getZipFile(function (data) {
       var params = {
         Code: {
-          ZipFile: data
+          S3Bucket: bucketName,
+          S3Key: zipFile
         },
         FunctionName: functionName,
         Handler: 'LambdaTest.handler',
@@ -70,35 +107,23 @@ gulp.task('upload', function() {
       };
 
       lambda.createFunction (params, function (err, data) {
-        if (err) console.error(err);
+        if (err) console.error("CREATE ERROR", err);
         else console.log('Function ' + functionName + ' has been created.');
       });
-    });
 
   }
 
   function updateFunction () {
-
-    getZipFile(function (data) {
       var params = {
         FunctionName: functionName,
-        ZipFile: data
+        S3Bucket: bucketName,
+        S3Key: zipFile
       };
 
       lambda.updateFunctionCode(params, function(err, data) {
         if (err) console.error(err);
         else console.log('Function ' + functionName + ' has been updated.');
       });
-    });
-  }
-
-  function getZipFile (next) {
-    fs.readFile(zipFile, function (err, data) {
-          if (err) console.log(err);
-          else {
-            next(data);
-          }
-    });
   }
 
 });
@@ -131,8 +156,9 @@ gulp.task('deploy', function (callback) {
   return runSequence(
     ['js', 'node-mods'],
     ['zip'],
+    ['upload-to-s3'],
     ['upload'],
-    ['test-invoke'],
+    ['test-invoke']
     callback
   );
 });
