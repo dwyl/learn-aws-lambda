@@ -394,9 +394,15 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
 
     var callback = function(err, data) {
       if (err) {
-        console.log
+        console.log(err);
+        context.fail('unable to update users at this time');
+      } else {
+        console.log(data);
+        context.done(null, data);
       }
     };
+
+    dynamo.putItem({TableName:"Users", Item:item}, callback);
   };
   ```
 
