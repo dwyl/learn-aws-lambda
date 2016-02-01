@@ -8,7 +8,6 @@ var lab                 = exports.lab = Lab.script();
 var describe            = lab.experiment;
 var expect              = Code.expect;
 var it                  = lab.test;
-var simple              = require('simple-mock');
 var createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
 
 /**
@@ -45,17 +44,10 @@ describe('LambdaTest', function(){
 
 describe('DynamoDB Triggered Lambda Test', function(){
   it("DynamoDBTest: returns number of records in the event", function(done) {
-    // // stub and spy on console log
-    var consolelog = simple.mock(console, "log").returnWith("");
-
     DynamoDBLambdaTest(testDynamoDBEvent)
       .then(function(response) {
         expect(response).to.equal(3); // three records in the event
-        expect(consolelog.callCount).to.equal(9); // console.log called three times per record.
         done();
       })
-
-    consolelog.reset();
-
   })
 })

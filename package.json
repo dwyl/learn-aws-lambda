@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "upload": "./lambda-upload-create.sh",
-    "test": "./node_modules/lab/bin/lab ./lambda-testing/test/index.js -m 0 -c -a code -r lcov -o lcov.info -r console -o stdout",
-    "ava:test": "ava ./lambda-testing/test/avatest.js",
+    "test": "./node_modules/lab/bin/lab ./lambda-testing/test/callbacks.test.js -m 0 -c -a code -r lcov -o lcov.info -r console -o stdout",
+    "ava:test": "ava ./lambda-testing/test/ava.test.js",
     "coverage": "./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
   },
   "repository": {

@@ -9,7 +9,7 @@ var createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
 **/
 
 var ctx               = context();
-var testEvent         = '{ "key1" : "name" }'
+var testEvent         = { key1: 'name' }
 var testDynamoDBEvent = createDynamoDBEvent();
 
 /**
@@ -23,8 +23,8 @@ test('LambdaTest', async t => {
   t.is( await LambdaTest(testEvent), 'name')
 })
 
-// test('DynamoDBLambdaTest', async t => {
-//   t.is( await DynamoDBLambdaTest(testDynamoDBEvent), '3')
-// })
+test('DynamoDBLambdaTest', async t => {
+  t.is( await DynamoDBLambdaTest(testDynamoDBEvent), 3)
+})
 
 console.log('Tests took', process.uptime(), "seconds to run");
