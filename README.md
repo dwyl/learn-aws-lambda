@@ -380,6 +380,8 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
 
   ![role](https://cloud.githubusercontent.com/assets/12450298/12716846/6d4dcd82-c8db-11e5-9b01-3dccc12d8fa5.png)
 
+  Click 'Test' to test the function. The results should return an empty objext ```{}```.
+
   Create a second ```.js``` file that will contain our second Lambda function. This function will UPDATE information in our DynamoDB table. We've called the file ```updateUserInfo.js```. Here is the code:
 
   ```JavaScript
@@ -387,7 +389,7 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
   var DOC = require('dynamodb-doc');
   var dynamo = new DOC.DynamoDB();
 
-  exports.handler = fucntion(event, context) {
+  exports.handler = function(event, context) {
     var item = { username:"default",
                  users: event.users || {}
             };
@@ -408,7 +410,51 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
   Again zip up the file and then upload it to Lambda:
   ```zip -r updateUserInfo.zip updateUserInfo.js```
 
-  Follow the same steps as the previous function to create the second one, giving it the same role. 
+  Follow the same steps as the previous function to create the second one, giving it the same role. They should both now appear in your functions section:
+
+  ![functions](https://cloud.githubusercontent.com/assets/12450298/12717241/7e1805bc-c8de-11e5-9c0c-9974a961cef7.png)
+
+  Test the function with a sample event relevant to your data. We created the following sample event:
+  ```
+  {
+    "users": [
+              {
+                "id": 1,
+                "name": "John Smith",
+                "location": "London"
+
+              }
+             ]
+  }
+  ```
+  You should see an empty obect just like the first function ```{}```.
+  Go back to the GetUserInfo function and then click 'Test' again. You should now see a returned result with the object in your sample event like this:
+
+  ```
+  [
+    {
+      "id": 1,
+      "location": "London",
+      "name": "John Smith"
+    }
+  ]
+  ```
+5. We're going to have to create one more Lambda function. It essentially does nothing but it is required by the OPTIONS method for CORS _(Cross Origin Resource Sharing which is a mechanism that allows restricted resources on a web page to be requested from )_. The function is as follows:
+
+  ```JavaScript
+    exports.handler = function(event, context) {
+      context.succeed('');
+    }
+  ```
+  Upload it just like the previous Lambda functions:
+
+  ![noop](https://cloud.githubusercontent.com/assets/12450298/12744540/be1404a0-c98c-11e5-8a7b-a0dfb74bc6f1.png)
+
+6. Next go to the Amazon API Gateway console and create a new API by clicking 'Create API'. Give it a name, we've called our API 'SecureUsers':
+
+  ![api gateway](https://cloud.githubusercontent.com/assets/12450298/12744749/cd30dd9a-c98d-11e5-97ce-217fe7adf74f.png)
+
+
 
 
 
