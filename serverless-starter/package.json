@@ -1,0 +1,18 @@
+{
+  "name": "serverless-starter",
+  "version": "0.1.0",
+  "description": "A Serverless Project and its Serverless Plugin dependencies.",
+  "author": {
+    "name": "me"
+  },
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/"
+  },
+  "dependencies": {
+    "serverless-optimizer-plugin": "^1.0.0"
+  },
+  "scripts": {}
+}
