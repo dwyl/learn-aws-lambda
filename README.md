@@ -1574,6 +1574,48 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
 
    ![api gateway](https://cloud.githubusercontent.com/assets/12450298/12744749/cd30dd9a-c98d-11e5-97ce-217fe7adf74f.png)
 
+   Click on the 'Create Resource' button and then give your resource a name. We've called ours 'Users':
+
+   ![create resource button](screen shot 2016-02-05 at 14 30 28](https://cloud.githubusercontent.com/assets/12450298/12849024/2d7ae61c-cc15-11e5-8e92-1cefb9cc7bee.png)
+
+   Click 'Create Resource' again to confirm it:
+
+   ![create resource config](https://cloud.githubusercontent.com/assets/12450298/12849056/5e7c7082-cc15-11e5-87cc-51d921af1bd7.png)
+
+7. On the left hand side, click the endpoint you just created. Ours is ```/users```. Then click 'Create Method' and set it to 'GET':
+
+  ![GET](https://cloud.githubusercontent.com/assets/12450298/12849342/1d95f8ca-cc17-11e5-894b-3896f83d3f2f.png)
+
+  Select the 'Lambda function' radio button and then assign it to the Get function we created earlier then press 'Save':
+
+  ![assign GET function](https://cloud.githubusercontent.com/assets/12450298/12849623/87651974-cc18-11e5-8e88-ebf4f2b3c39d.png)
+
+  Click 'Test'. You should see an empty object ```{}``` in the response body:
+
+  ![GET test](https://cloud.githubusercontent.com/assets/12450298/12849531/f5d2f0ee-cc17-11e5-8162-cde17cdab2dc.png)
+
+8. Repeat the previous step but instead of a 'GET', set the method to 'POST':
+
+  ![POST](https://cloud.githubusercontent.com/assets/12450298/12849673/cf1cf82c-cc18-11e5-8c8c-edac7bc0d39d.png)
+
+  Click 'Test' but this time in the request body, add in some details. We've added two users:
+
+  ```json
+    {"users": [ {"id": 1, "name": "Peter", "surname": "Smith"},
+             {"id": 2, "name": "John", "surname": "Walsh"}
+           ]
+    }
+  ```
+
+9. Go back to your 'GET' method and then click 'Test' again. You should now be able to see that the table has been updated with the details you tested your 'POST' request with.
+
+  ![GET test 2](https://cloud.githubusercontent.com/assets/12450298/12849902/ebfa3602-cc19-11e5-92f6-ffa21320fd20.png)
+
+
+All done! You can now set up Lambda functions that manipulate information in an AWS DynamoDB table that are invoked through the API Gateway!
+
+
+
 ## Further Reading
 
 + Walkthrough Custom Events:
