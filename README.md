@@ -64,7 +64,7 @@ something to S3 on each execution cycle you could rack up the bill!
 ## Create and Test Your Own AWS Lambda Function
 
 * [Create a Lambda function inline](#hello-world-example-inline)
-* [Create a Lambda function using a .zip folder](#hello-world-example-.zip)
+* [Create a Lambda function using a .zip folder](#hello-world-example-zip)
 * [Create a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
 * [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
