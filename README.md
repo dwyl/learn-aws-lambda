@@ -73,6 +73,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Upload Lambda Function to S3 and deploy to Lambda](#upload-your-lambda-function-to-an-s3-bucket-and-automatically-deploy-it-to-lambda-bash-script-example)
 * [Deploying Lambda Functions using Gulp](#deploying-lambda-functions-using-gulp)
 * [Versioning and Aliasing Lambda Functions](#versioning-and-aliasing-lambda-functions)
+* [Create an API with GET/POST Methods using Lambda functions to retrieve/update records from a DynamoDB table](#create-an-api-with-get/post-methods-that-uses-lambda-functions-to-retrieve/update-records-from-a-dynamodb-table)
 
 ### 'HELLO WORLD!' Example (inline)
 
