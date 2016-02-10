@@ -4,6 +4,7 @@
   "description": "\"How-to Guide for AWS Lambda, DynamoDB, SNS & API Gateway\"",
   "main": "index.js",
   "scripts": {
+    "upload": "./lambda-upload-create.sh",
     "test": "./node_modules/lab/bin/lab ./lambda-testing/test/index.js -m 0 -c -a code -r lcov -o lcov.info -r console -o stdout",
     "coverage": "./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
   },
@@ -26,6 +27,12 @@
   "devDependencies": {
     "aws-lambda-mock-context": "^1.1.0",
     "code": "^2.0.1",
-    "lab": "^7.2.0"
+    "lab": "^7.2.0",
+    "archiver": "^0.21.0",
+    "aws-sdk": "^2.2.29",
+    "gulp": "^3.9.0",
+    "gulp-install": "^0.6.0",
+    "gulp-zip": "^3.0.2",
+    "run-sequence": "^1.1.5"
   }
 }

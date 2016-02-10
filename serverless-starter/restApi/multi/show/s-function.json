@@ -1,0 +1,34 @@
+{
+  "name": "show",
+  "handler": "multi/show/handler.handler",
+  "runtime": "nodejs",
+  "timeout": 6,
+  "memorySize": 256,
+  "custom": {
+    "excludePatterns": [],
+    "envVars": [],
+    "optimize": true
+  },
+  "endpoints": [
+    {
+      "path": "multi/show/{id}",
+      "method": "GET",
+      "authorizationType": "none",
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${apiRequestTemplate}",
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {},
+          "responseTemplates": {},
+          "application/json": ""
+        }
+      }
+    }
+  ]
+}
