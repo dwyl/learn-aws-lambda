@@ -1,6 +1,6 @@
 {
   "name": "learn-aws-lambda",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "\"How-to Guide for AWS Lambda, DynamoDB, SNS & API Gateway\"",
   "main": "index.js",
   "scripts": {
