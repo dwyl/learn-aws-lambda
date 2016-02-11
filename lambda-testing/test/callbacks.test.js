@@ -11,7 +11,7 @@ var createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
 /**
    Handlers
 **/
-var LambdaTest         = require('../functions/LambdaTest.js').handler
+var LambdaTest         = require('../functions/lambdaTest.js').handler
 var DynamoDBLambdaTest = require('../functions/DynamoDBLambdaTest.js').handler
 
 /**
