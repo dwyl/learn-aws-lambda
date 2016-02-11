@@ -5,6 +5,11 @@
 Learn to use AWS Lambda to create scalable micro-services in less time
 and cost *far* less to run than "*traditional*" server-based apps.
 
+[![Codeship](https://img.shields.io/codeship/dc9ad800-a8a7-0133-6c3b-2a9c037ce78e/master.svg?style=flat-square)](https://github.com/codeship/documentation/issues/335)
+[![codecov.io](https://codecov.io/github/dwyl/learn-aws-lambda/coverage.svg?branch=master)](https://codecov.io/github/dwyl/learn-aws-lambda?branch=master)
+
+
+
 ## Contents
 
 * [What is Lambda?](#what-is-lambda)
@@ -947,13 +952,13 @@ We will be writing our own bash script that will involve the use of some of the 
   aws s3api put-object --bucket $BucketName --key "./$ZipFileName.zip" --body "./$ZipFileName.zip"
   ```
 
-  The deployment command 'create-function' takes five inputs, the function name which can be anything you like, the runtime which in our case is nodejs, the role which is the ARN for an IAM role you have used/created in the IAM console, the code which consists of the bucket name that you're deploying from and the key which is the file path of the zip and finally the description of your function which is optional.    
+  The deployment command 'create-function' takes five inputs, the function name which can be anything you like, the runtime which in our case is nodejs, the role which is the ARN for an IAM role you have used/created in the IAM console, the code which consists of the bucket name that you're deploying from and the key which is the file path of the zip and finally the description of your function which is optional.
   ```bash
   aws lambda create-function --function-name $FunctionName --runtime nodejs \
   --role $Role --handler "$ZipFileName.handler" \
   --code S3Bucket="$BucketName",S3Key="./$ZipFileName.zip" \
   --description $Description
-  ```   
+  ```
 8. Let's create the script that we'll run in our ```package.json``` that will trigger the ```.sh``` file we just created:
 
   ![script link](https://cloud.githubusercontent.com/assets/12450298/12648830/b1af1d4c-c5d3-11e5-91af-0d32691b7764.png)
@@ -1004,7 +1009,7 @@ We will be writing our own bash script that will involve the use of some of the 
   adding: upload.js (deflated 17%)
   {
       "ETag": "\"519e9cfc9a2ee33412ba813c82f33a56fa3\""
-    }   
+    }
   {
     "CodeSha256": "nbYYHfHKyYSlb09Dpw7vf7wB93F+9V8XEmaTBU=",
     "FunctionName": "Upload",
@@ -1077,7 +1082,7 @@ We will be writing our own bash script that will involve the use of some of the 
 
     **Make sure the IAM role is changed to the ARN of a role from your AWS account and the region is set to the AWS region you want to deploy the Lambda function to!**
 
-  3. Create an archive folder and add the project files    
+  3. Create an archive folder and add the project files
 
     ```js
     gulp.task('js', function () {
