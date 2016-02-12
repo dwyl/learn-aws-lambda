@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lambda Notes</title>
+  <link rel="shortcut icon" href="https://s3-eu-west-1.amazonaws.com/dwyl/favicon.ico">
+  <!-- CSS Styles are 100% Optional! -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.2.2/css/flat-ui.min.css">
+  <style>body { margin-left: 2em;} #save { float: right;} #notes {width: 95%; }</style>
+</head>
+<body>
+  <h1>Lambda Notes</h1>
+  <div id="form" style="display: none;">
+  <textarea id="notes" name="textarea" rows="10" cols="60" placeholder="Make your notes here"></textarea>
+  <br/>
+  <button id="save" class="btn btn-block btn-lg btn-success">Save</button>
+</div>
+<!-- Litterally *Everyone* Knows jQuery ... see: http://trends.builtwith.com/javascript/jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+  // var API_KEY = 'x1TMsafJaB4z4mWpmhjck8XtU1yrryAy9aolqpvU';
+  var baseURL = 'https://r09u5uw11g.execute-api.eu-west-1.amazonaws.com/prod';
+
+  $(document).ready(function() {
+
+    function getNotes () {
+
+      $.ajax({
+        type: "GET",
+        // headers: { 'x-api-key' : API_KEY },
+        url: baseURL + '/GetNotes',
+        dataType: "json",
+        success: function(res, status, xhr) {
+          console.log(' - - - - - - - - getNotes res:')
+          console.log(res);
+          $('#notes').val(res.notes)
+          $('#form').fadeIn('slow'); // this is why I'm using jQuery ... feel free to remove.
+        },
+        error: function(xhr, err) {
+          console.log(' - - - - - - - - xhr:')
+          console.log(xhr);
+          console.log(' - - - - - - - - error:')
+          console.log(err);
+        }
+      });
+    }
+    getNotes(); // initialise the notes on the page
+
+    // Ajax without JQuery if you prefer:
+    function postNotes () {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', baseURL + '/SaveNotes');
+      xhr.onreadystatechange = function() {
+        // un-comment these console.logs in for debugging
+        console.log( xhr.status, xhr.statusText )
+        console.log(xhr.responseText);
+        return;
+      };
+      var encoded = JSON.stringify({"notes":document.getElementById('notes').value });
+      xhr.send(encoded);
+    }
+
+    $( "#save" ).click(function() {
+      console.log('Save Button Clicked!');
+      postNotes();
+    });
+  });
+
+</script>
+
+</body>
+</html>
