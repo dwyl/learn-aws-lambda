@@ -1,4 +1,4 @@
 exports.handler = function(event, context) {
-  console.log('b executed');
-  context.succeed('great success');
+  console.log('Lambda B Received event:', JSON.stringify(event, null, 2));
+  context.succeed('Hello ' + event.name);
 };

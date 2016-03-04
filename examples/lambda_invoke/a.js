@@ -9,26 +9,12 @@ exports.handler = function(event, context) {
     LogType: 'Tail',
     Payload: '{ "name" : "Alex" }'
   };
-  console.log(params);
-  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
 
-  function invokeFunction() {
-    lambda.invoke(params, function(err, data) {
-      if (err) {
-        context.fail(err);
-      } else {
-        context.succeed('Lambda_B said '+ data.Payload);
-      }
-    })
-  }
-  // first check that the
-  lambda.getFunction({ FunctionName: params.FunctionName }, function(err, data) {
+  lambda.invoke(params, function(err, data) {
     if (err) {
-      context.fail(params.FunctionName + 'FUNCTION NOT FOUND', err);
+      context.fail(err);
     } else {
-      console.log(data);
-      console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
-      invokeFunction();
+      context.succeed('Lambda_B said '+ data.Payload);
     }
-  });
+  })
 };
