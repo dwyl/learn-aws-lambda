@@ -75,8 +75,6 @@ exports.handler = function(event, context) {
     LogType: 'Tail',
     Payload: '{ "name" : "Alex" }'
   };
-  console.log(params);
-  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
 
   function invokeFunction() {
     lambda.invoke(params, function(err, data) {
@@ -87,7 +85,7 @@ exports.handler = function(event, context) {
       }
     })
   }
-  // first check that the
+  // check that the Lambda Function you want to invoke exists before invoking
   lambda.getFunction({ FunctionName: params.FunctionName }, function(err, data) {
     if (err) {
       context.fail(params.FunctionName + 'FUNCTION NOT FOUND', err);
