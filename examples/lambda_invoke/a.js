@@ -3,30 +3,28 @@ AWS.config.region = 'eu-west-1';
 var lambda = new AWS.Lambda();
 
 exports.handler = function(event, context) {
-
   var params = {
-    FunctionName: 'GetNotes',
+    FunctionName: 'Lambda_B', // the lambda function we are going to invoke
     InvocationType: 'RequestResponse',
     LogType: 'Tail',
-    Payload: '{ "key1" : "name" }'
+    Payload: '{ "name" : "Alex" }'
   };
-  console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
   console.log(params);
   console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
 
   function invokeFunction() {
     lambda.invoke(params, function(err, data) {
-      if (err) { console.log(err, err.stack); }
-      else { console.log(data); }
-
-        console.log('a executed');
-        context.succeed(data);
+      if (err) {
+        context.fail(err);
+      } else {
+        context.succeed('Lambda_B said '+ data.Payload);
+      }
     })
   }
-
-  lambda.getFunction({ FunctionName: 'GetNotes' }, function(err, data) {
+  // first check that the
+  lambda.getFunction({ FunctionName: params.FunctionName }, function(err, data) {
     if (err) {
-      console.log("FUNCTION NOT FOUND", err);
+      context.fail(params.FunctionName + 'FUNCTION NOT FOUND', err);
     } else {
       console.log(data);
       console.log(' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -');
