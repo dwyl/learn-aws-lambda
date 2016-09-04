@@ -855,8 +855,8 @@ Some initial set up of your project repo is required. This involves having a lam
   npm install
   ```
 
-  AWS Lambda only supports Node 0.10 so the tests (which are written in es6) are piped through babel and can be run without Node 4.0.
-
+  AWS Lambda [*used to*](https://twitter.com/nelsonic/status/718377061090516992) only support Node 0.10 so our tests (which are written in es6) are piped through babel so that they could be run without Node 4.0. However this would be no longer required.
+  
   Under 'Configure Test Pipelines', in the 'Test Commands' tab add `npm test`.
 
   In the Deployment Tab, under 'Configure Deployment Pipeline' select the name of the branch on GitHub that you want to test.
