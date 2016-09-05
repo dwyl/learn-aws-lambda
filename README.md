@@ -172,7 +172,7 @@ by following one of the previous examples!)_
 3. Configure your API endpoint settings:
 
  - API endpoint type : API Gateway  
- - API name : whatever-you-like (we recommend having all lower case letters separated by a comma for readability)  
+ - API name : whatever-you-like (we recommend having all lower case letters separated by a dash for readability)  
  - Resource name: /YourLambdaFunctionName  
  - Method : GET/POST/PUT/DELETE...  
  - Deployment stage : Defines the *path through which an API deployment is accessible
