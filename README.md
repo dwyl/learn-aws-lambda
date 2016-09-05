@@ -172,7 +172,7 @@ by following one of the previous examples!)_
 3. Configure your API endpoint settings:
 
  - API endpoint type : API Gateway  
- - API name : WhateverYouLike  
+ - API name : whatever-you-like (we recommend having all lower case letters separated by a comma for readability)  
  - Resource name: /YourLambdaFunctionName  
  - Method : GET/POST/PUT/DELETE...  
  - Deployment stage : Defines the *path through which an API deployment is accessible
@@ -856,7 +856,7 @@ Some initial set up of your project repo is required. This involves having a lam
   ```
 
   AWS Lambda [*used to*](https://twitter.com/nelsonic/status/718377061090516992) only support Node 0.10 so our tests (which are written in es6) are piped through babel so that they could be run without Node 4.0. However this would be no longer required.
-  
+
   Under 'Configure Test Pipelines', in the 'Test Commands' tab add `npm test`.
 
   In the Deployment Tab, under 'Configure Deployment Pipeline' select the name of the branch on GitHub that you want to test.
