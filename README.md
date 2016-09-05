@@ -1385,6 +1385,31 @@ Here we will implement the previous example of uploading a Lambda function to S3
   ![deployed](https://cloud.githubusercontent.com/assets/12450298/12680144/2241d87a-c6a0-11e5-8e15-2c5fc32e3470.png)
 
 
+#### Deploy your Lambda functions using the deployment module we wrote - `npm dpl`
+
+We decided to write `dpl` to make deploying your Lambda functions _extremely_ easy. Here's how to implement it.
+
+1. `$ npm install dpl --save-dev`
+2. Configure your environment variables. You need `AWS_REGION` and `AWS_IAM_ROLE`  
+```
+export AWS_REGION=eu-west-1
+export AWS_IAM_ROLE=arn:aws:iam::123456789:role/LambdaExecRole
+```
+3. Add the _list_ of files to deploy to your `package.json`:
+```json
+"files_to_deploy": [ "package.json", "index.js", "lib/" ]
+```
+4. Add the deployment script to your `package.json`
+```json
+"scripts": {
+    "deploy": "dpl"
+}
+```
+5. Run the script
+```$ npm run deploy```
+
+
+
 ### Versioning and Aliasing Lambda Functions
 
 Multiple versions of a Lambda function can be running at the same time on AWS. Each one has a unique ARN. This allows different versions to be used in different stages of the development workflow e.g. development, beta, staging, production etc. Versions are immutable.
