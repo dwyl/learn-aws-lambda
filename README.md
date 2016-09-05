@@ -72,6 +72,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Create a Lambda function inline](#hello-world-example-inline)
 * [Create a Lambda function using a .zip folder](#hello-world-example-zip)
 * [Create a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
+* [Use the callback parameter with node v4.3](#the-callback-parameter)
 * [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
@@ -462,7 +463,27 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
   ![api gateway](https://cloud.githubusercontent.com/assets/12450298/12744749/cd30dd9a-c98d-11e5-97ce-217fe7adf74f.png)
 
 
+### The Callback Parameter
 
+It used to be the case that in order to terminate a lambda function you had to use `context.succeed`, `context.fail` or `context.error`. Now that AWS Lambda supports node v4.3, we are able to make use of the callback parameter which allows us to explicitly return information back to the caller.
+
+The callback takes two parameters taking the following form `callback(Error error, Object result);` Let's walk through a quick example of how to implement the callback.
+
+Let's write a simple Lambda function that returns some text after it's been invoked through an SNS topic:
+
+```
+exports.handler = function (event, context, callback) {
+  const message = JSON.parse(event.Records[0].Sns.Message);
+  const text = message.content.text;
+  // checking that the text exists
+  if (text && text.length) {
+    return callback(null, `Here is some text: ${text}`);
+  } else {
+    // if no text was found return this message
+    return callback(null, 'No text was found');
+  }
+}
+```
 
 
 ### Triggering a Lambda function using an event from DynamoDB
