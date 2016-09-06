@@ -34,8 +34,8 @@ module.exports = function(cb) {
       console.log('fail: ' + error);
       cb(error);
     },
+    /* Istanbul ignore next */
     done: function (result) {
-     /* Istanbul ignore next */
       cb(result);
     }
   }
