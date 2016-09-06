@@ -23,7 +23,7 @@
   })
 
 **/
-
+/* Istanbul ignore next */ 
 module.exports = function(cb) {
   return {
     succeed: function (result) {
@@ -35,7 +35,7 @@ module.exports = function(cb) {
       cb(error);
     },
     done: function (result) {
-      /* Istanbul ignore */ cb(result);
+      cb(result);
     }
   }
 };
