@@ -32,10 +32,6 @@ module.exports = function(cb) {
     fail: function (error) {
       console.log('fail: ' + error);
       cb(error);
-    },
-    /* Istanbul ignore if */ 
-    done: function (result) {
-      cb(result);
     }
   }
 };
