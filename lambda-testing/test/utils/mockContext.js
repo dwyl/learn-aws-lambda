@@ -23,7 +23,6 @@
   })
 
 **/
-
 module.exports = function(cb) {
   return {
     succeed: function (result) {
@@ -33,9 +32,6 @@ module.exports = function(cb) {
     fail: function (error) {
       console.log('fail: ' + error);
       cb(error);
-    },
-    done: function (result) {
-      cb(result);
     }
   }
 };

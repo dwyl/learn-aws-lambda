@@ -26,16 +26,16 @@
   },
   "homepage": "https://github.com/dwyl/learn-aws-lambda#readme",
   "devDependencies": {
-    "archiver": "^0.21.0",
-    "ava": "^0.11.0",
-    "aws-lambda-mock-context": "^1.1.0",
-    "aws-lambda-pify": "^1.1.0",
-    "aws-sdk": "^2.2.29",
-    "code": "^1.5.0",
-    "gulp": "^3.9.0",
+    "archiver": "^1.1.0",
+    "ava": "^0.16.0",
+    "aws-lambda-mock-context": "^3.0.0",
+    "aws-lambda-pify": "^3.0.0",
+    "aws-sdk": "^2.5.6",
+    "code": "^3.0.2",
+    "gulp": "^3.9.1",
     "gulp-install": "^0.6.0",
-    "gulp-zip": "^3.0.2",
-    "lab": "^6.0.0",
-    "run-sequence": "^1.1.5"
+    "gulp-zip": "^3.2.0",
+    "lab": "^11.0.1",
+    "run-sequence": "^1.2.2"
   }
 }

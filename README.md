@@ -7,7 +7,9 @@ and cost *far* less to run than "*traditional*" server-based apps.
 
 [![Codeship](https://img.shields.io/codeship/dc9ad800-a8a7-0133-6c3b-2a9c037ce78e/master.svg?style=flat-square)](https://github.com/codeship/documentation/issues/335)
 [![codecov.io](https://codecov.io/github/dwyl/learn-aws-lambda/coverage.svg?branch=master)](https://codecov.io/github/dwyl/learn-aws-lambda?branch=master)
-
+[![dependencies Status](https://david-dm.org/dwyl/learn-aws-lambda/status.svg)](https://david-dm.org/dwyl/learn-aws-lambda)
+[![devDependencies Status](https://david-dm.org/dwyl/learn-aws-lambda/dev-status.svg)](https://david-dm.org/dwyl/learn-aws-lambda?type=dev)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/learn-aws-lambda/issues)
 
 
 ## Contents
@@ -18,7 +20,8 @@ and cost *far* less to run than "*traditional*" server-based apps.
 * [Further Reading](#further-reading)
 * [Glossary](#glossary)
 * [Concerns](#concerns)
-* [Pricing](#pricing)
+* [Pricing](#lambda-pricing)
+* [FAQ](#faq)
 
 ## What is Lambda?
 
@@ -71,6 +74,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Create a Lambda function inline](#hello-world-example-inline)
 * [Create a Lambda function using a .zip folder](#hello-world-example-zip)
 * [Create a Lambda function using the AWS API Gateway](#hello-world-example-api-gateway)
+* [Use the callback parameter with node v4.3](#the-callback-parameter)
 * [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
@@ -172,7 +176,7 @@ by following one of the previous examples!)_
 3. Configure your API endpoint settings:
 
  - API endpoint type : API Gateway  
- - API name : WhateverYouLike  
+ - API name : whatever-you-like (we recommend having all lower case letters separated by a dash for readability)  
  - Resource name: /YourLambdaFunctionName  
  - Method : GET/POST/PUT/DELETE...  
  - Deployment stage : Defines the *path through which an API deployment is accessible
@@ -461,7 +465,27 @@ see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys
   ![api gateway](https://cloud.githubusercontent.com/assets/12450298/12744749/cd30dd9a-c98d-11e5-97ce-217fe7adf74f.png)
 
 
+### The Callback Parameter
 
+It used to be the case that in order to terminate a lambda function you had to use `context.succeed`, `context.fail` or `context.error`. Now that AWS Lambda supports node v4.3, we are able to make use of the callback parameter which allows us to explicitly return information back to the caller.
+
+The callback takes two parameters taking the following form `callback(Error error, Object result);` Let's walk through a quick example of how to implement the callback.
+
+Let's write a simple Lambda function that returns some text after it's been invoked through an SNS topic:
+
+```
+exports.handler = function (event, context, callback) {
+  const message = JSON.parse(event.Records[0].Sns.Message);
+  const text = message.content.text;
+  // checking that the text exists
+  if (text && text.length) {
+    return callback(null, `Here is some text: ${text}`);
+  } else {
+    // if no text was found return this message
+    return callback(null, 'No text was found');
+  }
+}
+```
 
 
 ### Triggering a Lambda function using an event from DynamoDB
@@ -856,7 +880,7 @@ Some initial set up of your project repo is required. This involves having a lam
   ```
 
   AWS Lambda [*used to*](https://twitter.com/nelsonic/status/718377061090516992) only support Node 0.10 so our tests (which are written in es6) are piped through babel so that they could be run without Node 4.0. However this would be no longer required.
-  
+
   Under 'Configure Test Pipelines', in the 'Test Commands' tab add `npm test`.
 
   In the Deployment Tab, under 'Configure Deployment Pipeline' select the name of the branch on GitHub that you want to test.
@@ -1363,6 +1387,31 @@ Here we will implement the previous example of uploading a Lambda function to S3
   ![deployed](https://cloud.githubusercontent.com/assets/12450298/12680144/2241d87a-c6a0-11e5-8e15-2c5fc32e3470.png)
 
 
+#### Deploy your Lambda functions using the deployment module we wrote - `npm dpl`
+
+We decided to write `dpl` to make deploying your Lambda functions _extremely_ easy. Here's how to implement it.
+
+1. `$ npm install dpl --save-dev`
+2. Configure your environment variables. You need `AWS_REGION` and `AWS_IAM_ROLE`  
+```
+export AWS_REGION=eu-west-1
+export AWS_IAM_ROLE=arn:aws:iam::123456789:role/LambdaExecRole
+```
+3. Add the _list_ of files to deploy to your `package.json`:
+```json
+"files_to_deploy": [ "package.json", "index.js", "lib/" ]
+```
+4. Add the deployment script to your `package.json`
+```json
+"scripts": {
+    "deploy": "dpl"
+}
+```
+5. Run the script
+```$ npm run deploy```
+
+
+
 ### Versioning and Aliasing Lambda Functions
 
 Multiple versions of a Lambda function can be running at the same time on AWS. Each one has a unique ARN. This allows different versions to be used in different stages of the development workflow e.g. development, beta, staging, production etc. Versions are immutable.
@@ -1866,3 +1915,36 @@ event notification or invoke call, including test invokes from the console.
 + You are charged $0.00001667 for every GB-second used
 
 > See: http://aws.amazon.com/lambda/pricing/ for more ***pricing examples***.
+
+## FAQ
+
+### How do you add an existing NPM module to a Lambda function?
+
+You might want to add some additional functionality to your Lambda functions in the form of an NPM module. Here are four easy steps you need to take in order to do so!
+
+1. Firstly let's create a new directory that will hold our Lambda function and all of its modules
+`$ mkdir lambdaNPM`
+`$ cd lambdaNPM`
+
+2. Install an NPM package of your choice. We'll use the `aws-sdk` as an example
+```
+$ npm install --prefix=~/lambdaNPM aws-sdk
+aws-sdk@2.0.27 node_modules/aws-sdk
+├── xmlbuilder@0.4.2
+└── xml2js@0.2.6 (sax@0.4.2)
+$ ls node_modules
+aws-sdk
+```
+
+3. Test that the module has been installed
+```
+$ echo 'var AWS = require("aws-sdk");console.log(AWS.EC2.apiVersions)'> test.js
+$ node test.js
+[ '2013-06-15*','2013-10-15*','2014-02-01*','2014-05-01*','2014-06-15*','2014-09-01*','2014-10-01' ]
+```
+Here we're just requiring the sdk and then piping the code into `test.js`. Then if we run `test.js` we should be able to see the EC2 API versions printed in the console. This is a trivial test just to prove that the module has been installed.
+
+4. Create your function
+Delete the `test.js` file and replace it with whatever you need to create your Lambda only this time you'll have access to the module that you installed.
+
+Credit to the [AWS Compute Blog Post](https://aws.amazon.com/blogs/compute/nodejs-packages-in-lambda/)
