@@ -197,7 +197,7 @@ by following one of the previous examples!)_
 
 5. Now let's test our endpoint to see if our Lambda function is being invoked. Go to the AWS console and then click on 'API Gateway' under Application Services. This will take you to a list of your APIs where you should see the one we just created. Click on the title.
 
- ![api list](https://cloud.githubusercontent.com/assets/12450298/12553323/b4e4db76-c36e-11e5-8de0-8dc8f42aace4.png)
+ ![api list](https://github.com/4thAce/learn-aws-lambda/blob/master/api-gateway-lambda-microservice.png?raw=true)
 
 6. Click on the METHOD beneath your Lambda function, in our case it's 'POST'. Then click on the word 'TEST' with the lightning bolt underneath it:
 
