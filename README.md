@@ -780,7 +780,7 @@ Some initial set up of your project repo is required. This involves having a lam
 
 **Follow along with this simple example to try out setting up the process yourself**
 
-1. Create a FREE account on [Codeship](www.codeship.com) and connect to your GitHub account
+1. Create a FREE account on [Codeship](https://codeship.com/) and connect to your GitHub account
 
 2. Fork this repo on Github!
 
