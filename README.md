@@ -1631,7 +1631,7 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
 
    Click on the 'Create Resource' button and then give your resource a name. We've called ours 'Users':
 
-   ![create resource button](screen shot 2016-02-05 at 14 30 28](https://cloud.githubusercontent.com/assets/12450298/12849024/2d7ae61c-cc15-11e5-8e92-1cefb9cc7bee.png)
+   ![create resource button](https://cloud.githubusercontent.com/assets/12450298/12849024/2d7ae61c-cc15-11e5-8e92-1cefb9cc7bee.png)
 
    Click 'Create Resource' again to confirm it:
 
