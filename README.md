@@ -1923,28 +1923,34 @@ event notification or invoke call, including test invokes from the console.
 You might want to add some additional functionality to your Lambda functions in the form of an NPM module. Here are four easy steps you need to take in order to do so!
 
 1. Firstly let's create a new directory that will hold our Lambda function and all of its modules
-`$ mkdir lambdaNPM`
-`$ cd lambdaNPM`
+ ```
+ $ mkdir lambdaNPM
+ $ cd lambdaNPM
+ ```
 
 2. Install an NPM package of your choice. We'll use the `aws-sdk` as an example
-```
-$ npm install --prefix=~/lambdaNPM aws-sdk
-aws-sdk@2.0.27 node_modules/aws-sdk
-├── xmlbuilder@0.4.2
-└── xml2js@0.2.6 (sax@0.4.2)
-$ ls node_modules
-aws-sdk
-```
+
+ ```
+ $ npm install --prefix=~/lambdaNPM aws-sdk
+ aws-sdk@2.0.27 node_modules/aws-sdk
+ ├── xmlbuilder@0.4.2
+ └── xml2js@0.2.6 (sax@0.4.2)
+ $ ls node_modules
+ aws-sdk
+ ```
 
 3. Test that the module has been installed
-```
-$ echo 'var AWS = require("aws-sdk");console.log(AWS.EC2.apiVersions)'> test.js
-$ node test.js
-[ '2013-06-15*','2013-10-15*','2014-02-01*','2014-05-01*','2014-06-15*','2014-09-01*','2014-10-01' ]
-```
-Here we're just requiring the sdk and then piping the code into `test.js`. Then if we run `test.js` we should be able to see the EC2 API versions printed in the console. This is a trivial test just to prove that the module has been installed.
+
+ ```
+ $ echo 'var AWS = require("aws-sdk");console.log(AWS.EC2.apiVersions)'> test.js
+ $ node test.js
+ [ '2013-06-15*','2013-10-15*','2014-02-01*','2014-05-01*','2014-06-15*','2014-09-01*','2014-10-01' ]
+ ```
+
+ Here we're just requiring the sdk and then piping the code into `test.js`. Then if we run `test.js` we should be able to see the EC2 API versions printed in the console. This is a trivial test just to prove that the module has been installed.
 
 4. Create your function
-Delete the `test.js` file and replace it with whatever you need to create your Lambda only this time you'll have access to the module that you installed.
+
+ At this point we’ve successfully created a directory containing one or more npm-installed packages and verified that the packages can load and execute by running a test script locally. You can now delete the test script and continue by creating a real Lambda function that takes advantage of the modules that you’ve just installed, testing it the same way. To deploy the resulting function and modules to Lambda, just zip up the entire lambdaTestFunction directory and use Lambda’s createFunction API, CLI, or the console UI to deploy it.
 
 Credit to the [AWS Compute Blog Post](https://aws.amazon.com/blogs/compute/nodejs-packages-in-lambda/)
