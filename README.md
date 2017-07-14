@@ -77,7 +77,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Use the callback parameter with node v4.3](#the-callback-parameter)
 * [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
-* [Trigger a Lambda function when an email comes in to the AWS Simple Web Service](#trigger-a-lambda-function-using-simple-web-service)
+* [Trigger a Lambda function when an email comes in to the AWS Simple Web Service](#trigger-a-lambda-function-when-an-email-is-received-by-amazon-simple-email-service)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
 * [Testing Lambda Functions](#testing-lambda-functions)
 * [Upload Lambda Function to S3 and deploy to Lambda](#upload-your-lambda-function-to-an-s3-bucket-and-automatically-deploy-it-to-lambda-bash-script-example)
@@ -766,7 +766,7 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
   More info and an example can be found [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
 
-### Trigger a Lambda function using the simple notification system
+### Trigger a Lambda function when an email is received by Amazon Simple Email Service
 
 Start by creating a blank AWS Lambda function that will be called whenever a new email comes in.
 
