@@ -2,7 +2,7 @@ var AWS = require('aws-sdk');
 var DOC = require('dynamodb-doc');
 var dynamo = new DOC.DynamoDB();
 
-exports.handler = fucntion(event, context) {
+exports.handler = function(event, context) {
   var item = { username:"default",
                users: event.users || {}
           };
