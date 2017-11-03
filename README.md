@@ -853,22 +853,25 @@ Some initial set up of your project repo is required. This involves having a lam
 
 6. Add the AWS User Environment variables to your Codeship project. In the Environment tab in Codeship, add your 'AWS_ACCESS_KEY', 'AWS_SECRET_ACCESS_KEY' and 'AWS_DEFAULT_REGION' (usually 'us-east-1'). This is needed in order to authorise the Codeship to execute commands from the aws cli.
 
-  ![Environment variables](https://cloud.githubusercontent.com/assets/5912647/12619073/63294abe-c50e-11e5-9f91-2452078968ef.png)
+  ![Environment variables](https://user-images.githubusercontent.com/5222954/32383573-bdf7ad6e-c08e-11e7-938a-0ab81f78e830.png)
 
 7. Set up Test and Deployment Scripts for your Codeship project
 
   Click the the Test tab in your project settings.
 
-  ![Test script](https://cloud.githubusercontent.com/assets/5912647/12619098/83e071a6-c50e-11e5-8d28-45c8afc19f2e.png)
+  ![Setup Commands](https://user-images.githubusercontent.com/5222954/32383449-63517944-c08e-11e7-860f-aa7740806db3.png)
 
   You should already see the follow default code:
 
   ```bash
-  # By default we use the Node.js version set in your package.json or the latest
-  # version from the 0.10 release
+  # We support all major Node.js versions. Please see our documentation for a full list.
+  # https://documentation.codeship.com/basic/languages-frameworks/nodejs/
   #
-  # You can use nvm to install any Node.js (or io.js) version you require.
-  # nvm install 4.0
+  # By default we use the Node.js version specified in your package.json file and fall
+  # back to the latest version from the 0.10 release branch.
+  #
+  # You can use nvm to install any Node.js version you require
+  #nvm install 0.10
   nvm install 0.10
   ```
 
@@ -885,15 +888,15 @@ Some initial set up of your project repo is required. This involves having a lam
 
   In the Deployment Tab, under 'Configure Deployment Pipeline' select the name of the branch on GitHub that you want to test.
 
-  ![Deployment pipeline](https://cloud.githubusercontent.com/assets/5912647/12619166/d12aeb30-c50e-11e5-8d36-c3e1f60baef3.png)
+  ![Deployment pipeline](https://user-images.githubusercontent.com/5222954/32383445-63162b50-c08e-11e7-8bed-02445e4dcce8.png)
 
    Then choose the 'Custom Script' option.
 
-   ![Custom script](https://cloud.githubusercontent.com/assets/5912647/12619195/f92df8b6-c50e-11e5-8c82-fc9c55021a22.png)
+   ![Custom script](https://user-images.githubusercontent.com/5222954/32383447-63366f32-c08e-11e7-9d96-df1cfde52633.png)
 
    This next page looks like this. We will add our own script to the deployment commands.
 
-   ![depoyment script](https://cloud.githubusercontent.com/assets/5912647/12619261/2ba08fca-c50f-11e5-9c2c-db510e977e65.png)
+   ![depoyment script](https://user-images.githubusercontent.com/5222954/32383446-632751aa-c08e-11e7-8f40-297281156e74.png)
 
   We're going to first zip up the lambda function, then use the AWS cli to update the version on AWS, and finally invoke it with a test event. Add in the following code to the deployment commands:
 
@@ -908,7 +911,7 @@ Some initial set up of your project repo is required. This involves having a lam
 
 8. Make a change and push up to GitHub! Try modifying the LamdaTest.js file and/or the data.json file, commit the change and push the code up to GitHub. This should trigger Codeship.  View the build log to make sure the build is successful and the test passes.
 
-  ![Codeship build log](https://cloud.githubusercontent.com/assets/5912647/12619374/9df7bbb6-c50f-11e5-96de-2b7e1aee366f.png)
+  ![Codeship build log](https://user-images.githubusercontent.com/5222954/32383448-634406ce-c08e-11e7-9697-5a66ceed3c5c.png)
 
   Also have a look at the monitoring tab in your Lambda function console. You should see a spike where the function was invoked by Codeship.
 
@@ -916,7 +919,7 @@ Some initial set up of your project repo is required. This involves having a lam
 
 For more information have at the Codeship documentation:
 * [Integrating AWS Lambda with Codeship](https://blog.codeship.com/integrating-aws-lambda-with-codeship/)
-* [Deployment to AWS Lambda](https://codeship.com/documentation/continuous-deployment/deployment-to-aws-lambda/)
+* [Deployment to AWS Lambda](https://documentation.codeship.com/basic/continuous-deployment/deployment-to-aws-lambda/)
 
 ### Upload Your Lambda Function to an S3 Bucket and Automatically Deploy it to Lambda (bash script example)
 In this example will build a script that will execute the neccessary steps to upload a Lambda function to S3 where it can be stored and then automatically deploy it to Lambda.
