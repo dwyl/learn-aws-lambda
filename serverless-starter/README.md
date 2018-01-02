@@ -1,8 +1,8 @@
-#Serverless Starter
+# Serverless Starter
 
 A boilerplate for new Serverless Projects.  This is full of useful examples and we add more on a regular basis.
 
-##Install
+## Install
 
 Make sure you have the [Serverless Framework](http://www.serverless.com) installed and you're using Node V4
 ```
@@ -22,7 +22,7 @@ Deploy your functions and endpoints:
 serverless dash deploy
 ```
 
-##Includes
+## Includes
 
 This project contains the following:
 
