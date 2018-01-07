@@ -26,7 +26,7 @@ and cost *far* less to run than "*traditional*" server-based apps.
 ## What is Lambda?
 
 Amazon Web Services (AWS) Lambda lets you run JavaScript (Node.js), Java & Python
-scripts/apps in Amazon's (virtually) infinately-scalable cloud environment
+scripts/apps in Amazon's (virtually) infinitely-scalable cloud environment
 without having provision VM instances or other "*orquestration*";
 Everything is dynamically auto-scaled so if you have 1 user or 1 billion
 you pay for *usage*.
