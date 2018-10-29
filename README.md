@@ -1093,7 +1093,7 @@ We will be writing our own bash script that will involve the use of some of the 
 
 1. Require in all the relevant modules and files. We'll be using the aws-sdk to deploy and invoke the lambda function. We also need to read in the `package.json` file in order to add the node modules to the zip file.
 
-  ```js
+    ```js
     var AWS         = require('aws-sdk');
     var gulp        = require('gulp');
     var zip         = require('gulp-zip');
@@ -1102,7 +1102,7 @@ We will be writing our own bash script that will involve the use of some of the 
     var fs          = require('fs');
 
     var packageJson = require('./package.json');
-  ```
+    ```
 
  2. Declare Constants.
     ```js
