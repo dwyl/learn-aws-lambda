@@ -27,7 +27,7 @@ and cost *far* less to run than "*traditional*" server-based apps.
 
 Amazon Web Services (AWS) Lambda lets you run JavaScript (Node.js), Java & Python
 scripts/apps in Amazon's (virtually) infinitely-scalable cloud environment
-without having provision VM instances or other "*orquestration*";
+without having provision VM instances or other "*orchestration*";
 Everything is dynamically auto-scaled so if you have 1 user or 1 billion
 you pay for *usage*.
 
@@ -92,34 +92,46 @@ Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you st
 
 2. Sign in to the AWS management console, select your region in the top right hand corner and then open the AWS Lambda console.
 
-3. Choose 'Get Started Now' and then select the 'hello-world' blueprint from the list of option tiles.
+3. On the 'Learn to Build' section click on 'see all' and then select 'Run a Serverless "Hello World!"'.
 
-4. On the 'Configure Function' page, edit the existing inline code to create your function. AWS Lambda expects us to export an object which has a property called handler. Here's our example:
+4. Select that you want to make a blueprint and search for the 'hello-world' example.
 
- ![Configure Function](https://cloud.githubusercontent.com/assets/12450298/12529907/061d8e28-c1c3-11e5-9509-24cd1548417d.png)  
+5. Once you have found this follow the instructions given to set up your function.
+This will include setting a role (a role is an AWS identity with permission
+policies that determine what the identity can or cannot do in AWS. For more
+information on roles click **[here](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)**).
+Like the tutorial suggests we chose the 'lambda_basic_execution' role because our function is extremely simple.
+
+6. AWS Lambda expects us to export an object which has a property called handler.
+You can specify the handler and the runtime you wish to give it in the 'Function
+code' section:
+
+  ![Handler and Runtime](https://user-images.githubusercontent.com/16775804/47663592-45a74400-db95-11e8-9a11-ab095749afd6.png)
+
+6. Now your function has been created you have the chance to edit its code. Under
+the 'Function code' title, edit the existing inline code. Here's our example:
+
+ ![Configure Function](https://user-images.githubusercontent.com/16775804/47664750-a0da3600-db97-11e8-8acf-0408a4011ecc.png)  
 
  The value of that property is a function that takes two arguments, event and context. The event will be created by us and the context consists of the runtime information which will be supplied by AWS lambda. They both take the form of JSON objects.
 
-5. Beneath the function you then have to specify the handler and the role you wish to give it. (A role is an AWS identity with permission policies that determine what the identity can or cannot do in AWS. For more information on roles click **[here](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)**). We chose the 'lambda_basic_execution' role because our function is extremely simple:
-
-  ![Handler and Roles](https://cloud.githubusercontent.com/assets/12450298/12529957/dace98fa-c1c4-11e5-9df3-a6709cddcdab.png)
-
-  In the 'Advanced Settings' section you can specify the amount of memory that each AWS Lambda instance should be allocated.
+7. In the 'Basic Settings' section you can specify the amount of memory that each AWS Lambda instance should be allocated.
   **_Note: by increasing the memory, this also increases the cost of your function runtime!_**
 
-6. Click 'next' to review your code and then if you are happy click 'create function'. You'll then be taken to your AWS Lambda functions where you should see the one you just created.
+![Memory allocation](https://user-images.githubusercontent.com/16775804/47665920-370f5b80-db9a-11e8-9788-748cd0f00a17.png)
 
-  ![Test](https://cloud.githubusercontent.com/assets/12450298/12530052/a8e296b2-c1c8-11e5-9ef1-4d19367a4980.png)
+8. We can test our function by clicking on the 'Test' button in the top right.
+Here we will be able to specify the payload of the event that gets passed to our
+function. There will be an existing event template but we changed the key value
+pairs as shown below:
 
-7. We can then test our function by clicking on the blue 'Test' button in the top left. Here we will be able to specify the payload of the event that gets passed to our function. There will be an existing event template but we changed the key value pairs as shown below:
+  ![event object](https://user-images.githubusercontent.com/16775804/47663969-f9a8cf00-db95-11e8-8d71-c982b388a909.png)
 
-  ![event object](https://cloud.githubusercontent.com/assets/12450298/12530077/e1a703d8-c1c9-11e5-97f8-00cdf390bcdc.png)
+  Click the 'Test' button to test your function and then click to expand the results.
 
-  Click the 'Save and test' button to test your function.
+9. Below your function you should now be able to see the results from your test. Here are the results from our example:
 
-8. Below your function you should now be able to see the results from your test. Here are the results from our example:
-
-  ![test results](https://cloud.githubusercontent.com/assets/12450298/12530135/1a62941a-c1cc-11e5-87d8-d8077bd599ce.png)
+  ![test results](https://user-images.githubusercontent.com/16775804/47664134-560bee80-db96-11e8-8551-a2ebd6963814.png)
 
   You can reconfigure your test at any time. Click on the 'Actions' dropdown beside the 'Test' button and select the 'Configure test event' option.
 
