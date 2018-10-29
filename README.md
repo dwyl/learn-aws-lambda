@@ -535,12 +535,12 @@ You now have a DynamoDB table with streams enabled.
 
 4. In the 'Configure Function' section, give your lambda function a name in the 'Name' field. e.g. 'DynamoDBLambda'. The 'Runtime' should be set to 'Node.js' and the 'Description' should already have been filled in.
 
-There will already be some default code in the 'Lambda Function Code' section. You can leave the code as it is. It is just logging the data from each data row in the event from DynamoDB along with the action e.g. 'INSERT', 'MODIFY'. We will see the output of these logs in a later step.
+    There will already be some default code in the 'Lambda Function Code' section. You can leave the code as it is. It is just logging the data from each data row in the event from DynamoDB along with the action e.g. 'INSERT', 'MODIFY'. We will see the output of these logs in a later step.
 
-```js
-console.log('Loading function');
+    ```js
+    console.log('Loading function');
 
-exports.handler = function(event, context) {
+    exports.handler = function(event, context) {
     //console.log('Received event:', JSON.stringify(event, null, 2));
     event.Records.forEach(function(record) {
         console.log(record.eventID);
@@ -548,34 +548,34 @@ exports.handler = function(event, context) {
         console.log('DynamoDB Record: %j', record.dynamodb);
     });
     context.succeed("Successfully processed " + event.Records.length + " records.");
-};
-```
+    };
+    ```
 
 5. In the 'Lambda function handler and role' section, select the 'DynamoDB event stream role' option. This will open a new window to create an Identity and Access Management Role (IAM). Click the blue 'Allow' button to enable the creation of the role. This is necessary to enable permission for DynamoDB to invoke your Lambda function.
 
- ![role](https://cloud.githubusercontent.com/assets/5912647/12557588/75019368-c383-11e5-9824-f6c6f721f03d.png)
+    ![role](https://cloud.githubusercontent.com/assets/5912647/12557588/75019368-c383-11e5-9824-f6c6f721f03d.png)
 
- ![role name](https://cloud.githubusercontent.com/assets/5912647/12557604/8f24704e-c383-11e5-90f5-2dc15723c2c5.png)
+    ![role name](https://cloud.githubusercontent.com/assets/5912647/12557604/8f24704e-c383-11e5-90f5-2dc15723c2c5.png)
 
 6. Then click 'Next'
 
 7. On the final Review page, in the 'Event Sources' section choose the 'Enable now' option. Then Click 'Create Function'
 
- ![enable now option](https://cloud.githubusercontent.com/assets/5912647/12557637/ba8ae330-c383-11e5-8fde-f6912a681f51.png)
+    ![enable now option](https://cloud.githubusercontent.com/assets/5912647/12557637/ba8ae330-c383-11e5-8fde-f6912a681f51.png)
 
 #### Create Data in the DynamoDB table.
 
 1. Go back to the DynamoDB dashboard and select the 'Tables' tab > 'LambdaTest'. Click 'Create Item'. This will open a pop up window. Enter an 'Id' for your data point. This can be any string you want. Then click 'Save'.
 
- ![create data button](https://cloud.githubusercontent.com/assets/5912647/12563887/4cd15e34-c3a4-11e5-8b65-c16a909c3637.png)
+    ![create data button](https://cloud.githubusercontent.com/assets/5912647/12563887/4cd15e34-c3a4-11e5-8b65-c16a909c3637.png)
 
- ![create data save](https://cloud.githubusercontent.com/assets/5912647/12563894/56dd9852-c3a4-11e5-986a-be381262c536.png)
+    ![create data save](https://cloud.githubusercontent.com/assets/5912647/12563894/56dd9852-c3a4-11e5-986a-be381262c536.png)
 
 2. Add in some more items and perform some actions to edit/delete the entries in the table e.g. add attributes, delete items. This can be done by selecting the entry and then clicking the 'Actions' dropdown menu. Each of these actions will be logged by our Lambda function and will be visible in the Cloudwatch logs.
 
- ![edit data](https://cloud.githubusercontent.com/assets/5912647/12563914/62fb5b38-c3a4-11e5-9830-f87e65a4468b.png)
+    ![edit data](https://cloud.githubusercontent.com/assets/5912647/12563914/62fb5b38-c3a4-11e5-9830-f87e65a4468b.png)
 
- ![edit data 2](https://cloud.githubusercontent.com/assets/5912647/12557777/55046eea-c384-11e5-9abe-db37615ba2d4.png)
+    ![edit data 2](https://cloud.githubusercontent.com/assets/5912647/12557777/55046eea-c384-11e5-9abe-db37615ba2d4.png)
 
 #### View the output of the Lambda function in response to changes to the DynamoDB table
 
@@ -583,9 +583,9 @@ exports.handler = function(event, context) {
 
 2. Select the 'Monitoring' tab and then the 'View Logs in CloudWatch' option. Select one of the log streams. You should see the console.log output from the lambda function capturing the create, edit and delete operations you performed on data entries in the DynamoDB table.
 
- ![view output](https://cloud.githubusercontent.com/assets/5912647/12557807/7320f4a2-c384-11e5-9fcd-b399285fad92.png)
+    ![view output](https://cloud.githubusercontent.com/assets/5912647/12557807/7320f4a2-c384-11e5-9fcd-b399285fad92.png)
 
- ![view output 2](https://cloud.githubusercontent.com/assets/5912647/12557836/996c7b22-c384-11e5-88d8-c7b16c368f25.png)
+    ![view output 2](https://cloud.githubusercontent.com/assets/5912647/12557836/996c7b22-c384-11e5-88d8-c7b16c368f25.png)
 
 You can now modify the lambda function to perform different operations with the event data from DynamoDB.
 
@@ -597,11 +597,11 @@ Amazon SNS is a Publisher/Subscribe System. You can create, subscribe and publis
 
 1. In the AWS SNS console click the 'Create Topic' button.
 
-  ![create topic](https://cloud.githubusercontent.com/assets/5912647/12579896/4652ea94-c423-11e5-8a15-e31c3d586405.png)
+    ![create topic](https://cloud.githubusercontent.com/assets/5912647/12579896/4652ea94-c423-11e5-8a15-e31c3d586405.png)
 
 2. In the pop up that opens up add the name of your topic e.g. 'Lambda Test' and then click the blue 'Create Topic' button. You should see a message that says 'Successfully created topic'.
 
-  ![create topic pop up](https://cloud.githubusercontent.com/assets/5912647/12579906/54c371de-c423-11e5-8982-9668384cf90a.png)
+    ![create topic pop up](https://cloud.githubusercontent.com/assets/5912647/12579906/54c371de-c423-11e5-8982-9668384cf90a.png)
 
 #### Create a Lambda Function and Subscribe to a topic
 
@@ -609,37 +609,37 @@ Amazon SNS is a Publisher/Subscribe System. You can create, subscribe and publis
 
 2. Under 'Configure Event Sources' you can select the Lambda topic the function should subscribe to. Select the one we just created: 'LambdaTest'.
 
-  ![configure sources](https://cloud.githubusercontent.com/assets/5912647/12579931/7d7ce47a-c423-11e5-973c-e0e03e1cf990.png)
+    ![configure sources](https://cloud.githubusercontent.com/assets/5912647/12579931/7d7ce47a-c423-11e5-973c-e0e03e1cf990.png)
 
 3. Give your function a name e.g. 'LambdaSNSTest'. There will already be default code in the Lambda Function Code section to console.log the message:
 
-  ```js
-  console.log('Loading function');
+    ```js
+    console.log('Loading function');
 
-  exports.handler = function(event, context) {
+    exports.handler = function(event, context) {
       //console.log('Received event:', JSON.stringify(event, null, 2));
       var message = event.Records[0].Sns.Message;
       console.log('From SNS:', message);
       context.succeed(message);
-  };
-  ```
+    };
+    ```
 
 4. In the Execution Role section select 'basic execution role'. In the pop up window, enable the creation of a lambda_basic_execution role and click 'Allow'.
 
 5. On the final Review page, in the 'Event Sources' section choose the 'Enable now' option. Then Click 'Create Function'. You should be redirected back to the Lambda Console with a confirmation messsage: 'Congratulations! Your Lambda function "LambdaSNSTest" has been successfully created and configured with SNS: LambdaTest as an event source.'
 
-![lambda function created](https://cloud.githubusercontent.com/assets/5912647/12579947/97b24344-c423-11e5-93b8-f658b8c9db5b.png)
+    ![lambda function created](https://cloud.githubusercontent.com/assets/5912647/12579947/97b24344-c423-11e5-93b8-f658b8c9db5b.png)
 
 #### Publish a message to a topic
 
 1. Open the SNS console and select the 'Topics' tab in the left hand menu. Select the 'LambdaTest' topic created in an earlier step. Then click the blue 'Publish to Topic' button.
 
-  ![Publish to topic](https://cloud.githubusercontent.com/assets/5912647/12579960/a5dd5238-c423-11e5-90df-40b3c88f7e05.png)
+    ![Publish to topic](https://cloud.githubusercontent.com/assets/5912647/12579960/a5dd5238-c423-11e5-90df-40b3c88f7e05.png)
 
 2. The opens the message editor. The topic ARN is the 'Amazon Resource Name' for the topic. ARNs are used to specify a resource unambiguously across all of AWS.  We don't need to worry about them for this example!
 Give your message a subject and add some text to the message body. Leave the 'Time to Live' field blank and click 'Publish Message' in the bottom right hand corner of the screen. You should be redirected back the SNS console.
 
-  ![Publish message](https://cloud.githubusercontent.com/assets/5912647/12579968/c3410dec-c423-11e5-9189-3dd68fe7060c.png)
+    ![Publish message](https://cloud.githubusercontent.com/assets/5912647/12579968/c3410dec-c423-11e5-9189-3dd68fe7060c.png)
 
 NB: Using the JSON Messsage Generator option it is possible to format messages differently for different viewing platforms. Find out more on the [AWS SNS docs](http://docs.aws.amazon.com/sns/latest/dg/PublishTopic.html).
 
@@ -647,16 +647,14 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
 1. Open up the Cloudwatch logs. Select the 'Logs' tab in the left hand menu.
 
-  ![Logs tab](https://cloud.githubusercontent.com/assets/5912647/12579987/db74a798-c423-11e5-94e4-86965a9c8d82.png)
+    ![Logs tab](https://cloud.githubusercontent.com/assets/5912647/12579987/db74a798-c423-11e5-94e4-86965a9c8d82.png)
 
 2. Click on the LambdaSNSTest option and click on the first Log Stream. It will take you to the log output from the SNS message that we published!
 
-  ![Log stream](https://cloud.githubusercontent.com/assets/5912647/12579999/ff48d928-c423-11e5-9b02-45b7ecc7b1d4.png)
+    ![Log stream](https://cloud.githubusercontent.com/assets/5912647/12579999/ff48d928-c423-11e5-9b02-45b7ecc7b1d4.png)
 
-  ![Log stream output](https://cloud.githubusercontent.com/assets/5912647/12580016/18dc1f76-c424-11e5-8d27-ecd4f1ae68e0.png)
+    ![Log stream output](https://cloud.githubusercontent.com/assets/5912647/12580016/18dc1f76-c424-11e5-8d27-ecd4f1ae68e0.png)
 
-
-<br />
 
 ### Testing Lambda Functions
 
@@ -664,20 +662,20 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
 1. **Using Lambda to test Lambda!**
 
-  This method uses Lambda itself as the test platform. This involves creating a “unit” test that calls the Lambda function being tested and then either summarizes whether it succeeded or failed and/or records its output in DynamoDB. AWS lambda has a 'unit and load test harness' blueprint that you can use to test another Lambda function when it is live on AWS. The harness has two modes: 'Unit' and 'Load' so simple scale testing can also be performed.
+    This method uses Lambda itself as the test platform. This involves creating a “unit” test that calls the Lambda function being tested and then either summarizes whether it succeeded or failed and/or records its output in DynamoDB. AWS lambda has a 'unit and load test harness' blueprint that you can use to test another Lambda function when it is live on AWS. The harness has two modes: 'Unit' and 'Load' so simple scale testing can also be performed.
 
-  More information and an example can be found [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
+    More information and an example can be found [here](https://aws.amazon.com/blogs/compute/serverless-testing-with-aws-lambda/)
 
 2. **Generating mock events and testing locally using a Node.js assertion library**
 
-  The event and context objects can be mocked so that the lambda function can be tested locally before deployment. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects e.g. DynamoDB events, SNS notifications,
+    The event and context objects can be mocked so that the lambda function can be tested locally before deployment. Using the 'Test' function in the AWS Lambda console it is possible to view the format of different event objects e.g. DynamoDB events, SNS notifications,
 
-  Have a look at [mock-events.js](www.github.com/dwyl/learn-aws-lambda/lambda-testing/mock-events.js) to see some examples. These can be used to create helper functions to generate mock events.
+    Have a look at [mock-events.js](www.github.com/dwyl/learn-aws-lambda/lambda-testing/mock-events.js) to see some examples. These can be used to create helper functions to generate mock events.
 
-  The context object has the following form:
+    The context object has the following form:
 
-  ```js
-  {
+    ```js
+    {
     //methods
     success,
     done,
@@ -713,24 +711,24 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
         locale,
       }
     }
-  }
-  ```
+    }
+    ```
 
-  It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
+    It is slightly harder to mock because the methods (`success`, `done`, `fail`) are asynchronous and also have to be mocked, but has been done on an [npm module](https://github.com/SamVerschueren/aws-lambda-mock-context) using promises.
 
-  It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
+    It doesn't yet account for different invocation types i.e. Event or Request/Response. From the AWS docs about the `context.sucess` function:
 
-  > If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
-  > If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
+    > If the Lambda function is invoked using the Event invocation type (asynchronous invocation), the method will return "HTTP status 202, request accepted" response.
+    > If the Lambda function is invoked using the RequestResponse invocation type (synchronous invocation), the method will return HTTP status 200 (OK) and set the response > body to the string representation of the result.
 
-  The following is an example lambda function and associated test using the 'mock-context-object' module and the 'tape' assertion library.
+    The following is an example lambda function and associated test using the 'mock-context-object' module and the 'tape' assertion library.
 
-  ```js
-  // very simple lambda function
-  exports.handler = function(event, context) {
+    ```js
+    // very simple lambda function
+    exports.handler = function(event, context) {
       context.succeed(event.key1);  // SUCCESS with message
-  };
-  ```
+    };
+    ```
 
   ```js
   // test set up and simple test
@@ -773,9 +771,9 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
 
 3. **Using grunt-aws-lambda plugin**
 
-  This plugin for Grunt has helpers for running Lambda functions locally as well as for packaging and deployment of Lambda functions.
+    This plugin for Grunt has helpers for running Lambda functions locally as well as for packaging and deployment of Lambda functions.
 
-  More info and an example can be found [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
+    More info and an example can be found [here](https://aws.amazon.com/blogs/compute/continuous-integration-deployment-for-aws-lambda-functions-with-jenkins-and-grunt-part-1/)
 
 ### Continuous Integration using Codeship
 
