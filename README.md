@@ -1412,15 +1412,15 @@ We decided to write `dpl` to make deploying your Lambda functions _extremely_ ea
     "files_to_deploy": [ "package.json", "index.js", "lib/" ]
     ```
 4. Add the deployment script to your `package.json`
-```json
-"scripts": {
-    "deploy": "dpl"
-}
-```
+    ```json
+    "scripts": {
+        "deploy": "dpl"
+    }
+    ```
 5. Run the script
-```$ npm run deploy```
-
-
+    ```
+    $ npm run deploy
+    ```
 
 ### Versioning and Aliasing Lambda Functions
 
@@ -1455,24 +1455,24 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
 
 ### Create an API with GET/POST Methods that uses Lambda functions to retrieve/update records from a DynamoDB table
 
- 1. First we'll need to create a table in DynamoDB. Go to the DynamoDB console and then click the 'Create Table' button. Give your table a name _(call it something relevant to the type of data your DynamoDB table will hold)_. We've called ours 'Users'. The 'Primary key' is made up of a 'Partition key' _(hash key)_ and an optional 'Sort key'. _(The partition key is used to partition data across hosts for scalability and availability)_:
+1. First we'll need to create a table in DynamoDB. Go to the DynamoDB console and then click the 'Create Table' button. Give your table a name _(call it something relevant to the type of data your DynamoDB table will hold)_. We've called ours 'Users'. The 'Primary key' is made up of a 'Partition key' _(hash key)_ and an optional 'Sort key'. _(The partition key is used to partition data across hosts for scalability and availability)_:
 
 
-   ![create table](https://cloud.githubusercontent.com/assets/5912647/12557398/7114929c-c382-11e5-9c48-5c2bf15649ac.png)
+    ![create table](https://cloud.githubusercontent.com/assets/5912647/12557398/7114929c-c382-11e5-9c48-5c2bf15649ac.png)
 
-   ![table name](https://cloud.githubusercontent.com/assets/12450298/12714300/c9a4e152-c8cb-11e5-8c35-370393cef70e.png)
+    ![table name](https://cloud.githubusercontent.com/assets/12450298/12714300/c9a4e152-c8cb-11e5-8c35-370393cef70e.png)
 
-   For 'Table settings' just check the 'Use default settings' checkbox and then click the blue 'Create' button:
+    For 'Table settings' just check the 'Use default settings' checkbox and then click the blue 'Create' button:
 
-   ![table setup](https://cloud.githubusercontent.com/assets/12450298/12714466/db3a51d0-c8cc-11e5-882f-a3b09df203a4.png)
+    ![table setup](https://cloud.githubusercontent.com/assets/12450298/12714466/db3a51d0-c8cc-11e5-882f-a3b09df203a4.png)
 
 2. Once the table is created, click on the 'Alarms' tab and then delete the basic alarms if they have been created:
 
-   ![alarms](https://cloud.githubusercontent.com/assets/12450298/12714608/9da7b6ea-c8cd-11e5-8b5c-f09f94d3e66a.png)
+    ![alarms](https://cloud.githubusercontent.com/assets/12450298/12714608/9da7b6ea-c8cd-11e5-8b5c-f09f94d3e66a.png)
 
-   Then click on the 'Capacity' tab and then specify the 'Read' and 'Write' capacity units as 3 each and then click 'Save':
+    Then click on the 'Capacity' tab and then specify the 'Read' and 'Write' capacity units as 3 each and then click 'Save':
 
-   ![capacity](https://cloud.githubusercontent.com/assets/12450298/12714552/5fe19b1e-c8cd-11e5-919a-780c3bb06316.png)
+    ![capacity](https://cloud.githubusercontent.com/assets/12450298/12714552/5fe19b1e-c8cd-11e5-919a-780c3bb06316.png)
 
 3. Next we will have to create a policy that allows your AWS functions to access Cloudwatch logs as well as the table you just created. Go to the IAM console, select 'Roles' and then 'Create new role'. We've called ours 'APIGatewayLambdaExecRole':
 
@@ -1529,7 +1529,7 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
    }
     ```
 
- 4. Now we need to create the Lambda functions for adding and retrieving data to and from the table _(we'll be creating our functions in a text editor, zipping them up and then uploading them to Lambda. Follow the instructions in the previous 'HELLO WORLD!' .zip example on how to do this)_:
+4. Now we need to create the Lambda functions for adding and retrieving data to and from the table _(we'll be creating our functions in a text editor, zipping them up and then uploading them to Lambda. Follow the instructions in the previous 'HELLO WORLD!' .zip example on how to do this)_:
 
     Create a new ```.js``` file that will contain our first Lambda function. This function will GET information from the DynamoDB table. We've called the file ```getUserInfo.js```. Here is the code:
 
@@ -1598,13 +1598,13 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
     zip -r updateUserInfo.zip updateUserInfo.js
     ```
 
-   Follow the same steps as the previous function to create the second one, giving it the same role. They should both now appear in your functions section:
+    Follow the same steps as the previous function to create the second one, giving it the same role. They should both now appear in your functions section:
 
-   ![functions](https://cloud.githubusercontent.com/assets/12450298/12717241/7e1805bc-c8de-11e5-9c0c-9974a961cef7.png)
+    ![functions](https://cloud.githubusercontent.com/assets/12450298/12717241/7e1805bc-c8de-11e5-9c0c-9974a961cef7.png)
 
-   Test the function with a sample event relevant to your data. We created the following sample event:
-   ```
-   {
+    Test the function with a sample event relevant to your data. We created the following sample event:
+    ```
+    {
      "users": [
                {
                  "id": 1,
@@ -1613,71 +1613,72 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
 
                }
               ]
-   }
-   ```
-   You should see an empty obect just like the first function ```{}```.
-   Go back to the GetUserInfo function and then click 'Test' again. You should now see a returned result with the object in your sample event like this:
+    }
+    ```
+    You should see an empty obect just like the first function ```{}```.
+    Go back to the GetUserInfo function and then click 'Test' again. You should now see a returned result with the object in your sample event like this:
 
-   ```
-   [
+    ```
+    [
      {
        "id": 1,
        "location": "London",
        "name": "John Smith"
      }
-   ]
-   ```
- 5. We're going to have to create one more Lambda function. It essentially does nothing but it is required by the OPTIONS method for CORS _(Cross Origin Resource Sharing which is a mechanism that allows restricted resources on a web page to be requested from )_. The function is as follows:
+    ]
+    ```
 
-   ```JavaScript
-     exports.handler = function(event, context) {
-       context.succeed('');
-     }
-   ```
-   Upload it just like the previous Lambda functions:
+5. We're going to have to create one more Lambda function. It essentially does nothing but it is required by the OPTIONS method for CORS _(Cross Origin Resource Sharing which is a mechanism that allows restricted resources on a web page to be requested from )_. The function is as follows:
 
-   ![noop](https://cloud.githubusercontent.com/assets/12450298/12744540/be1404a0-c98c-11e5-8a7b-a0dfb74bc6f1.png)
+    ```JavaScript
+      exports.handler = function(event, context) {
+        context.succeed('');
+      }
+    ```
+    Upload it just like the previous Lambda functions:
+
+    ![noop](https://cloud.githubusercontent.com/assets/12450298/12744540/be1404a0-c98c-11e5-8a7b-a0dfb74bc6f1.png)
 
  6. Next go to the Amazon API Gateway console and create a new API by clicking 'Create API'. Give it a name, we've called our API 'SecureUsers':
 
-   ![api gateway](https://cloud.githubusercontent.com/assets/12450298/12744749/cd30dd9a-c98d-11e5-97ce-217fe7adf74f.png)
+    ![api gateway](https://cloud.githubusercontent.com/assets/12450298/12744749/cd30dd9a-c98d-11e5-97ce-217fe7adf74f.png)
 
-   Click on the 'Create Resource' button and then give your resource a name. We've called ours 'Users':
+    Click on the 'Create Resource' button and then give your resource a name. We've called ours 'Users':
 
-   ![create resource button](https://cloud.githubusercontent.com/assets/12450298/12849024/2d7ae61c-cc15-11e5-8e92-1cefb9cc7bee.png)
+    ![create resource button](https://cloud.githubusercontent.com/assets/12450298/12849024/2d7ae61c-cc15-11e5-8e92-1cefb9cc7bee.png)
 
-   Click 'Create Resource' again to confirm it:
+    Click 'Create Resource' again to confirm it:
 
-   ![create resource config](https://cloud.githubusercontent.com/assets/12450298/12849056/5e7c7082-cc15-11e5-87cc-51d921af1bd7.png)
+    ![create resource config](https://cloud.githubusercontent.com/assets/12450298/12849056/5e7c7082-cc15-11e5-87cc-51d921af1bd7.png)
 
 7. On the left hand side, click the endpoint you just created. Ours is ```/users```. Then click 'Create Method' and set it to 'GET':
 
-  ![GET](https://cloud.githubusercontent.com/assets/12450298/12849342/1d95f8ca-cc17-11e5-894b-3896f83d3f2f.png)
+    ![GET](https://cloud.githubusercontent.com/assets/12450298/12849342/1d95f8ca-cc17-11e5-894b-3896f83d3f2f.png)
 
-  Select the 'Lambda function' radio button and then assign it to the Get function we created earlier then press 'Save':
+    Select the 'Lambda function' radio button and then assign it to the Get function we created earlier then press 'Save':
 
-  ![assign GET function](https://cloud.githubusercontent.com/assets/12450298/12849623/87651974-cc18-11e5-8e88-ebf4f2b3c39d.png)
+    ![assign GET function](https://cloud.githubusercontent.com/assets/12450298/12849623/87651974-cc18-11e5-8e88-ebf4f2b3c39d.png)
 
-  Click 'Test'. You should see an empty object ```{}``` in the response body:
+    Click 'Test'. You should see an empty object ```{}``` in the response body:
 
-  ![GET test](https://cloud.githubusercontent.com/assets/12450298/12849531/f5d2f0ee-cc17-11e5-8162-cde17cdab2dc.png)
+    ![GET test](https://cloud.githubusercontent.com/assets/12450298/12849531/f5d2f0ee-cc17-11e5-8162-cde17cdab2dc.png)
 
 8. Repeat the previous step but instead of a 'GET', set the method to 'POST':
 
-  ![POST](https://cloud.githubusercontent.com/assets/12450298/12849673/cf1cf82c-cc18-11e5-8c8c-edac7bc0d39d.png)
+    ![POST](https://cloud.githubusercontent.com/assets/12450298/12849673/cf1cf82c-cc18-11e5-8c8c-edac7bc0d39d.png)
 
-  Click 'Test' but this time in the request body, add in some details. We've added two users:
+    Click 'Test' but this time in the request body, add in some details. We've added two users:
 
-  ```json
+    ```json
     {"users": [ {"id": 1, "name": "Peter", "surname": "Smith"},
              {"id": 2, "name": "John", "surname": "Walsh"}
            ]
     }
-  ```
+    ```
 
 9. Go back to your 'GET' method and then click 'Test' again. You should now be able to see that the table has been updated with the details you tested your 'POST' request with.
 
-  ![GET test 2](https://cloud.githubusercontent.com/assets/12450298/12849902/ebfa3602-cc19-11e5-92f6-ffa21320fd20.png)
+    ![GET test 2](https://cloud.githubusercontent.com/assets/12450298/12849902/ebfa3602-cc19-11e5-92f6-ffa21320fd20.png)
 
 
 All done! You can now set up Lambda functions that manipulate information in an AWS DynamoDB table that are invoked through the API Gateway!
@@ -1688,9 +1689,8 @@ All done! You can now set up Lambda functions that manipulate information in an 
 
 
 #### Why use it?
+
 This framework makes it extremely easy to deploy Lambda functions and API Gateway endpoints from your local machine. It is also _super_ easy to test your functions locally too. If you want to know more about it check out the [Serverless repo](https://github.com/serverless/serverless)
-
-
 
 We'll go through the steps to set up their example project 'serverless-starter'. If you haven't checked out our previous examples on how to create and deploy a Lambda function we strongly recommend that before you get stuck into this one:
 Here are the steps to set up the Serverless example project 'serverless-starter'.
@@ -1699,30 +1699,30 @@ Here are the steps to set up the Serverless example project 'serverless-starter'
 
 2. Go to your IAM console. We're going to have to create a new 'User' that our serverless application will be able to use and attach the neccessary policy in order to initialize it. Go to the 'Users' tab and then click 'Create New Users'. Give your user a name and then click 'Create'. We've called ours 'serverless-admin':
 
-  ![serverless user](https://cloud.githubusercontent.com/assets/12450298/12822479/2d889d44-cb60-11e5-8c89-9420378d6be6.png)
+    ![serverless user](https://cloud.githubusercontent.com/assets/12450298/12822479/2d889d44-cb60-11e5-8c89-9420378d6be6.png)
 
-  Once you've created your user, click show credentials. Make a note of them and then download them. _(keep them safe...we'll need them later)_
+    Once you've created your user, click show credentials. Make a note of them and then download them. _(keep them safe...we'll need them later)_
 
-  ![credentials](https://cloud.githubusercontent.com/assets/12450298/12822483/31bfc428-cb60-11e5-81f0-2990ec32ca41.png)
+    ![credentials](https://cloud.githubusercontent.com/assets/12450298/12822483/31bfc428-cb60-11e5-81f0-2990ec32ca41.png)
 
-  Click on your newly created user and then click the blue 'Attach Policy' button. Select the 'AdministratorAccess' policy and then click the 'Attach Policy' button again to attach it.
+    Click on your newly created user and then click the blue 'Attach Policy' button. Select the 'AdministratorAccess' policy and then click the 'Attach Policy' button again to attach it.
 
-  ![attach policy](https://cloud.githubusercontent.com/assets/12450298/12822486/35574a98-cb60-11e5-8cd7-2e2f06ab5c41.png)
+    ![attach policy](https://cloud.githubusercontent.com/assets/12450298/12822486/35574a98-cb60-11e5-8cd7-2e2f06ab5c41.png)
 
-  Here's the summary of our serverless-admin user:
+    Here's the summary of our serverless-admin user:
 
-  ![user summary](https://cloud.githubusercontent.com/assets/12450298/12822489/39388622-cb60-11e5-900d-bda80d95cd5f.png)
+    ![user summary](https://cloud.githubusercontent.com/assets/12450298/12822489/39388622-cb60-11e5-900d-bda80d95cd5f.png)
 
 3. Next you're going to have to install the AWS CLI if you haven't already done so. You can do so via any of the methods **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**. Once you've done that, type the ```aws configure``` command into the command line. Use the Access ID and Secret Access ID from the user you just set up, select your region and then press enter for the last option:
 
-  ```bash
-  $ aws configure
-  AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
-  AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-  Default region name [None]: eu-west-1
-  Default output format [None]: ENTER
-  ```
-  _(note: you'll still need to reconfigure your AWS CLI, even if you've done so previously)_
+    ```bash
+    $ aws configure
+    AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+    AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    Default region name [None]: eu-west-1
+    Default output format [None]: ENTER
+    ```
+    _(note: you'll still need to reconfigure your AWS CLI, even if you've done so previously)_
 
 
 4. Now you should be good to get started with Serverless. Run this command to install it globally:
@@ -1731,60 +1731,62 @@ Here are the steps to set up the Serverless example project 'serverless-starter'
 
 5. It's time to set up your project. For demonstration purposes we've chosen to run [serverless-starter](https://github.com/serverless/serverless-starter) which is a boilerplate example provided by Serverless. In future we'll show you how to set up your own project but for now this is all you need to get used the framework. Run this command in your terminal:
 
-  ```$ serverless project install serverless-starter```
+    ```$ serverless project install serverless-starter```
 
-  You'll see this screen and then be prompted to insert some data:
+    You'll see this screen and then be prompted to insert some data:
 
-  ![project data](https://cloud.githubusercontent.com/assets/12450298/12822470/2854a2be-cb60-11e5-9822-11913fdd98e1.png)
+    ![project data](https://cloud.githubusercontent.com/assets/12450298/12822470/2854a2be-cb60-11e5-9822-11913fdd98e1.png)
 
-  Enter the name of the bucket you'd like Serverless to back up your Lambda functions with and an email that alarms can be sent to. Select your region and then select the default AWS profile:
+    Enter the name of the bucket you'd like Serverless to back up your Lambda functions with and an email that alarms can be sent to. Select your region and then select the default AWS profile:
 
-  ```bash
-  Serverless: Enter a universally unique project bucket name:  (serverless-starter-nkatqu-ejl6y9.com) learn-serverless
-  Serverless: Enter an email to use for AWS alarms:  (me@serverless-starter-nkatqu.com) example@email.com
-  Serverless: Select a region for your project:
+    ```bash
+    Serverless: Enter a universally unique project bucket name:  (serverless-starter-nkatqu-ejl6y9.com) learn-serverless
+    Serverless: Enter an email to use for AWS alarms:  (me@serverless-starter-nkatqu.com) example@email.com
+    Serverless: Select a region for your project:
       us-east-1
       us-west-2
     > eu-west-1
       ap-northeast-1
-  Serverless: Select an AWS profile for your project:
+    Serverless: Select an AWS profile for your project:
     > default
-  Serverless: Creating stage "dev"...  
-  Serverless: Creating region "eu-west-1" in stage "dev"...  
-  Serverless: Creating your project bucket on S3: serverless.eu-west-1.learn-serverless...  
-  Serverless: Deploying resources to stage "dev" in region "eu-west-1" via Cloudformation (~3 minutes)...  
-  Serverless: No resource updates are to be performed.  
-  Serverless: Successfully created region "eu-west-1" within stage "dev"  
-  Serverless: Successfully created stage "dev"  
-  Serverless: Installing nodejs dependencies for component: restApi...  
-  serverless-helpers-js@0.0.3 node_modules/serverless-helpers-js
-  └── dotenv@1.2.0
-  Serverless: Successfully initialized project "serverless-starter"  
-  Serverless: Successfully installed project "serverless-starter"
-  ```
+    Serverless: Creating stage "dev"...  
+    Serverless: Creating region "eu-west-1" in stage "dev"...  
+    Serverless: Creating your project bucket on S3: serverless.eu-west-1.learn-serverless...  
+    Serverless: Deploying resources to stage "dev" in region "eu-west-1" via Cloudformation (~3 minutes)...  
+    Serverless: No resource updates are to be performed.  
+    Serverless: Successfully created region "eu-west-1" within stage "dev"  
+    Serverless: Successfully created stage "dev"  
+    Serverless: Installing nodejs dependencies for component: restApi...  
+    serverless-helpers-js@0.0.3 node_modules/serverless-helpers-js
+    └── dotenv@1.2.0
+    Serverless: Successfully initialized project "serverless-starter"  
+    Serverless: Successfully installed project "serverless-starter"
+    ```
 6. You should now be able to see the serverless-starter files in your directory:
 
-  ![serverless-starter files](https://cloud.githubusercontent.com/assets/12450298/12822495/3ea624c0-cb60-11e5-87e5-4335faa9320a.png)
+    ![serverless-starter files](https://cloud.githubusercontent.com/assets/12450298/12822495/3ea624c0-cb60-11e5-87e5-4335faa9320a.png)
 
 7. Click on it. Let's have a look at what's inside. Click on the 'restApi' folder. In there you should see lib, multi and single directories:
 
-  ![inside the files](https://cloud.githubusercontent.com/assets/12450298/12822502/43a7e9c2-cb60-11e5-8bd6-8fa5a0cf963b.png)
+    ![inside the files](https://cloud.githubusercontent.com/assets/12450298/12822502/43a7e9c2-cb60-11e5-8bd6-8fa5a0cf963b.png)
 
-  ```lib``` - holds code shared across all of your functions  
-  ```multi``` - this is a Serverless module that contains multiple Lambda functions  
-  ```single``` - this is another Serverless module containing one Lambda function with multiple endpoints
+    ```lib``` - holds code shared across all of your functions  
+    ```multi``` - this is a Serverless module that contains multiple Lambda functions  
+    ```single``` - this is another Serverless module containing one Lambda function with multiple endpoints
 
-  In the ```multi``` directory click on the ```create``` directory and then the ```s-function.json``` file. This file contains endpoint configuration information for that Lambda function.
+    In the ```multi``` directory click on the ```create``` directory and then the ```s-function.json``` file. This file contains endpoint configuration information for that Lambda function.
 
-  ![endpoint](https://cloud.githubusercontent.com/assets/12450298/12822510/4c8b6e38-cb60-11e5-80fe-2bc093f7f955.png)
+    ![endpoint](https://cloud.githubusercontent.com/assets/12450298/12822510/4c8b6e38-cb60-11e5-80fe-2bc093f7f955.png)
 
-  In the ```single``` directory click on the ```all``` directory and then navigate to its ```s-function.json``` file. Here you can see that a single function has been configured with multiple endpoints. (GET, POST, PUT, DELETE)
+    In the ```single``` directory click on the ```all``` directory and then navigate to its ```s-function.json``` file. Here you can see that a single function has been configured with multiple endpoints. (GET, POST, PUT, DELETE)
 
-  ![endpoints](https://cloud.githubusercontent.com/assets/12450298/12822513/4f450b5c-cb60-11e5-990e-a5d175233442.png)
+    ![endpoints](https://cloud.githubusercontent.com/assets/12450298/12822513/4f450b5c-cb60-11e5-990e-a5d175233442.png)
 
 8. Next we're going to run our Lambda functions locally. Type the following command in your command line. The third piece is the route to your function. We're testing the 'all' function and so ours is:
 
-  ```$ serverless function restApi/single/all```
+    ```
+    $ serverless function restApi/single/all
+    ```
 
   You should then see the function run and return the results:
 
