@@ -150,13 +150,12 @@ pairs as shown below:
 
    ![function code](https://cloud.githubusercontent.com/assets/12450298/12537413/7374470c-c2b6-11e5-8e3a-9baaa99c06aa.png)
 
-  5. Zip up this file by typing the following into the command line. The command consists of the first filename which is the zip file you want to create _(call it whatever you like .zip)_ followed by the files you want to zip up. In our example you can see the name of the ```.js``` file we created earlier:
+5. Zip up this file by typing the following into the command line. The command consists of the first filename which is the zip file you want to create _(call it whatever you like .zip)_ followed by the files you want to zip up. In our example you can see the name of the ```.js``` file we created earlier:
+   
+ &nbsp; &nbsp; &nbsp; &nbsp; `$ zip -r hello-world.zip hello-world.js`
 
-   `$ zip -r hello-world.zip hello-world.js`
-
-    You should now be able to see a ```.ZIP``` file alongside your ```.js``` file.  
-    **NOTE: If your function has any dependencies then you must include your ```node_modules``` file within your .ZIP file. Simply add ```node_modules``` after the files you wish to zip up!**
-
+ &nbsp; &nbsp; &nbsp; &nbsp; You should now be able to see a `.ZIP` file alongside your `.js` file.  
+ &nbsp; &nbsp; &nbsp; &nbsp; **NOTE: If your function has any dependencies then you must include your `node_modules` file within your .ZIP file. Simply add `node_modules` after the files you wish to zip up!**
   6. Go back to the 'Configure Function' page and click the 'Upload' button and select the .ZIP file you just created.
 
   7. Next select the Lambda function handler and role. The handler is the name of the ```.js``` file that contains your function followed by the name of the handler you are exporting. We've selected the basic execution role just like the previous example:
@@ -177,8 +176,7 @@ via HTTP calls. You can configure these endpoints straight from the
 AWS Lambda console:
 
 1. Open your AWS Lambda console and click on the function that you wish
-to create an endpoint for.
-_(if you haven't created a Lambda function already you can do so
+to create an endpoint for. _(If you haven't created a Lambda function already you can do so
 by following one of the previous examples!)_
 
 2. On this page Select the 'API endpoints' tab and then click '+ Add API endpoint':
@@ -186,15 +184,13 @@ by following one of the previous examples!)_
  ![add api endpoint](https://cloud.githubusercontent.com/assets/12450298/12551718/6427822e-c364-11e5-9bda-5138e241e72a.png)
 
 3. Configure your API endpoint settings:
-
- - API endpoint type : API Gateway  
- - API name : whatever-you-like (we recommend having all lower case letters separated by a dash for readability)  
- - Resource name: /YourLambdaFunctionName  
- - Method : GET/POST/PUT/DELETE...  
- - Deployment stage : Defines the *path through which an API deployment is accessible
- - Security : Defines how your function can be invoked  
-
-    *The path will be a URI ending in >> _.../deploymentStage/ResourceName_
+    - API endpoint type : API Gateway  
+    - API name : whatever-you-like (we recommend having all lower case letters separated by a dash for readability)  
+    - Resource name: /YourLambdaFunctionName  
+    - Method : GET/POST/PUT/DELETE...  
+    - Deployment stage : Defines the *path through which an API deployment is accessible*
+    - Security : Defines how your function can be invoked  
+        * The path will be a URI ending in >> _.../deploymentStage/ResourceName_
 
  ![api endpoint settings](https://cloud.githubusercontent.com/assets/12450298/12551817/234565ae-c365-11e5-8afe-64d186c22cbe.png)
 
@@ -603,7 +599,7 @@ Amazon SNS is a Publisher/Subscribe System. You can create, subscribe and publis
 
   ![create topic pop up](https://cloud.githubusercontent.com/assets/5912647/12579906/54c371de-c423-11e5-8982-9668384cf90a.png)
 
-#### Create a Lambda Function and Subscribe to a topic
+#### Create a Lambda Function and Subscribe to a topic
 
 1. Follow the instructions in this [previous section](#hello-world-example-inline) to create a Lambda function. In Step 3 of the process select the 'sns-message' blueprint. This function will simply log the message pushed to the SNS topic.
 
@@ -630,7 +626,7 @@ Amazon SNS is a Publisher/Subscribe System. You can create, subscribe and publis
 
 ![lambda function created](https://cloud.githubusercontent.com/assets/5912647/12579947/97b24344-c423-11e5-93b8-f658b8c9db5b.png)
 
-#### Publish a message to a topic
+#### Publish a message to a topic
 
 1. Open the SNS console and select the 'Topics' tab in the left hand menu. Select the 'LambdaTest' topic created in an earlier step. Then click the blue 'Publish to Topic' button.
 
@@ -946,8 +942,8 @@ We will be writing our own bash script that will involve the use of some of the 
     * Click your IAM username
     * Click 'Security Credentials' and then 'Create Access Key'
     * To see your access key, choose Show User Security Credentials. Your credentials will look something like this:
-      Access Key ID: AKIAIOSFODNN7EXAMPLE
-      Secret Access Key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+        * Access Key ID: AKIAIOSFODNN7EXAMPLE
+        * Secret Access Key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     * Click 'Download Credentials' and store them in a secure location
 
 3. Install the AWS CLI via a method of your choice **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**.
@@ -1079,7 +1075,7 @@ We will be writing our own bash script that will involve the use of some of the 
 
   [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/API.md) can be used to automate the zipping, deployment and testing of Lambda functions on AWS. The Codeship deployment script can then be reduced to a single command `gulp deploy`!
 
-  The syntax to create a new Gulp task is"
+  The syntax to create a new Gulp task is:
 
   ```js
   gulp.task('name of task', function() {
@@ -1093,7 +1089,7 @@ We will be writing our own bash script that will involve the use of some of the 
 
   1. Require in all the relevant modules and files. We'll be using the aws-sdk to deploy and invoke the lambda function. We also need to read in the `package.json` file in order to add the node modules to the zip file.
 
-    ```js
+  ```js
     var AWS         = require('aws-sdk');
     var gulp        = require('gulp');
     var zip         = require('gulp-zip');
@@ -1102,11 +1098,11 @@ We will be writing our own bash script that will involve the use of some of the 
     var fs          = require('fs');
 
     var packageJson = require('./package.json');
-    ```
+  ```
 
   2. Declare Constants.
 
-    ```js
+  ```js
     var region       = 'eu-west-1';  //AWS region
     var functionName = 'LambdaTest';  
     var outputName   = 'LambdaTest.zip'; //name to be given to output zip file
@@ -1116,74 +1112,73 @@ We will be writing our own bash script that will involve the use of some of the 
 
     // the paths of the files to be added to the zip folder
     var filesToPack = ['./lambda-testing/functions/LambdaTest.js'];
-
-    ```
+  ```
 
     **Make sure the IAM role is changed to the ARN of a role from your AWS account and the region is set to the AWS region you want to deploy the Lambda function to!**
 
   3. Create an archive folder and add the project files
 
-    ```js
+  ```js
     gulp.task('js', function () {
       return gulp.src(filesToPack, {base: './lambda-testing/functions'})
         .pipe(gulp.dest('dist/'));
     });
-    ```
+  ```
 
     `gulp.src` takes an array of file paths as the first argument and an options object as the second. If you specify a base file path in the options only the folders/files after the base are copied i.e. in this case, only the LambdaTest.js file is copied into the archive folder (`dist`).  
 
   4. Add the node modules to the archive folder
 
-    ```js
+  ```js
     gulp.task('node-modules', function () {
       return gulp.src('./package.json')
         .pipe(gulp.dest('dist/'))
         .pipe(install({production: true}));
     });
-    ```
+  ```
 
     In this task, the `package.json` file is copied to the archive folder and the 'gulp-install' module is used to do an `npm install --production` of all the listed dependencies.
 
   5. Zip up the archive folder and save it.
 
-    ```js
+  ```js
     gulp.task('zip', function () {
       return gulp.src(['dist/**', '!dist/package.json'])
         .pipe(zip(outputName))
         .pipe(gulp.dest('./'));
     });
-    ```
+  ```
 
-    All the files in the dist folder apart from the `package.json` file are zipped up using the 'gulp-zip' module and save in the root of the project folder.
+   All the files in the dist folder apart from the `package.json` file are zipped up using the 'gulp-zip' module and save in the root of the project folder.
 
   6. Upload the zip file to AWS. If the function already exists, update it, otherwise create a new Function.
 
-    We can create an 'upload' task with gulp
+   We can create an 'upload' task with gulp:
 
-    ```js
+  ```js
     gulp.task('upload', function() {})
-    ```
+  ```
 
-    Inside the function we first have to do a bit of set up:
+   Inside the function we first have to do a bit of set up:
 
-    ```js
+  ```js
     AWS.config.region = region; // this is set to eu-west-1 from the constants declared in step 1
     var lambda = new AWS.Lambda();
     var zipFile = './' + outputName; // the outputName has also been set in step 1
-    ```
+  ```
 
-    First we need to check if the function already exists on AWS before deciding whether to create a function or update a function.
+   First we need to check if the function already exists on AWS before deciding whether to create a function or update a function.
 
-    ```js
+  ```js
     lambda.getFunction({ FunctionName: functionName }, function(err, data) {
       if (err) createFunction();
       else updateFunction();
     });
-    ```
+  ```
 
-    We also need a function to retrieve the saved zip file in order to pass it in as a parameter in our create function command.
+   We also need a function to retrieve the saved zip file in order to pass it in as a parameter in our create function command.
 
-    ```js
+  ```js
     function getZipFile (callback) {
       fs.readFile(zipFile, function (err, data) {
             if (err) console.log(err);
@@ -1192,12 +1187,13 @@ We will be writing our own bash script that will involve the use of some of the 
             }
       });
     }
-    ```
-    The `getZipFile` function takes a callback which gets called with the file data if the file is read successfully.
+  ```
+ 
+   The `getZipFile` function takes a callback which gets called with the file data if the file is read successfully.
 
-    Using the aws-sdk we can then define a function to create a new Lambda function from this zip file.
+   Using the aws-sdk we can then define a function to create a new Lambda function from this zip file.
 
-    ```js
+  ```js
     function createFunction () {
 
       getZipFile(function (data) {
@@ -1218,10 +1214,10 @@ We will be writing our own bash script that will involve the use of some of the 
       });
 
     }
-    ```
-    Similarly we can also define `updateFunction`:
+  ```
+   Similarly we can also define `updateFunction`:
 
-    ```js
+  ```js
     function updateFunction () {
 
       getZipFile(function (data) {
@@ -1236,15 +1232,15 @@ We will be writing our own bash script that will involve the use of some of the 
         });
       });
     }
-    ```
+  ```
 
   7. Invoke the function with a test event to check the live version is working as expected.
 
-    We have to first get the function to make sure it exists and only invoke it if there isn't an error.
+   We have to first get the function to make sure it exists and only invoke it if there isn't an error.
 
-    In the parameters for invoking the function, a JSON object can be specified as the 'Payload' and the 'InvocationType' can be specified as 'RequestResponse' if you want to get a response body.
+   In the parameters for invoking the function, a JSON object can be specified as the 'Payload' and the 'InvocationType' can be specified as 'RequestResponse' if you want to get a response body.
 
-    ```js
+  ```js
     gulp.task('test-invoke', function() {
       var lambda = new AWS.Lambda();
 
@@ -1267,13 +1263,13 @@ We will be writing our own bash script that will involve the use of some of the 
         })
       }
     })
-    ```
+  ```
 
   8. Create a deployment task that runs all the above tasks in series in the correct order.
 
-    The `runSequence` module takes a comma separated list of gulp task names or a list of arrays with gulp tasks, and ends with a callback. The tasks are run in the order they are specified. To run two tasks in parallel specify them in the same array.
+   The `runSequence` module takes a comma separated list of gulp task names or a list of arrays with gulp tasks, and ends with a callback. The tasks are run in the order they are specified. To run two tasks in parallel specify them in the same array.
 
-    ```js
+  ```js
     gulp.task('deploy', function (callback) {
       return runSequence(
         ['js', 'node-modules'],
@@ -1283,17 +1279,17 @@ We will be writing our own bash script that will involve the use of some of the 
         callback
       );
     });
-    ```
+  ```
 
-    **In the AWS console you can only view functions by region, so if you can't see the function after it has been created, check you're looking at the correct region (in the dropdown menu in the top right of the console)**
+   **In the AWS console you can only view functions by region, so if you can't see the function after it has been created, check you're looking at the correct region (in the dropdown menu in the top right of the console)**
 
-    ![AWSregion](https://cloud.githubusercontent.com/assets/5912647/12677661/75d12846-c692-11e5-878d-990487be9910.png)
+   ![AWSregion](https://cloud.githubusercontent.com/assets/5912647/12677661/75d12846-c692-11e5-878d-990487be9910.png)
 
   9. Add the deployment script to Codeship or your package.json
 
-    In Codeship just add `gulp-deploy` to your Deployment script and you're good to go!
+   In Codeship just add `gulp-deploy` to your Deployment script and you're good to go!
 
-    **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
+   **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
 
 #### Upload to S3 and Deploy to Lambda With Gulp
 Here we will implement the previous example of uploading a Lambda function to S3 and then deploying it from the bucket. Intead of using a bash script we can use Gulp. We can make some small adjustments to the Gulp example that we just created in order to deploy from S3. This is a continuation from that so please check it out before you look at this one:
@@ -1327,7 +1323,6 @@ Here we will implement the previous example of uploading a Lambda function to S3
     });
     ```
 2. Next we need to add our new task to the list of tasks in our runSequence that we've already created. We want it to come after zipping but before our 'upload' task:
-
     ```JavaScript
     gulp.task('deploy', function (callback) {
       return runSequence(
@@ -1407,15 +1402,16 @@ Here we will implement the previous example of uploading a Lambda function to S3
 We decided to write `dpl` to make deploying your Lambda functions _extremely_ easy. Here's how to implement it.
 
 1. `$ npm install dpl --save-dev`
-2. Configure your environment variables. You need `AWS_REGION` and `AWS_IAM_ROLE`  
-```
-export AWS_REGION=eu-west-1
-export AWS_IAM_ROLE=arn:aws:iam::123456789:role/LambdaExecRole
-```
+2. Configure your environment variables.
+    You need `AWS_REGION` and `AWS_IAM_ROLE`  
+    ```
+    export AWS_REGION=eu-west-1
+    export AWS_IAM_ROLE=arn:aws:iam::123456789:role/LambdaExecRole
+    ```
 3. Add the _list_ of files to deploy to your `package.json`:
-```json
-"files_to_deploy": [ "package.json", "index.js", "lib/" ]
-```
+    ```json
+    "files_to_deploy": [ "package.json", "index.js", "lib/" ]
+    ```
 4. Add the deployment script to your `package.json`
 ```json
 "scripts": {
@@ -1481,31 +1477,31 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
 
 3. Next we will have to create a policy that allows your AWS functions to access Cloudwatch logs as well as the table you just created. Go to the IAM console, select 'Roles' and then 'Create new role'. We've called ours 'APIGatewayLambdaExecRole':
 
-   ![create role](https://cloud.githubusercontent.com/assets/12450298/12714889/11c25804-c8cf-11e5-8b32-e01f9673b8cf.png)
+    ![create role](https://cloud.githubusercontent.com/assets/12450298/12714889/11c25804-c8cf-11e5-8b32-e01f9673b8cf.png)
 
-   Select the 'AWS Lambda' role:
+    Select the 'AWS Lambda' role:
 
-   ![lambda role](https://cloud.githubusercontent.com/assets/12450298/12714963/651140f6-c8cf-11e5-87f5-f547605f757a.png)
+    ![lambda role](https://cloud.githubusercontent.com/assets/12450298/12714963/651140f6-c8cf-11e5-87f5-f547605f757a.png)
 
-   And then click 'Next step' to skip the 'Attach Policy' section:
+    And then click 'Next step' to skip the 'Attach Policy' section:
 
-   ![skip attach policy](https://cloud.githubusercontent.com/assets/12450298/12714986/8de42822-c8cf-11e5-9fc8-9aad5ed4b799.png)
+    ![skip attach policy](https://cloud.githubusercontent.com/assets/12450298/12714986/8de42822-c8cf-11e5-9fc8-9aad5ed4b799.png)
 
-   In the 'Review' section click the blue 'Create Role' button to finish:
+    In the 'Review' section click the blue 'Create Role' button to finish:
 
-   ![review role](https://cloud.githubusercontent.com/assets/12450298/12715013/bcb3bc1c-c8cf-11e5-8fce-37f32546d0b5.png)
+    ![review role](https://cloud.githubusercontent.com/assets/12450298/12715013/bcb3bc1c-c8cf-11e5-8fce-37f32546d0b5.png)
 
-   Click on the title of the role you just created then click the down arrow for 'Inline Policies'. Follow the link to create an inline policy:
+    Click on the title of the role you just created then click the down arrow for 'Inline Policies'. Follow the link to create an inline policy:
 
-   ![inline policies](https://cloud.githubusercontent.com/assets/12450298/12715091/385b678e-c8d0-11e5-8006-1d65487b933e.png)
+    ![inline policies](https://cloud.githubusercontent.com/assets/12450298/12715091/385b678e-c8d0-11e5-8006-1d65487b933e.png)
 
-   Click on the 'Custom Policy' radio button and then click 'Select':
+    Click on the 'Custom Policy' radio button and then click 'Select':
 
-   ![custom policy](https://cloud.githubusercontent.com/assets/12450298/12715150/857ad6e4-c8d0-11e5-9688-c6237746e742.png)
+    ![custom policy](https://cloud.githubusercontent.com/assets/12450298/12715150/857ad6e4-c8d0-11e5-9688-c6237746e742.png)
 
-   Give your custom policy a name _(we've called ours 'LogAndDynamoDBAccess')_ and then enter the following in the 'Policy Document' section. **Make sure your "Resource" at the bottom is set to the ARN of your table and the second "SID" is set to "_YourTableName_DynamoDBReadWrite"**. _(the ARN can be found in your 'Table details' by going to your DynamoDB console and clicking on your table.)_:
+    Give your custom policy a name _(we've called ours 'LogAndDynamoDBAccess')_ and then enter the following in the 'Policy Document' section. **Make sure your "Resource" at the bottom is set to the ARN of your table and the second "SID" is set to "_YourTableName_DynamoDBReadWrite"**. _(the ARN can be found in your 'Table details' by going to your DynamoDB console and clicking on your table.)_:
 
-   ```
+    ```
    {
      "Version": "2012-10-17",
      "Statement": [
@@ -1532,37 +1528,38 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
          }
      ]
    }
-   ```
+    ```
 
  4. Now we need to create the Lambda functions for adding and retrieving data to and from the table _(we'll be creating our functions in a text editor, zipping them up and then uploading them to Lambda. Follow the instructions in the previous 'HELLO WORLD!' .zip example on how to do this)_:
 
-   Create a new ```.js``` file that will contain our first Lambda function. This function will GET information from the DynamoDB table. We've called the file ```getUserInfo.js```. Here is the code:
+    Create a new ```.js``` file that will contain our first Lambda function. This function will GET information from the DynamoDB table. We've called the file ```getUserInfo.js```. Here is the code:
 
-   ```JavaScript
-   var AWS = require('aws-sdk');
-   var DOC = require('dynamodb-doc');
-   var dynamo = new DOC.DynamoDB();
+    ```JavaScript
+    var AWS = require('aws-sdk');
+    var DOC = require('dynamodb-doc');
+    var dynamo = new DOC.DynamoDB();
 
-   exports.handler = function(event, context) {
-     var callback = function(err, data) {
-       if (err) {
-         console.log('error on getUserInfo: ', err);
-         context.done('Unable to retrieve user information', null);
-       } else {
-         if(data.Item && data.Item.users) {
-           context.done(null, data.Item.users);
-         } else {
-           context.done(null, {});
-         }
-       }
-     };
+    exports.handler = function(event, context) {
+      var callback = function(err, data) {
+        if (err) {
+          console.log('error on getUserInfo: ', err);
+          context.done('Unable to retrieve user information', null);
+        } else {
+          if(data.Item && data.Item.users) {
+            context.done(null, data.Item.users);
+          } else {
+            context.done(null, {});
+          }
+        }
+      };
 
-     dynamo.getItem({TableName:"Users", Key:{username:"default"}}, callback);
-   };
-   ```
-   Zip up the file and then upload it to Lambda:
-
-   ```zip -r getUserInfo.zip getUserInfo.js```
+      dynamo.getItem({TableName:"Users", Key:{username:"default"}}, callback);
+    };
+    ```
+    Zip up the file and then upload it to Lambda:
+    ```
+    zip -r getUserInfo.zip getUserInfo.js
+    ```
 
    ![getuserinfo](https://cloud.githubusercontent.com/assets/12450298/12716616/ceb37a6a-c8d9-11e5-80be-54ebf8b9754d.png)
 
@@ -1574,31 +1571,33 @@ Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/lates
 
    Create a second ```.js``` file that will contain our second Lambda function. This function will UPDATE information in our DynamoDB table. We've called the file ```updateUserInfo.js```. Here is the code:
 
-   ```JavaScript
-   var AWS = require('aws-sdk');
-   var DOC = require('dynamodb-doc');
-   var dynamo = new DOC.DynamoDB();
+    ```JavaScript
+    var AWS = require('aws-sdk');
+    var DOC = require('dynamodb-doc');
+    var dynamo = new DOC.DynamoDB();
 
-   exports.handler = function(event, context) {
-     var item = { username:"default",
-                  users: event.users || {}
-             };
+    exports.handler = function(event, context) {
+      var item = { username:"default",
+                   users: event.users || {}
+              };
 
-     var callback = function(err, data) {
-       if (err) {
-         console.log(err);
-         context.fail('unable to update users at this time');
-       } else {
-         console.log(data);
-         context.done(null, data);
-       }
-     };
+      var callback = function(err, data) {
+        if (err) {
+          console.log(err);
+          context.fail('unable to update users at this time');
+        } else {
+          console.log(data);
+          context.done(null, data);
+        }
+      };
 
-     dynamo.putItem({TableName:"Users", Item:item}, callback);
-   };
-   ```
-   Again zip up the file and then upload it to Lambda:
-   ```zip -r updateUserInfo.zip updateUserInfo.js```
+      dynamo.putItem({TableName:"Users", Item:item}, callback);
+    };
+    ```
+    Again zip up the file and then upload it to Lambda:
+    ```
+    zip -r updateUserInfo.zip updateUserInfo.js
+    ```
 
    Follow the same steps as the previous function to create the second one, giving it the same role. They should both now appear in your functions section:
 
@@ -1955,17 +1954,16 @@ You might want to add some additional functionality to your Lambda functions in 
  ```
 
 3. Test that the module has been installed
+    ```
+    $ echo 'var AWS = require("aws-sdk");console.log(AWS.EC2.apiVersions)'> test.js
+    $ node test.js
+    [ '2013-06-15*','2013-10-15*','2014-02-01*','2014-05-01*','2014-06-15*','2014-09-01*','2014-10-01' ]
+    ```
 
- ```
- $ echo 'var AWS = require("aws-sdk");console.log(AWS.EC2.apiVersions)'> test.js
- $ node test.js
- [ '2013-06-15*','2013-10-15*','2014-02-01*','2014-05-01*','2014-06-15*','2014-09-01*','2014-10-01' ]
- ```
-
- Here we're just requiring the sdk and then piping the code into `test.js`. Then if we run `test.js` we should be able to see the EC2 API versions printed in the console. This is a trivial test just to prove that the module has been installed.
+    Here we're just requiring the sdk and then piping the code into `test.js`. Then if we run `test.js` we should be able to see the EC2 API versions printed in the console. This is a trivial test just to prove that the module has been installed.
 
 4. Create your function
 
- At this point we’ve successfully created a directory containing one or more npm-installed packages and verified that the packages can load and execute by running a test script locally. You can now delete the test script and continue by creating a real Lambda function that takes advantage of the modules that you’ve just installed, testing it the same way. To deploy the resulting function and modules to Lambda, just zip up the entire lambdaTestFunction directory and use Lambda’s createFunction API, CLI, or the console UI to deploy it.
+    At this point we’ve successfully created a directory containing one or more npm-installed packages and verified that the packages can load and execute by running a test script locally. You can now delete the test script and continue by creating a real Lambda function that takes advantage of the modules that you’ve just installed, testing it the same way. To deploy the resulting function and modules to Lambda, just zip up the entire lambdaTestFunction directory and use Lambda’s createFunction API, CLI, or the console UI to deploy it.
 
 Credit to the [AWS Compute Blog Post](https://aws.amazon.com/blogs/compute/nodejs-packages-in-lambda/)
