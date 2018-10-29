@@ -152,11 +152,15 @@ pairs as shown below:
 
 5. Zip up this file by typing the following into the command line. The command consists of the first filename which is the zip file you want to create _(call it whatever you like .zip)_ followed by the files you want to zip up. In our example you can see the name of the ```.js``` file we created earlier:
    
- &nbsp; &nbsp; &nbsp; &nbsp; `$ zip -r hello-world.zip hello-world.js`
+    ```
+    $ zip -r hello-world.zip hello-world.js
+    ```
 
- &nbsp; &nbsp; &nbsp; &nbsp; You should now be able to see a `.ZIP` file alongside your `.js` file.  
- &nbsp; &nbsp; &nbsp; &nbsp; **NOTE: If your function has any dependencies then you must include your `node_modules` file within your .ZIP file. Simply add `node_modules` after the files you wish to zip up!**
-  6. Go back to the 'Configure Function' page and click the 'Upload' button and select the .ZIP file you just created.
+    You should now be able to see a `.ZIP` file alongside your `.js` file.
+
+    **NOTE: If your function has any dependencies then you must include your `node_modules` file within your .ZIP file. Simply add `node_modules` after the files you wish to zip up!**
+    
+6. Go back to the 'Configure Function' page and click the 'Upload' button and select the .ZIP file you just created.
 
   7. Next select the Lambda function handler and role. The handler is the name of the ```.js``` file that contains your function followed by the name of the handler you are exporting. We've selected the basic execution role just like the previous example:
 
