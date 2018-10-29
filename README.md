@@ -1926,7 +1926,7 @@ event notification or invoke call, including test invokes from the console.
 + Execution time is rounded up to the nearest 100ms
 + You are charged $0.00001667 for every GB-second used
 
-> See: http://aws.amazon.com/lambda/pricing/ for more ***pricing examples***.
+See: http://aws.amazon.com/lambda/pricing/ for more ***pricing examples***.
 
 ## FAQ
 
@@ -1935,10 +1935,10 @@ event notification or invoke call, including test invokes from the console.
 You might want to add some additional functionality to your Lambda functions in the form of an NPM module. Here are four easy steps you need to take in order to do so!
 
 1. Firstly let's create a new directory that will hold our Lambda function and all of its modules
- ```
- $ mkdir lambdaNPM
- $ cd lambdaNPM
- ```
+    ```
+    $ mkdir lambdaNPM
+    $ cd lambdaNPM
+    ```
 
 2. Install an NPM package of your choice. We'll use the `aws-sdk` as an example
 
