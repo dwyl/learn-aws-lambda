@@ -1792,21 +1792,21 @@ Here are the steps to set up the Serverless example project 'serverless-starter'
     $ serverless function restApi/single/all
     ```
 
-  You should then see the function run and return the results:
+    You should then see the function run and return the results:
 
-  ```
-  Serverless: Running restApi/single/all...  
-  Serverless: -----------------  
-  Serverless: Success! - This Response Was Returned:  
-  Serverless: {"message":"Your Serverless function ran successfully via the 'GET' method!"}
-  ```
-  _Note: The function will take the event from the **event.json** file so you can configure whatever your payload is there. Our test function expects an object with a 'httpMethod' key so our event.json file looks like this:_
+    ```
+    Serverless: Running restApi/single/all...  
+    Serverless: -----------------  
+    Serverless: Success! - This Response Was Returned:  
+    Serverless: {"message":"Your Serverless function ran successfully via the 'GET' method!"}
+    ```
+    _Note: The function will take the event from the **event.json** file so you can configure whatever your payload is there. Our test function expects an object with a 'httpMethod' key so our event.json file looks like this:_
 
-  ```json
-  {
-    "httpMethod": "GET"
-  }
-  ```
+    ```json
+    {
+      "httpMethod": "GET"
+    }
+    ```
 
 9. Once we are happy with our Lambda functions and API Gateway endpoints we can deploy them from the command line using the ```$ serverless dash deploy``` command. You then use the up and down arrow keys to navigate to, and select (by pressing ```enter```). The ones you select will then be deployed after you've moved back down to 'Deploy' and pressed ```enter```. The selected ones show up in yellow:
 
