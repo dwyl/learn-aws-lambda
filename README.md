@@ -1087,7 +1087,7 @@ We will be writing our own bash script that will involve the use of some of the 
 
   We will go through a simple gulp script with tasks for each of the steps involved.
 
-  1. Require in all the relevant modules and files. We'll be using the aws-sdk to deploy and invoke the lambda function. We also need to read in the `package.json` file in order to add the node modules to the zip file.
+1. Require in all the relevant modules and files. We'll be using the aws-sdk to deploy and invoke the lambda function. We also need to read in the `package.json` file in order to add the node modules to the zip file.
 
   ```js
     var AWS         = require('aws-sdk');
@@ -1100,9 +1100,8 @@ We will be writing our own bash script that will involve the use of some of the 
     var packageJson = require('./package.json');
   ```
 
-  2. Declare Constants.
-
-  ```js
+ 2. Declare Constants.
+    ```js
     var region       = 'eu-west-1';  //AWS region
     var functionName = 'LambdaTest';  
     var outputName   = 'LambdaTest.zip'; //name to be given to output zip file
@@ -1112,73 +1111,73 @@ We will be writing our own bash script that will involve the use of some of the 
 
     // the paths of the files to be added to the zip folder
     var filesToPack = ['./lambda-testing/functions/LambdaTest.js'];
-  ```
+    ```
 
     **Make sure the IAM role is changed to the ARN of a role from your AWS account and the region is set to the AWS region you want to deploy the Lambda function to!**
 
-  3. Create an archive folder and add the project files
+3. Create an archive folder and add the project files
 
-  ```js
+    ```js
     gulp.task('js', function () {
       return gulp.src(filesToPack, {base: './lambda-testing/functions'})
         .pipe(gulp.dest('dist/'));
     });
-  ```
+   ```
 
     `gulp.src` takes an array of file paths as the first argument and an options object as the second. If you specify a base file path in the options only the folders/files after the base are copied i.e. in this case, only the LambdaTest.js file is copied into the archive folder (`dist`).  
 
-  4. Add the node modules to the archive folder
+4. Add the node modules to the archive folder
 
-  ```js
+    ```js
     gulp.task('node-modules', function () {
       return gulp.src('./package.json')
         .pipe(gulp.dest('dist/'))
         .pipe(install({production: true}));
     });
-  ```
+    ```
 
     In this task, the `package.json` file is copied to the archive folder and the 'gulp-install' module is used to do an `npm install --production` of all the listed dependencies.
 
-  5. Zip up the archive folder and save it.
+5. Zip up the archive folder and save it.
 
-  ```js
+    ```js
     gulp.task('zip', function () {
       return gulp.src(['dist/**', '!dist/package.json'])
         .pipe(zip(outputName))
         .pipe(gulp.dest('./'));
     });
-  ```
+    ```
 
-   All the files in the dist folder apart from the `package.json` file are zipped up using the 'gulp-zip' module and save in the root of the project folder.
+    All the files in the dist folder apart from the `package.json` file are zipped up using the 'gulp-zip' module and save in the root of the project folder.
 
-  6. Upload the zip file to AWS. If the function already exists, update it, otherwise create a new Function.
+6. Upload the zip file to AWS. If the function already exists, update it, otherwise create a new Function.
 
-   We can create an 'upload' task with gulp:
+    We can create an 'upload' task with gulp:
 
-  ```js
+    ```js
     gulp.task('upload', function() {})
-  ```
+    ```
 
-   Inside the function we first have to do a bit of set up:
+    Inside the function we first have to do a bit of set up:
 
-  ```js
+    ```js
     AWS.config.region = region; // this is set to eu-west-1 from the constants declared in step 1
     var lambda = new AWS.Lambda();
     var zipFile = './' + outputName; // the outputName has also been set in step 1
-  ```
+    ```
 
-   First we need to check if the function already exists on AWS before deciding whether to create a function or update a function.
+    First we need to check if the function already exists on AWS before deciding whether to create a function or update a function.
 
-  ```js
+    ```js
     lambda.getFunction({ FunctionName: functionName }, function(err, data) {
       if (err) createFunction();
       else updateFunction();
     });
-  ```
+   ```
 
-   We also need a function to retrieve the saved zip file in order to pass it in as a parameter in our create function command.
+    We also need a function to retrieve the saved zip file in order to pass it in as a parameter in our create function command.
 
-  ```js
+    ```js
     function getZipFile (callback) {
       fs.readFile(zipFile, function (err, data) {
             if (err) console.log(err);
@@ -1187,13 +1186,13 @@ We will be writing our own bash script that will involve the use of some of the 
             }
       });
     }
-  ```
+    ```
  
-   The `getZipFile` function takes a callback which gets called with the file data if the file is read successfully.
+    The `getZipFile` function takes a callback which gets called with the file data if the file is read successfully.
 
-   Using the aws-sdk we can then define a function to create a new Lambda function from this zip file.
+    Using the aws-sdk we can then define a function to create a new Lambda function from this zip file.
 
-  ```js
+    ```js
     function createFunction () {
 
       getZipFile(function (data) {
@@ -1214,10 +1213,10 @@ We will be writing our own bash script that will involve the use of some of the 
       });
 
     }
-  ```
-   Similarly we can also define `updateFunction`:
+    ```
+    Similarly we can also define `updateFunction`:
 
-  ```js
+    ```js
     function updateFunction () {
 
       getZipFile(function (data) {
@@ -1232,15 +1231,15 @@ We will be writing our own bash script that will involve the use of some of the 
         });
       });
     }
-  ```
+    ```
 
-  7. Invoke the function with a test event to check the live version is working as expected.
+7. Invoke the function with a test event to check the live version is working as expected.
 
-   We have to first get the function to make sure it exists and only invoke it if there isn't an error.
+    We have to first get the function to make sure it exists and only invoke it if there isn't an error.
 
-   In the parameters for invoking the function, a JSON object can be specified as the 'Payload' and the 'InvocationType' can be specified as 'RequestResponse' if you want to get a response body.
+    In the parameters for invoking the function, a JSON object can be specified as the 'Payload' and the 'InvocationType' can be specified as 'RequestResponse' if you want to get a response body.
 
-  ```js
+    ```js
     gulp.task('test-invoke', function() {
       var lambda = new AWS.Lambda();
 
@@ -1263,13 +1262,13 @@ We will be writing our own bash script that will involve the use of some of the 
         })
       }
     })
-  ```
+    ```
 
-  8. Create a deployment task that runs all the above tasks in series in the correct order.
+8. Create a deployment task that runs all the above tasks in series in the correct order.
 
-   The `runSequence` module takes a comma separated list of gulp task names or a list of arrays with gulp tasks, and ends with a callback. The tasks are run in the order they are specified. To run two tasks in parallel specify them in the same array.
+    The `runSequence` module takes a comma separated list of gulp task names or a list of arrays with gulp tasks, and ends with a callback. The tasks are run in the order they are specified. To run two tasks in parallel specify them in the same array.
 
-  ```js
+    ```js
     gulp.task('deploy', function (callback) {
       return runSequence(
         ['js', 'node-modules'],
@@ -1279,17 +1278,17 @@ We will be writing our own bash script that will involve the use of some of the 
         callback
       );
     });
-  ```
+    ```
 
-   **In the AWS console you can only view functions by region, so if you can't see the function after it has been created, check you're looking at the correct region (in the dropdown menu in the top right of the console)**
+    **In the AWS console you can only view functions by region, so if you can't see the function after it has been created, check you're looking at the correct region (in the dropdown menu in the top right of the console)**
 
-   ![AWSregion](https://cloud.githubusercontent.com/assets/5912647/12677661/75d12846-c692-11e5-878d-990487be9910.png)
+    ![AWSregion](https://cloud.githubusercontent.com/assets/5912647/12677661/75d12846-c692-11e5-878d-990487be9910.png)
 
-  9. Add the deployment script to Codeship or your package.json
+9. Add the deployment script to Codeship or your package.json
 
-   In Codeship just add `gulp-deploy` to your Deployment script and you're good to go!
+    In Codeship just add `gulp-deploy` to your Deployment script and you're good to go!
 
-   **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
+    **Note: Make sure the Access Policy of the Codeship User in the IAM console on AWS has permissions for all the actions you're trying to execute. i.e. getting, creating, updating and invoking lambda functions.**
 
 #### Upload to S3 and Deploy to Lambda With Gulp
 Here we will implement the previous example of uploading a Lambda function to S3 and then deploying it from the bucket. Intead of using a bash script we can use Gulp. We can make some small adjustments to the Gulp example that we just created in order to deploy from S3. This is a continuation from that so please check it out before you look at this one:
@@ -1805,25 +1804,24 @@ Here are the steps to set up the Serverless example project 'serverless-starter'
 
 9. Once we are happy with our Lambda functions and API Gateway endpoints we can deploy them from the command line using the ```$ serverless dash deploy``` command. You then use the up and down arrow keys to navigate to, and select (by pressing ```enter```). The ones you select will then be deployed after you've moved back down to 'Deploy' and pressed ```enter```. The selected ones show up in yellow:
 
-  ![deploy serverless](https://cloud.githubusercontent.com/assets/12450298/12822528/5bd60a7e-cb60-11e5-9f55-460af2b6132c.png)
+    ![deploy serverless](https://cloud.githubusercontent.com/assets/12450298/12822528/5bd60a7e-cb60-11e5-9f55-460af2b6132c.png)
 
-  You'll then see this in your terminal:
+    You'll then see this in your terminal:
 
-  ![deploying in process](https://cloud.githubusercontent.com/assets/12450298/12822531/5f22124a-cb60-11e5-8297-868c0cd250d2.png)
+    ![deploying in process](https://cloud.githubusercontent.com/assets/12450298/12822531/5f22124a-cb60-11e5-8297-868c0cd250d2.png)
 
 10. We can then go to AWS and check out the S3, Lambda and API Gateway consoles to see if everything has been deployed correctly:
 
-  API Gateway
-  ![Api deploy](https://cloud.githubusercontent.com/assets/12450298/12822535/624c67fe-cb60-11e5-8120-9f74d933994d.png)
+    API Gateway
+   ![Api deploy](https://cloud.githubusercontent.com/assets/12450298/12822535/624c67fe-cb60-11e5-8120-9f74d933994d.png)
 
-  S3
-  ![S3 deploy](https://cloud.githubusercontent.com/assets/12450298/12822544/6ccb1ca2-cb60-11e5-8d1c-97e8e8224717.png)
+    S3
+   ![S3 deploy](https://cloud.githubusercontent.com/assets/12450298/12822544/6ccb1ca2-cb60-11e5-8d1c-97e8e8224717.png)
 
-  Lambda
-  ![lambda deploy](https://cloud.githubusercontent.com/assets/12450298/12822547/70f21056-cb60-11e5-90c8-e2a3fd4aa457.png)
+   Lambda
+   ![lambda deploy](https://cloud.githubusercontent.com/assets/12450298/12822547/70f21056-cb60-11e5-90c8-e2a3fd4aa457.png)
 
 _(The Serverless framework automates a lot of the processes that we have covered in previous examples such as uploading to S3 and deploying to Lambda)_
-
 
 
 ## Further Reading
@@ -1944,14 +1942,14 @@ You might want to add some additional functionality to your Lambda functions in 
 
 2. Install an NPM package of your choice. We'll use the `aws-sdk` as an example
 
- ```
- $ npm install --prefix=~/lambdaNPM aws-sdk
- aws-sdk@2.0.27 node_modules/aws-sdk
- ├── xmlbuilder@0.4.2
- └── xml2js@0.2.6 (sax@0.4.2)
- $ ls node_modules
- aws-sdk
- ```
+    ```
+    $ npm install --prefix=~/lambdaNPM aws-sdk
+    aws-sdk@2.0.27 node_modules/aws-sdk
+    ├── xmlbuilder@0.4.2
+    └── xml2js@0.2.6 (sax@0.4.2)
+    $ ls node_modules
+    aws-sdk
+    ```
 
 3. Test that the module has been installed
     ```
