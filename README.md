@@ -77,7 +77,7 @@ something to S3 on each execution cycle you could rack up the bill!
 * [Use the callback parameter with node v4.3](#the-callback-parameter)
 * [Trigger a Lambda function using an event from DynamoDB](#triggering-a-lambda-function-using-an-event-from-dynamodb)
 * [Trigger a Lambda function using the Simple Notification System](#trigger-a-lambda-function-using-the-simple-notification-system)
-* [Trigger a Lambda function when an email comes in to the AWS Simple Web Service](#trigger-a-lambda-function-when-an-email-is-received-by-amazon-simple-email-service)
+* [Trigger a Lambda function when an email comes in to the AWS Simple Email Service (SES)](#trigger-a-lambda-function-when-an-email-is-received-by-amazon-simple-email-service)
 * [Continuous Integration using Codeship](#continuous-integration-using-codeship)
 * [Testing Lambda Functions](#testing-lambda-functions)
 * [Upload Lambda Function to S3 and deploy to Lambda](#upload-your-lambda-function-to-an-s3-bucket-and-automatically-deploy-it-to-lambda-bash-script-example)
@@ -782,14 +782,28 @@ In that rule set add an action for your Lambda function. This tells AWS to run y
 
 This is all you need to do to make your function trigger from SES, but depending on what your Lambda function does, it might be kind of hard to verify that it's run (though you can look at the stats for the function to see how and when it's been run) so let's make it save the body of your email to your bucket!
 
+### Warning before continuing
+
+This next section is an illustration of how Lambda function can be used with SES, not a recommendation for usage.
+If you set this up on your own AWS account, it's possible a SPAMer will _flood_ your Lambda and cause you to waste _loadz-a-money_ on S3 writes...
+
+![image](https://user-images.githubusercontent.com/194400/28249477-7f486464-6a4e-11e7-983b-cc7735876ef2.png)
+**$0.05 per 1,000** writes to S3 might not _sound_ like a lot, but it will add up if you consider the volume of spam sent/received. (_if you use GMail you won't realise it because Google has **amazing** filters, but an "un-protected" email address will get hundreds and a reasonably popular domain will get **thousands** of SPAM  emails **per day**_)
+
+> Fun Fact: Over 50% of email is SPAM see: https://www.statista.com/statistics/420391/spam-email-traffic-share/
+![image](https://user-images.githubusercontent.com/194400/28249544-a823d822-6a4f-11e7-9e21-791a9eba0aa6.png)
+
+Continue with care :dollar:
+
 #### Save the email to S3
+
 Go back to the rule set you created for your Lambda function. Add a new action to it, this one should be an S3 action, with the bucket you want to use selected. This will save the email to S3. Make sure this action is positioned **above** your Lambda function:
 
 ![ses management console - google chrome_006](https://user-images.githubusercontent.com/22300773/28177094-a0e16bfc-67f1-11e7-8676-feabc437295f.png)
 
-This saves the email in a slightly weird way that we don't have that much control over, so we want our Lambda function to take that go into the file written from the S3 action and process it separately.
+This saves the email in a slightly weird way that we don't have that much control over, so we want our Lambda function to take the file written from the S3 action and process it separately.
 
-So now you need to set up a role to give your function access to S3, for the policy of the role put something like this:
+Before this can happen you need to set up a role to give your function access to S3, for the policy of the role put something like this:
 
 ```json
 {
@@ -805,19 +819,19 @@ So now you need to set up a role to give your function access to S3, for the pol
             "Action": [
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
-                "s3:*" // This allows all S3 functions
+                "s3:*"
             ],
             "Resource": [
                 "arn:aws:logs:us-east-2:271861816104:log-group:/aws/lambda/getHelloWorld:*",
-                "arn:aws:s3:::YOUR-BUCKET-HERE", // Gives access to your bucket
-                "arn:aws:s3:::YOUR-BUCKET-HERE/*" // Gives access to all directories within your bucket
+                "arn:aws:s3:::YOUR-BUCKET-HERE",
+                "arn:aws:s3:::YOUR-BUCKET-HERE/*"
             ]
         }
     ]
 }
 ```
 
-As detailed in the comments this allows all s3 functionality for any functions with this role, and gives them access to your bucket and any subdirectories in that bucket.
+The `s3:*` property under `Action` allows all s3 functionality for any functions with this role. The last two properties under `Resource` give access to your bucket and any subdirectories within it.
 
 In the permissions tab of your S3 bucket select "Any Authenticated AWS User" and give read and write access for object access and permission access.
 
