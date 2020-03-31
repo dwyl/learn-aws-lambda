@@ -10,8 +10,8 @@ We will be writing our own bash script that will involve the use of some of the 
    * Click your IAM username
    * Click 'Security Credentials' and then 'Create Access Key'
    * To see your access key, choose Show User Security Credentials. Your credentials will look something like this:
-     * Access Key ID: AKIAIOSFODNN7EXAMPLE
-     * Secret Access Key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+     * Access Key ID: `AKIAIOSFODNN7EXAMPLE`
+     * Secret Access Key: `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
    * Click 'Download Credentials' and store them in a secure location
 
 1. Install the AWS CLI via a method of your choice **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**.

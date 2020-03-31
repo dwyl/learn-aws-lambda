@@ -18,7 +18,7 @@ Some initial set up of your project repo is required. This involves having a lam
 
    If you have any problems with the Step 1 or 3, follow the instructions on the Codeship documentation.
 
-1. Create a hello-world Lambda function on AWS following the steps in [this earlier section](#hello-world-example-inline). In the 'Configuration' tab **Make sure that the name of the handler is changed from 'index.handler' to 'LambdaTest.handler'. 'LambdaTest' will be the name of the zip file that we upload to AWS through Codeship.**
+1. Create a hello-world Lambda function on AWS following the steps in [this earlier section](create-lambda-inline.md). In the 'Configuration' tab **Make sure that the name of the handler is changed from 'index.handler' to 'LambdaTest.handler'. 'LambdaTest' will be the name of the zip file that we upload to AWS through Codeship.**
 
    Also make a note of the ARN for the lambda function - it can be found in the top right hand corner of the page. It should have the form: `arn:aws:lambda:YOUR_AWS_REGION:YOUR_AWS_ACCOUNT_ID:function:YOUR_FUNCTION_NAME`. You'll need it when setting up the Deployment Script on Codeship.
 ![Lambda arn](https://cloud.githubusercontent.com/assets/5912647/12617272/de1cc1b8-c506-11e5-98e4-1dc8692450e0.png)

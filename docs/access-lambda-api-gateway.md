@@ -15,7 +15,8 @@ By *default*, access to your API Endpoint and therefore the Lambda function are 
 
 1. Once you enable your API Key, a section will appear below the creation form that allows you to assign the new API Key to one of your APIs "*Stage*". Select the API & Stage (*in our case the API is* `LambdaMicroservice` *and the stage is* `prod`) then click the `Add` button:
 ![aws04-api-key-create-assign-to-stage](https://cloud.githubusercontent.com/assets/194400/12614393/8f1224c8-c4f7-11e5-99d0-aa97b48ae727.png)
-You should now see that the API Key is *Enabled* for your `prod` stage:
+
+   You should now see that the API Key is *Enabled* for your `prod` stage:
 ![aws05-api-key-associated](https://cloud.githubusercontent.com/assets/194400/12614459/0a6ff2b2-c4f8-11e5-9c0d-3a44fb6b1a2a.png)
 
 1. ***Copy*** the ***API key*** from this screen and save it to your notepad.
@@ -36,15 +37,15 @@ You should now see that the API Key is *Enabled* for your `prod` stage:
 Note: I slightly modified my Lambda function to return a timestamp so I know when the function gets executed:
 ```js
 exports.handler = function(event, context) {
-    console.log('Received event:', JSON.stringify(event, null, 2));
-    console.log('context:', JSON.stringify(context, null, 2));
-    event.key1 = event.key1 || 'Hello'; // set default values
-    event.key2 = event.key2 || 'World!';
-    console.log('value1 =', event.key1);
-    console.log('value2 =', event.key2);
-    var date = new Date();
-    var time = date.toString();
-    context.succeed(event.key1 + ' ' + event.key2 + ' >> ' + time );
+  console.log('Received event:', JSON.stringify(event, null, 2));
+  console.log('context:', JSON.stringify(context, null, 2));
+  event.key1 = event.key1 || 'Hello'; // set default values
+  event.key2 = event.key2 || 'World!';
+  console.log('value1 =', event.key1);
+  console.log('value2 =', event.key2);
+  var date = new Date();
+  var time = date.toString();
+  context.succeed(event.key1 + ' ' + event.key2 + ' >> ' + time );
 };
 ```
 
