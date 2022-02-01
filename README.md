@@ -1,6 +1,6 @@
 # Learn Aws Lambda
 
-![aws lambda intro image](http://i.imgur.com/9ImDKrv.jpg)
+![aws lambda intro image](https://i.imgur.com/9ImDKrv.jpg)
 
 Learn to use AWS Lambda to create scalable micro-services in less time
 and cost *far* less to run than "*traditional*" server-based apps.
@@ -56,7 +56,7 @@ so you cannot store data or the `result` of an operation *locally*.
 The lack of *local* persistence on Lambda is resolved by having
 low-latency access to AWS S3 and *other* AWS Datastores e.g:
 [ElastiCache](https://aws.amazon.com/elasticache/) (in-memory cache),
-[DynamoDB](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html) (NoSQL ssd-based database),
+[DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html) (NoSQL ssd-based database),
 [RDS](https://aws.amazon.com/rds/) (*relational database*),
 however there's an
 important (and potentially *expensive*) catch: PUT/POST/GET requests to all
@@ -65,9 +65,9 @@ something to S3 on each execution cycle you could rack up the bill!
 
 ## *How*?
 
-+ General Intro (*if you're completely new, watch the video!*): http://aws.amazon.com/lambda/
-+ How it Works: http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html
-+ Getting Started Guide (Overview): http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
++ General Intro (*if you're completely new, watch the video!*): https://aws.amazon.com/lambda/
++ How it Works: https://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html
++ Getting Started Guide (Overview): https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
 
 ## Create and Test Your Own AWS Lambda Function
 
@@ -89,7 +89,7 @@ something to S3 on each execution cycle you could rack up the bill!
 
 Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you started with AWS Lambda:
 
-1. If you haven't already done so, create a free AWS account  **[here](http://aws.amazon.com/)**.
+1. If you haven't already done so, create a free AWS account  **[here](https://aws.amazon.com/)**.
 
 2. Sign in to the AWS management console, select your region in the top right hand corner and then open the AWS Lambda console.
 
@@ -100,7 +100,7 @@ Here's a super simple walkthrough of a 'HELLO WORLD!' example to help get you st
 5. Once you have found this follow the instructions given to set up your function.
 This will include setting a role (a role is an AWS identity with permission
 policies that determine what the identity can or cannot do in AWS. For more
-information on roles click **[here](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)**).
+information on roles click **[here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)**).
 Like the tutorial suggests we chose the 'lambda_basic_execution' role because our function is extremely simple.
 
 6. AWS Lambda expects us to export an object which has a property called handler.
@@ -286,7 +286,7 @@ exports.handler = function(event, context) {
 ```
 
 For *even* more steps on enabling API Keys on AWS API Gateway,
-see: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys.html
+see: https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-keys.html
 
 
 <br />
@@ -642,7 +642,7 @@ Give your message a subject and add some text to the message body. Leave the 'Ti
 
     ![Publish message](https://cloud.githubusercontent.com/assets/5912647/12579968/c3410dec-c423-11e5-9189-3dd68fe7060c.png)
 
-NB: Using the JSON Messsage Generator option it is possible to format messages differently for different viewing platforms. Find out more on the [AWS SNS docs](http://docs.aws.amazon.com/sns/latest/dg/PublishTopic.html).
+NB: Using the JSON Messsage Generator option it is possible to format messages differently for different viewing platforms. Find out more on the [AWS SNS docs](https://docs.aws.amazon.com/sns/latest/dg/PublishTopic.html).
 
 #### Viewing the output of the lambda Function
 
@@ -768,7 +768,7 @@ NB: Using the JSON Messsage Generator option it is possible to format messages d
   })
   ```
 
-  More info on testing lambda functions locally can be found  [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv) and an example of testing by mocking the context object can be found [here](http://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/).
+  More info on testing lambda functions locally can be found  [here](https://medium.com/@AdamRNeary/developing-and-testing-amazon-lambda-functions-e590fac85df4#.romz6yjwv) and an example of testing by mocking the context object can be found [here](https://codedad.net/2016/01/03/test-aws-lambda-function-without-aws/).
 
 3. **Using grunt-aws-lambda plugin**
 
@@ -783,7 +783,7 @@ Start by creating a blank AWS Lambda function that will be called whenever a new
 #### Set up SES
 For this you need your own domain, and you need to verify the domain with AWS, this can take up to 72hrs, so have a nice drink and chill out while you wait :sunglasses: :coffee:
 
-	See here for how: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domain-procedure.html
+	See here for how: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domain-procedure.html
 
 #### Add a rule set
 Click `rule sets` on the bottom left and create a new rule set with whatever name you like. If you want to have your function triggered by emails sent to any address in your domain you can leave recipient blank, else you can add the recipient you want to trigger the function.
@@ -1050,7 +1050,7 @@ In this example will build a script that will execute the neccessary steps to up
 
 We will be writing our own bash script that will involve the use of some of the AWS CLI commands. Follow these instructions on how to get set up with the AWS CLI on your local machine:
 
-1. If you haven't already done so, set up an account with AWS **[here](http://aws.amazon.com/)**.
+1. If you haven't already done so, set up an account with AWS **[here](https://aws.amazon.com/)**.
 
 2. You'll then need to get your 'access key ID' and 'secret access key' by doing the following:
     * Open the IAM console
@@ -1062,7 +1062,7 @@ We will be writing our own bash script that will involve the use of some of the 
         * Secret Access Key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     * Click 'Download Credentials' and store them in a secure location
 
-3. Install the AWS CLI via a method of your choice **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**.
+3. Install the AWS CLI via a method of your choice **[here](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)**.
 
 4. Once it's installed you have to configure it. Type ```aws configure``` in the command line. You should see something like this:
   ```bash
@@ -1567,7 +1567,7 @@ Using aliases means that calling event source doesn't have to know the specific 
 * new versions to easily be promoted or rolled back (aliases can easily be mapped to different function versions)
 * easier event source mappings - more control over which versions of your function are used with specific event sources in your development environment
 
-Walkthrough of implementing [versioning](http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases-walkthrough1.html) and [aliasing](http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases-walkthrough1.html) using the AWS CLI on the AWS Lambda docs.
+Walkthrough of implementing [versioning](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases-walkthrough1.html) and [aliasing](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases-walkthrough1.html) using the AWS CLI on the AWS Lambda docs.
 
 ### Create an API with GET/POST Methods that uses Lambda functions to retrieve/update records from a DynamoDB table
 
@@ -1829,7 +1829,7 @@ Here are the steps to set up the Serverless example project 'serverless-starter'
 
     ![user summary](https://cloud.githubusercontent.com/assets/12450298/12822489/39388622-cb60-11e5-900d-bda80d95cd5f.png)
 
-3. Next you're going to have to install the AWS CLI if you haven't already done so. You can do so via any of the methods **[here](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)**. Once you've done that, type the ```aws configure``` command into the command line. Use the Access ID and Secret Access ID from the user you just set up, select your region and then press enter for the last option:
+3. Next you're going to have to install the AWS CLI if you haven't already done so. You can do so via any of the methods **[here](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)**. Once you've done that, type the ```aws configure``` command into the command line. Use the Access ID and Secret Access ID from the user you just set up, select your region and then press enter for the last option:
 
     ```bash
     $ aws configure
@@ -1945,14 +1945,14 @@ _(The Serverless framework automates a lot of the processes that we have covered
 ## Further Reading
 
 + Walkthrough Custom Events:
-http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-custom-events.html
+https://docs.aws.amazon.com/lambda/latest/dg/walkthrough-custom-events.html
 + Admin Events:
-http://docs.aws.amazon.com/lambda/latest/dg/walkthrough-s3-events-adminuser.html
-+ lambdash: AWS Lambda Shell Hack http://alestic.com/2014/11/aws-lambda-shell
-+ Lambda Persistence: http://alestic.com/2014/12/aws-lambda-persistence
-+ Lambda Speed (faster execution): http://alestic.com/2014/11/aws-lambda-speed
+https://docs.aws.amazon.com/lambda/latest/dg/walkthrough-s3-events-adminuser.html
++ lambdash: AWS Lambda Shell Hack https://alestic.com/2014/11/aws-lambda-shell
++ Lambda Persistence: https://alestic.com/2014/12/aws-lambda-persistence
++ Lambda Speed (faster execution): https://alestic.com/2014/11/aws-lambda-speed
 + Lambda Execution Environment and Available Libraries:
-http://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
+https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
 + Intro to Lambda by [Jeff Douglas](https://github.com/jeffdonthemic) (*Cloud Legend*)
 https://www.topcoder.com/blog/amazon-lambda-demo-tutorial/ + https://youtu.be/m7egclrPzSg
 + Alternatives to Lambda:
@@ -1974,7 +1974,7 @@ As exciting as this *incredible* service is, it's only natural to have few conce
 
 AWS Lambda has a default safety throttle limit of **100 concurrent Lambda
 function executions** per account.
-see: http://docs.aws.amazon.com/lambda/latest/dg/limits.html
+see: https://docs.aws.amazon.com/lambda/latest/dg/limits.html
 
 ***Q***: Does this mean we can "*only*" process 100 requests at any given time?  
 ***A***: No, *it depends* on how long the Lambda function takes to *complete*.
@@ -2044,7 +2044,7 @@ event notification or invoke call, including test invokes from the console.
 + Execution time is rounded up to the nearest 100ms
 + You are charged $0.00001667 for every GB-second used
 
-See: http://aws.amazon.com/lambda/pricing/ for more ***pricing examples***.
+See: https://aws.amazon.com/lambda/pricing/ for more ***pricing examples***.
 
 ## FAQ
 
