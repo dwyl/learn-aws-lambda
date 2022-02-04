@@ -14,7 +14,7 @@ via an AWS Lambda Function (*available from AWS API Gateway*).
 
 This mini-tutorial expects you to have:
 
-+ An Amazon Web Services (***AWS***) Account: http://aws.amazon.com/
++ An Amazon Web Services (***AWS***) Account: https://aws.amazon.com/
 + *Basic* Node.js/JavaScript Knowledge
 
 Everything else will be covered step-by-step!
@@ -357,7 +357,7 @@ browser you will see a `No 'Access-Control-Allow-Origin'` Error:
 ![aws-lambda-cors-error](https://cloud.githubusercontent.com/assets/194400/12768553/33c41e3a-ca08-11e5-96e4-1844bee177c0.png)
 
 > Official CORS Docs for Lambda:
-http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html#how-to-cors-console
+https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html#how-to-cors-console
 
 #### 1. In your API Gateway click "*Enable CORS*"
 
@@ -471,7 +471,7 @@ Try it!
 + Amazon API Gateway Tutorial by Auth0:
 https://auth0.com/docs/integrations/aws-api-gateway
 + Measuring response time with cURL:
-http://stackoverflow.com/questions/18215389/how-do-i-measure-request-and-response-times-at-once-using-curl
+https://stackoverflow.com/questions/18215389/how-do-i-measure-request-and-response-times-at-once-using-curl
 
 ## Performance?
 
