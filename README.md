@@ -450,7 +450,7 @@ see: https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-api-key
              ]
   }
   ```
-  You should see an empty obect just like the first function ```{}```.
+  You should see an empty object just like the first function ```{}```.
   Go back to the GetUserInfo function and then click 'Test' again. You should now see a returned result with the object in your sample event like this:
 
   ```
@@ -1046,7 +1046,7 @@ For more information have at the Codeship documentation:
 * [Deployment to AWS Lambda](https://documentation.codeship.com/basic/continuous-deployment/deployment-to-aws-lambda/)
 
 ### Upload Your Lambda Function to an S3 Bucket and Automatically Deploy it to Lambda (bash script example)
-In this example will build a script that will execute the neccessary steps to upload a Lambda function to S3 where it can be stored and then automatically deploy it to Lambda.
+In this example will build a script that will execute the necessary steps to upload a Lambda function to S3 where it can be stored and then automatically deploy it to Lambda.
 
 We will be writing our own bash script that will involve the use of some of the AWS CLI commands. Follow these instructions on how to get set up with the AWS CLI on your local machine:
 
@@ -1731,7 +1731,7 @@ Walkthrough of implementing [versioning](https://docs.aws.amazon.com/lambda/late
               ]
     }
     ```
-    You should see an empty obect just like the first function ```{}```.
+    You should see an empty object just like the first function ```{}```.
     Go back to the GetUserInfo function and then click 'Test' again. You should now see a returned result with the object in your sample event like this:
 
     ```
@@ -1813,7 +1813,7 @@ Here are the steps to set up the Serverless example project 'serverless-starter'
 
 1. First create an AWS account if you haven't done so already. Follow the steps in our previous examples in order to do this.
 
-2. Go to your IAM console. We're going to have to create a new 'User' that our serverless application will be able to use and attach the neccessary policy in order to initialize it. Go to the 'Users' tab and then click 'Create New Users'. Give your user a name and then click 'Create'. We've called ours 'serverless-admin':
+2. Go to your IAM console. We're going to have to create a new 'User' that our serverless application will be able to use and attach the necessary policy in order to initialize it. Go to the 'Users' tab and then click 'Create New Users'. Give your user a name and then click 'Create'. We've called ours 'serverless-admin':
 
     ![serverless user](https://cloud.githubusercontent.com/assets/12450298/12822479/2d889d44-cb60-11e5-8c89-9420378d6be6.png)
 
@@ -2021,7 +2021,7 @@ not pay for the *idle* time e.g. while your users are asleep!
 
 
 **Note**: the S3 storage costs would still be the same if you
-used a Heroku or EC2 instance to handle the upload/resize/compresion task.
+used a Heroku or EC2 instance to handle the upload/resize/compression task.
 
 1,000,000 images x (900,000 + 100,000) = 100 Gigabytes or 100 GB  
 So 100 x $0.030 = **$30 per month** to store a million images!
