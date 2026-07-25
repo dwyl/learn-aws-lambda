@@ -1,16 +1,83 @@
+<div align="center">
+
 # Learn Aws Lambda
 
 ![aws lambda intro image](https://i.imgur.com/9ImDKrv.jpg)
 
-Learn to use AWS Lambda to create scalable micro-services in less time
-and cost *far* less to run than "*traditional*" server-based apps.
+Learn to use `AWS Lambda`
+to create **scalable micro-services**<br />
+in less time
+and lower overhead
+than "*traditional*" server-based apps.
 
-[![Codeship](https://img.shields.io/codeship/dc9ad800-a8a7-0133-6c3b-2a9c037ce78e/master.svg?style=flat-square)](https://github.com/codeship/documentation/issues/335)
-[![codecov.io](https://codecov.io/github/dwyl/learn-aws-lambda/coverage.svg?branch=master)](https://codecov.io/github/dwyl/learn-aws-lambda?branch=master)
-[![dependencies Status](https://david-dm.org/dwyl/learn-aws-lambda/status.svg)](https://david-dm.org/dwyl/learn-aws-lambda)
-[![devDependencies Status](https://david-dm.org/dwyl/learn-aws-lambda/dev-status.svg)](https://david-dm.org/dwyl/learn-aws-lambda?type=dev)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/learn-aws-lambda/issues)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/learn-aws-lambda/ci.yml?label=build&style=flat-square&branch=main)](https://github.com/dwyl/learn-aws-lambda/actions/workflows/ci.yml)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/learn-aws-lambda/main.svg?style=flat-square)](https://codecov.io/github/dwyl/hits?branch=main)
+[![HitCount](https://hits.dwyl.com/dwyl/learn-aws-lambda.svg)](https://github.com/dwyl/learn-aws-lambda)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/learn-aws-lambda/issues/)
+</div>
 
+# Disclaimer ⚠️
+
+We wrote these notes from **2015 - 2021**
+to **_extensively_ capture** our **knowledge** of using `AWS Lambda`
+to build both simple functions
+(e.g: "send email" or "transform an image")
+and more advanced "serverless apps".
+All credit to
+[Nikhi](https://github.com/nikhilaravi)
+and
+[Jack](https://github.com/jackcarlisle)
+for their superb work,
+subsequently extended/improved by
+[other dwylers](https://github.com/dwyl/learn-aws-lambda/graphs/contributors?all=1).
+🫶
+
+While the notes can still serve as a **reference**,
+they are **no longer current** with the **_latest_ `Lambda` UI**.
+
+Most of the code examples will still work because they are reasonable simple.
+If you get stuck with any of them,
+please
+[open an issue](https://github.com/dwyl/learn-aws-lambda/issues).
+
+We still have several functions running smoothly on `Lambda`
+with zero maintenance required (beyond updating Node.js version),
+both for our own internal apps and client apps,
+but we have not had time to update the notes. ⏳
+e.g:
+[dwyl/**aws-ses-lambda**](https://github.com/dwyl/aws-ses-lambda)
+and
+[`github-scraper/lambda`](https://github.com/nelsonic/github-scraper/tree/main/lambda)
+
+We also built our own micro `Lambda` **deployment tool**:
+[dwyl/**aws-lambda-deploy**](https://github.com/dwyl/aws-lambda-deploy)
+which still works flawlessly 10+ years later!
+A testament to its simplicity and
+[ultra-low dependency count!](https://github.com/dwyl/aws-lambda-deploy/blob/5b5518696e28e77800994c48f2d3a3af75bd0e5d/package.json#L71-L74)
+
+`AWS` recently released a new feature
+that allows directly calling a `Lambda` function
+via a URL without requiring the complexity of `API Gateway`:
+[dwyl/learn-aws-lambda#124](https://github.com/dwyl/learn-aws-lambda/issues/124).
+This **_significantly_ simplifies** invoking `Lambda`
+functions from other non-lambda apps.
+
+If you're looking for a way to offload some processing to `Lambda`
+from your existing non-lambda app/backend,
+we recommend exploring this option.
+
+We **do _not_ recommend** building an entire (complex)
+"[Serverless](https://github.com/dwyl/learn-aws-lambda/issues/119)"
+backend using `Lambda`
+because the request/response time is quite slow compared to a
+[**`Phoenix`**](https://github.com/dwyl/technology-stack)
+App
+and more tedious to test & deploy all the moving parts.
+But for simpler async functions it's great
+and there is a
+[_generous_ one million requests **free tier**](https://aws.amazon.com/lambda/pricing/).
+
+Happy Coding! ❤️
 
 ## Contents
 
@@ -210,7 +277,7 @@ by following one of the previous examples!)_
 
 5. Now let's test our endpoint to see if our Lambda function is being invoked. Go to the AWS console and then click on 'API Gateway' under Application Services. This will take you to a list of your APIs where you should see the one we just created. Click on the title.
 
- ![api list](https://github.com/4thAce/learn-aws-lambda/blob/master/api-gateway-lambda-microservice.png?raw=true)
+ ![api list](https://github.com/user-attachments/assets/cc0d85b7-d5b7-45b8-af5a-449cf007f255 "api list")
 
 6. Click on the METHOD beneath your Lambda function, in our case it's 'POST'. Then click on the word 'TEST' with the lightning bolt underneath it:
 

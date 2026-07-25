@@ -1,3 +1,5 @@
+// This code still works in 2026. Happy hello-world'ing. ;-)
+
 console.log('Loading function');
 
 exports.handler = function(event, context) {

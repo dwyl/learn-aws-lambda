@@ -1,0 +1,9 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    # Non-critical learning code, update deps infrequently.
+    interval: monthly
+    time: "17:00"
+    timezone: Europe/London

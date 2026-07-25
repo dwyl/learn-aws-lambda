@@ -1,0 +1,26 @@
+name: Node.js CI
+
+on:
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [24.x]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v7       # github.com/actions/checkout
+    - uses: actions/setup-node@v7     # github.com/actions/setup-node
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm i
+    - run: npm test
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v7 # github.com/codecov/codecov-action
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

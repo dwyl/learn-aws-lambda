@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "upload": "./lambda-upload-create.sh",
-    "test": "./node_modules/lab/bin/lab ./lambda-testing/test/callbacks.test.js -m 0 -c -a code -r lcov -o lcov.info -r console -o stdout",
-    "ava:test": "ava ./lambda-testing/test/ava.test.js",
-    "coverage": "./node_modules/lab/bin/lab -r html -o ./test/coverage.html"
+    "test": "nyc --reporter=lcov tap ./examples/add.test.ts",
+    "coverage": "nyc --report html tap ./examples/add.test.ts && open coverage/index.html"
   },
   "repository": {
     "type": "git",
@@ -17,7 +16,8 @@
     "AWS",
     "lambda",
     "DynamoDB",
-    "node.js"
+    "node.js",
+    "tutorial"
   ],
   "author": "Nelson Correia, Jack Carlisle, Nikki Ravi",
   "license": "GPL-2.0",
@@ -27,7 +27,6 @@
   "homepage": "https://github.com/dwyl/learn-aws-lambda#readme",
   "devDependencies": {
     "archiver": "^1.1.0",
-    "ava": "^0.16.0",
     "aws-lambda-mock-context": "^3.0.0",
     "aws-lambda-pify": "^3.0.0",
     "aws-sdk": "^2.5.6",
@@ -36,6 +35,8 @@
     "gulp-install": "^0.6.0",
     "gulp-zip": "^3.2.0",
     "lab": "^11.0.1",
-    "run-sequence": "^1.2.2"
+    "nyc": "^17.0.0",
+    "run-sequence": "^1.2.2",
+    "tap": "^19.2.5"
   }
 }

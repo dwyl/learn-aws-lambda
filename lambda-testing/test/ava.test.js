@@ -1,5 +1,6 @@
 'use strict';
-var test                = require('ava');
+import tap, { Test } from 'tap';
+const test = tap.test;
 var context             = require('aws-lambda-mock-context');
 var promisify           = require('aws-lambda-pify');
 var createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
@@ -20,11 +21,11 @@ var LambdaTest         = promisify(require('../functions/LambdaTest.js').handler
 var DynamoDBLambdaTest = promisify(require('../functions/DynamoDBLambdaTest.js').handler, ctx)
 
 test('LambdaTest', async t => {
-  t.is( await LambdaTest(testEvent), 'name')
+  t.equal(await LambdaTest(testEvent), 'name')
 })
 
 test('DynamoDBLambdaTest', async t => {
-  t.is( await DynamoDBLambdaTest(testDynamoDBEvent), 3)
+  t.equal(await DynamoDBLambdaTest(testDynamoDBEvent), 3)
 })
 
 console.log('Tests took', process.uptime(), "seconds to run");

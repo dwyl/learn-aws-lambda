@@ -1,55 +1,44 @@
 'use strict';
-
-var Code                = require('code');
-var Lab                 = require('lab');
-var lab                 = exports.lab = Lab.script();
-var describe            = lab.experiment;
-var expect              = Code.expect;
-var it                  = lab.test;
-var createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
+import tap from 'tap';
+const test = tap.test;
+const createDynamoDBEvent = require('./utils/eventCreators').createDynamoDBEvent;
 
 /**
    Handlers
 **/
-var LambdaTest         = require('../functions/lambdaTest.js').handler
-var DynamoDBLambdaTest = require('../functions/DynamoDBLambdaTest.js').handler
+import * as LambdaTest from '../functions/lambdaTest.js'
+import * as DynamoDBLambdaTest from '../functions/DynamoDBLambdaTest.js'
 
 /**
    Create mock event and context objects
 **/
-var contextCreator      = require('./utils/mockContext.js');
-var testEvent           = { key1: 'name' }
-var testDynamoDBEvent   = createDynamoDBEvent();
+const contextCreator      = require('./utils/mockContext.js');
+const testEvent           = { key1: 'name' }
+const testDynamoDBEvent   = createDynamoDBEvent();
 
-describe('LambdaTest', function(){
-  it("LambdaTest: returns value when given event with key1 property", function(done) {
+test('LambdaTest: returns value given event with key1 property', function(t) {
+  function test(result) {
+    t.equal(result, "name")
+    t.end();
+  }
+  const context = contextCreator(test);
+  LambdaTest(testEvent, context);
+});
 
-    function test(result){
-      expect(result).to.equal("name")
-      done();
-    }
-    var context = contextCreator(test);
-    LambdaTest(testEvent, context);
-  })
-  it("LambdaTest: returns error when given empty event", function(done) {
-    function test(error){
-      expect(error).to.equal("no key1")
-      done();
-    }
-    var context = contextCreator(test);
-    LambdaTest({}, context);
-  })
+test("LambdaTest: returns error when given empty event", function(t) {
+  function test(error) {
+    t.equal(error, "no key1");
+    t.end();
+  }
+  const context = contextCreator(test);
+  LambdaTest({}, context);
 })
 
-describe('DynamoDB Triggered Lambda Test', function(){
-  it("DynamoDBTest: returns number of records in the event", function(done) {
-
-    function test(result){
-      expect(result).to.equal(3)
-      done();
-    }
-    var context = contextCreator(test);
-
-    DynamoDBLambdaTest(testDynamoDBEvent, context);
-  })
+test("DynamoDBTest: returns number of records in the event", function(t) {
+  function test(result) {
+    t.equal(result, 3)
+    t.end();
+  }
+  const context = contextCreator(test);
+  DynamoDBLambdaTest(testDynamoDBEvent, context);
 })
