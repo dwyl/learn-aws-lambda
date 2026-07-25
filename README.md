@@ -66,7 +66,8 @@ If you're looking for a way to offload some processing to `Lambda`
 from your existing non-lambda app/backend,
 we recommend exploring this option.
 
-We do **_not_ recommend** building an entire/complex "Serverless"
+We **do _not_ recommend** building an entire (complex)
+"[Serverless](https://github.com/dwyl/learn-aws-lambda/issues/119)"
 backend using `Lambda`
 because the request/response time is quite slow compared to a `Phoenix` App
 and more tedious to test.
