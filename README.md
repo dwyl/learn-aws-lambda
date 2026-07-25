@@ -28,19 +28,27 @@ All credit to
 and
 [Jack](https://github.com/jackcarlisle)
 for their superb work,
-subsequently extended by others. 🫶
+subsequently extended/improved by
+[other dwylers](https://github.com/dwyl/learn-aws-lambda/graphs/contributors?all=1).
+🫶
 
 While the notes can still serve as a **reference**,
 they are **no longer current** with the **_latest_ `Lambda` UI**.
-We still have functions running on `Lambda`
+
+Most of the code examples will still work because they are reasonable simple.
+If you get stuck with any of them,
+please
+[open an issue](https://github.com/dwyl/learn-aws-lambda/issues).
+
+We still have several functions running on `Lambda`
 both for our own internal apps and client apps,
-but have not had time to update the notes.
+but have not had time to update the notes. ⏳
 e.g:
 [`github-scraper/lambda`](https://github.com/nelsonic/github-scraper/tree/main/lambda)
 and
 [dwyl/**aws-ses-lambda**](https://github.com/dwyl/aws-ses-lambda)
 
-We also built our own micro deployment tool:
+We also built our own micro `Lambda` **deployment tool**:
 [dwyl/**aws-lambda-deploy**](https://github.com/dwyl/aws-lambda-deploy)
 which still works flawlessly 10+ years later!
 A testament to its simplicity and
@@ -50,7 +58,7 @@ A testament to its simplicity and
 that allows directly calling a `Lambda` function
 via a URL without requiring the complexity of `API Gateway`:
 [dwyl/learn-aws-lambda#124](https://github.com/dwyl/learn-aws-lambda/issues/124).
-This **_significantly_ simplifies** calling `Lambda`
+This **_significantly_ simplifies** invoking `Lambda`
 functions from other non-lambda apps.
 
 If you're looking for a way to offload some processing to `Lambda`
