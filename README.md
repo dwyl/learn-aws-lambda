@@ -5,8 +5,9 @@
 ![aws lambda intro image](https://i.imgur.com/9ImDKrv.jpg)
 
 Learn to use `AWS Lambda`
-to create **scalable micro-services** in less time
-and cost *far* less to run
+to create **scalable micro-services**<br />
+in less time
+and lower overhead
 than "*traditional*" server-based apps.
 
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/learn-aws-lambda/ci.yml?label=build&style=flat-square&branch=main)](https://github.com/dwyl/learn-aws-lambda/actions/workflows/ci.yml)
@@ -14,6 +15,50 @@ than "*traditional*" server-based apps.
 [![HitCount](https://hits.dwyl.com/dwyl/learn-aws-lambda.svg)](https://github.com/dwyl/learn-aws-lambda)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/learn-aws-lambda/issues/)
 </div>
+
+# Disclaimer ⚠️
+
+We wrote these notes from **2015 - 2021**
+to **_extensively_ capture** our **knowledge** of using `AWS Lambda`
+to build both simple functions
+(e.g: "send email" or "transform an image")
+and more advanced "serverless apps".
+All credit to
+[Nikhi](https://github.com/nikhilaravi)
+and
+[Jack](https://github.com/jackcarlisle)
+for their superb work,
+subsequently extended by others. 🫶
+
+While the notes can still serve as a **reference**,
+they are **no longer current** with the **_latest_ `Lambda` UI**.
+We still have functions running on `Lambda`
+both for our own internal apps and client apps,
+but have not had time to update the notes.
+e.g:
+[`github-scraper/lambda`](https://github.com/nelsonic/github-scraper/tree/main/lambda)
+and
+[dwyl/**aws-ses-lambda**](https://github.com/dwyl/aws-ses-lambda)
+
+We also built our own micro deployment tool:
+[dwyl/**aws-lambda-deploy**](https://github.com/dwyl/aws-lambda-deploy)
+which still works flawlessly 10+ years later!
+A testament to its simplicity and
+[ultra-low dependency count!](https://github.com/dwyl/aws-lambda-deploy/blob/5b5518696e28e77800994c48f2d3a3af75bd0e5d/package.json#L71-L74)
+
+`AWS` recently released a new feature
+that allows directly calling a `Lambda` function
+via a URL without requiring the complexity of `API Gateway`:
+[dwyl/learn-aws-lambda#124](https://github.com/dwyl/learn-aws-lambda/issues/124).
+This **_significantly_ simplifies** calling `Lambda`
+functions from other non-lambda apps.
+
+If you're looking for a way to offload some processing to `Lambda`
+from your existing non-lambda app/backend,
+we recommend exploring this option.
+
+Happy Coding! ❤️
+
 
 ## Contents
 
