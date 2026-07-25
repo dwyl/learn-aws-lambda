@@ -40,13 +40,14 @@ If you get stuck with any of them,
 please
 [open an issue](https://github.com/dwyl/learn-aws-lambda/issues).
 
-We still have several functions running on `Lambda`
+We still have several functions running smoothly on `Lambda`
+with zero maintenance required (beyond updating Node.js version),
 both for our own internal apps and client apps,
-but have not had time to update the notes. ⏳
+but we have not had time to update the notes. ⏳
 e.g:
-[`github-scraper/lambda`](https://github.com/nelsonic/github-scraper/tree/main/lambda)
-and
 [dwyl/**aws-ses-lambda**](https://github.com/dwyl/aws-ses-lambda)
+and
+[`github-scraper/lambda`](https://github.com/nelsonic/github-scraper/tree/main/lambda)
 
 We also built our own micro `Lambda` **deployment tool**:
 [dwyl/**aws-lambda-deploy**](https://github.com/dwyl/aws-lambda-deploy)
