@@ -66,8 +66,15 @@ If you're looking for a way to offload some processing to `Lambda`
 from your existing non-lambda app/backend,
 we recommend exploring this option.
 
-Happy Coding! ❤️
+We do **_not_ recommend** building an entire/complex "Serverless"
+backend using `Lambda`
+because the request/response time is quite slow compared to a `Phoenix` App
+and more tedious to test.
+But for simpler async functions it's great
+and there is a
+[_generous_ one million requests **free tier**](https://aws.amazon.com/lambda/pricing/).
 
+Happy Coding! ❤️
 
 ## Contents
 
