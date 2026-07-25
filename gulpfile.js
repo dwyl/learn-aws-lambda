@@ -1,3 +1,8 @@
+/*** 
+ * This file was created before we had a better way to upload Lambda Functions
+ * see: https://github.com/dwyl/aws-lambda-deploy 
+ * */ 
+
 var AWS         = require('aws-sdk');
 var gulp        = require('gulp');
 var zip         = require('gulp-zip');
