@@ -69,7 +69,9 @@ we recommend exploring this option.
 We **do _not_ recommend** building an entire (complex)
 "[Serverless](https://github.com/dwyl/learn-aws-lambda/issues/119)"
 backend using `Lambda`
-because the request/response time is quite slow compared to a `Phoenix` App
+because the request/response time is quite slow compared to a
+[**`Phoenix`**](https://github.com/dwyl/technology-stack)
+App
 and more tedious to test & deploy all the moving parts.
 But for simpler async functions it's great
 and there is a
