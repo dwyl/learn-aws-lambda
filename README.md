@@ -70,7 +70,7 @@ We **do _not_ recommend** building an entire (complex)
 "[Serverless](https://github.com/dwyl/learn-aws-lambda/issues/119)"
 backend using `Lambda`
 because the request/response time is quite slow compared to a `Phoenix` App
-and more tedious to test.
+and more tedious to test & deploy all the moving parts.
 But for simpler async functions it's great
 and there is a
 [_generous_ one million requests **free tier**](https://aws.amazon.com/lambda/pricing/).
@@ -275,7 +275,7 @@ by following one of the previous examples!)_
 
 5. Now let's test our endpoint to see if our Lambda function is being invoked. Go to the AWS console and then click on 'API Gateway' under Application Services. This will take you to a list of your APIs where you should see the one we just created. Click on the title.
 
- ![api list](https://github.com/4thAce/learn-aws-lambda/blob/master/api-gateway-lambda-microservice.png?raw=true)
+ ![api list](https://github.com/user-attachments/assets/cc0d85b7-d5b7-45b8-af5a-449cf007f255 "api list")
 
 6. Click on the METHOD beneath your Lambda function, in our case it's 'POST'. Then click on the word 'TEST' with the lightning bolt underneath it:
 
