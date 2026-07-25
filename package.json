@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "upload": "./lambda-upload-create.sh",
-    "test": "nyc --reporter=lcov tap ./lambda-testing/test/ava.test.js",
-    "coverage": "nyc --report html tap ./lambda-testing/test/ava.test.js && open coverage/index.html"
+    "test": "nyc --reporter=lcov tap ./add.test.ts",
+    "coverage": "nyc --report html tap ./add.test.ts && open coverage/index.html"
   },
   "repository": {
     "type": "git",
