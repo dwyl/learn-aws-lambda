@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/dwyl/learn-aws-lambda#readme",
   "devDependencies": {
-    "archiver": "^1.1.0",
+    "archiver": "^8.0.0",
     "aws-lambda-mock-context": "^3.0.0",
     "aws-lambda-pify": "^3.0.0",
     "aws-sdk": "^2.5.6",
